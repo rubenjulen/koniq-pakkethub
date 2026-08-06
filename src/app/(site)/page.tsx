@@ -13,7 +13,7 @@ export default async function HomePage() {
 
   const MODES = [
     ["📦", h.mode1_t, h.mode1_d, "/verzenden"],
-    ["🧳", h.mode2_t, h.mode2_d, "/hoe-het-werkt"],
+    ["🧳", h.mode2_t, h.mode2_d, "/aanmelden?role=TRAVELER"],
     ["🏭", h.mode3_t, h.mode3_d, "/hoe-het-werkt"],
     ["🚚", h.mode4_t, h.mode4_d, "/prijzen"],
   ];

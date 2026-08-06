@@ -71,6 +71,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
               <button type="submit" className="ph-btn ph-btn-primary w-full">{m.common.login}</button>
             </form>
 
+            <div className="mt-4 rounded-lg border border-orange-200 bg-orange-50 p-3 text-center text-sm">
+              <span className="text-slate-600">{m.register.sub}</span>
+              <Link href="/aanmelden" className="ml-1 font-semibold text-orange-600 hover:underline">{m.register.title} →</Link>
+            </div>
+
             <div className="mt-6 rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
               <div className="mb-1 font-semibold text-slate-700">{L.demo_accounts}</div>
               <ul className="space-y-0.5">

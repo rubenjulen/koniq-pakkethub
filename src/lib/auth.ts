@@ -60,6 +60,41 @@ export async function login(
   return { ok: true };
 }
 
+export async function register(input: {
+  firstName: string; lastName: string; email: string; phone?: string;
+  password: string; role: "SENDER" | "TRAVELER";
+}): Promise<{ ok: true } | { ok: false; error: "exists" | "fields" }> {
+  const email = input.email.trim().toLowerCase();
+  if (!input.firstName.trim() || !email || input.password.length < 6) return { ok: false, error: "fields" };
+
+  const existing = await queryOne<{ id: string }>(`SELECT id FROM users WHERE lower(email) = $1 LIMIT 1`, [email]);
+  if (existing) return { ok: false, error: "exists" };
+
+  const tenant = await queryOne<{ id: string }>(`SELECT id FROM tenants WHERE slug = 'pakkethub' LIMIT 1`);
+  if (!tenant) return { ok: false, error: "fields" };
+  const role = await queryOne<{ id: string }>(`SELECT id FROM roles WHERE tenant_id = $1 AND key = $2 LIMIT 1`, [tenant.id, input.role]);
+
+  const userId = randomUUID();
+  await query(
+    `INSERT INTO users (id, tenant_id, first_name, last_name, email, phone, password_hash, role_id, kyc_status, kyc_level, active)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'UNVERIFIED','NONE',true)`,
+    [userId, tenant.id, input.firstName.trim(), input.lastName.trim(), email, input.phone?.trim() || null,
+     hashPassword(input.password), role?.id ?? null]
+  );
+
+  // Direct inloggen na registratie.
+  const token = randomBytes(32).toString("hex");
+  await query(
+    `INSERT INTO sessions (id, user_id, tenant_id, token, expires_at) VALUES ($1,$2,$3,$4, now() + interval '7 days')`,
+    [randomUUID(), userId, tenant.id, token]
+  );
+  const jar = await cookies();
+  jar.set(COOKIE, token, {
+    httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", maxAge: MAX_AGE,
+  });
+  return { ok: true };
+}
+
 export async function logout() {
   const jar = await cookies();
   const token = jar.get(COOKIE)?.value;

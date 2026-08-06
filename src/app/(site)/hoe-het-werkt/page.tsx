@@ -4,7 +4,7 @@ export const metadata = { title: "Hoe het werkt" };
 
 const PERSONAS = [
   ["📦", "Afzender", ["Geef je pakket en inhoud volledig aan", "Krijg direct een eligibility-check", "Ontvang aanbiedingen van reizigers", "Chat, spreek af en volg live"], "/verzenden", "Verstuur een pakket"],
-  ["🧳", "Reiziger", ["Publiceer je rit en capaciteit", "Bied op passende zendingen", "Haal op bij de hub, verzegeld", "Verdien bij; betaling na levering"], "/login", "Word reiziger"],
+  ["🧳", "Reiziger", ["Publiceer je rit en capaciteit", "Bied op passende zendingen", "Haal op bij de hub, verzegeld", "Verdien bij; betaling na levering"], "/aanmelden?role=TRAVELER", "Word reiziger"],
   ["📥", "Ontvanger", ["Ontvang een track-link", "Volg de status van je pakket", "Haal op bij een service point", "Bevestig ontvangst met OTP/QR"], "/track", "Volg een zending"],
   ["🚚", "Partner / fleet", ["Onboarding met KYB & documenten", "Publiceer routes en capaciteit", "Voer legs uit met scan-bewijs", "Afrekening en kwaliteit per fleet"], "/partner", "Word partner"],
 ];
