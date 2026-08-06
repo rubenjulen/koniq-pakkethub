@@ -3,13 +3,26 @@ import { InstallAppButton } from "@/components/InstallAppButton";
 import { AirportHero } from "@/components/AirportHero";
 import { HeroVideo } from "@/components/HeroVideo";
 import { VideoEmbed } from "@/components/VideoEmbed";
-import { getMessages } from "@/i18n";
+import { getMessages, getLocale } from "@/i18n";
+import { getTenantId } from "@/lib/tenant";
+import { query } from "@/db/client";
 
-const VIDEO_IDS = ["O_RucR2okRY", "z2wXH9ZCQSM"] as const;
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const m = await getMessages();
+  const locale = await getLocale();
   const h = m.home;
+
+  // Video's uit de content-CMS (content_items kind=VIDEO); fallback op vaste id's.
+  const tenantId = await getTenantId();
+  const vrows = await query<any>(
+    `SELECT body AS yt, title, title_i18n FROM content_items
+      WHERE tenant_id=$1 AND kind='VIDEO' AND status='PUBLISHED' ORDER BY sort_order`, [tenantId]
+  );
+  const videos = vrows.length
+    ? vrows.map((v) => ({ id: v.yt as string, title: (v.title_i18n?.[locale] as string) || v.title }))
+    : [{ id: "O_RucR2okRY", title: h.videos_title }, { id: "z2wXH9ZCQSM", title: h.videos_title }];
 
   const MODES = [
     ["📦", h.mode1_t, h.mode1_d, "/verzenden"],
@@ -89,7 +102,7 @@ export default async function HomePage() {
             <span className="ph-chip bg-white/10 text-slate-200">{h.videos_privacy}</span>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {VIDEO_IDS.map((id) => <VideoEmbed key={id} id={id} title={h.videos_title} />)}
+            {videos.map((v) => <VideoEmbed key={v.id} id={v.id} title={v.title} />)}
           </div>
         </div>
       </section>

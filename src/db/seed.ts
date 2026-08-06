@@ -265,6 +265,30 @@ export async function seedDatabase(db: DbAdapter) {
     si += 10;
   }
 
+  // ---- Video-content (CMS): YouTube-id in body, meertalige titel ----
+  const videos: [string, string, Record<string, string>][] = [
+    ["video-1", "O_RucR2okRY", {
+      nl: "PakketHub — zo werkt gecontroleerde corridor-crowdshipping",
+      en: "PakketHub — how controlled corridor crowdshipping works",
+      pt: "PakketHub — como funciona o crowdshipping de corredor controlado",
+      es: "PakketHub — cómo funciona el crowdshipping de corredor controlado",
+      fr: "PakketHub — comment fonctionne le crowdshipping de corridor contrôlé" }],
+    ["video-2", "z2wXH9ZCQSM", {
+      nl: "Van aangifte tot levering: de reis van je pakket",
+      en: "From declaration to delivery: your package's journey",
+      pt: "Da declaração à entrega: a jornada do seu pacote",
+      es: "De la declaración a la entrega: el viaje de tu paquete",
+      fr: "De la déclaration à la livraison : le voyage de votre colis" }],
+  ];
+  let vi = 5;
+  for (const [slug, ytId, titles] of videos) {
+    await q(db,
+      `INSERT INTO content_items (tenant_id, slug, kind, title, body, title_i18n, status, sort_order)
+       VALUES ($1,$2,'VIDEO',$3,$4,$5,'PUBLISHED',$6)`,
+      [T, slug, titles.nl, ytId, JSON.stringify(titles), vi]);
+    vi += 1;
+  }
+
   // ---- Wallets (leeg; vullen zich via finance-flow) ----
   for (const uid of [USER.TRAVELER, USER.SENDER]) {
     await q(db, `INSERT INTO wallets (tenant_id, user_id, balance_eur) VALUES ($1,$2,0)`, [T, uid]);
