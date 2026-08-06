@@ -4,12 +4,14 @@ import { query, queryOne } from "@/db/client";
 import { Chip, SectionTitle, EmptyState } from "@/components/ui";
 import { eur, timeAgo, dateTimeNL } from "@/lib/format";
 import { createApiKeyAction, revokeApiKeyAction, createWebhookAction, testWebhookAction } from "./actions";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Business & API" };
 
 export default async function BusinessPage({ searchParams }: { searchParams: Promise<{ created?: string; tested?: string }> }) {
   const user = await requireCapability("control.view");
   const t = user.tenantId;
+  const L = (await getMessages()).ui_biz;
   const { created, tested } = await searchParams;
 
   const jar = await cookies();
@@ -23,36 +25,36 @@ export default async function BusinessPage({ searchParams }: { searchParams: Pro
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">🏢 Business & API</h1>
-        <p className="text-sm text-slate-500">Zakelijke accounts, API-sleutels en webhooks (R2 Merchant/API)</p>
+        <h1 className="text-xl font-bold text-slate-900">{L.title}</h1>
+        <p className="text-sm text-slate-500">{L.sub}</p>
       </div>
 
       {biz && (
         <section className="ph-card p-4">
-          <SectionTitle>Zakelijk account</SectionTitle>
+          <SectionTitle>{L.account}</SectionTitle>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
             <span className="font-semibold text-slate-800">{biz.name}</span>
-            <span className="text-slate-500">BTW: {biz.vat_number}</span>
-            <span className="text-slate-500">Kredietlimiet: {eur(biz.credit)}</span>
+            <span className="text-slate-500">{L.vat}: {biz.vat_number}</span>
+            <span className="text-slate-500">{L.credit}: {eur(biz.credit)}</span>
           </div>
         </section>
       )}
 
       {newKey && (
         <div className="rounded-xl bg-orange-50 p-4 text-sm ring-1 ring-orange-200">
-          <div className="font-semibold text-orange-800">Nieuwe API-sleutel — kopieer nu, wordt maar één keer getoond:</div>
+          <div className="font-semibold text-orange-800">{L.new_key_msg}</div>
           <code className="mt-1 block break-all rounded bg-white px-2 py-1 font-mono text-orange-900">{newKey}</code>
         </div>
       )}
-      {tested && <div className="rounded-lg bg-orange-50 px-3 py-2 text-sm text-orange-700 ring-1 ring-orange-200">Testgebeurtenis verstuurd — zie deliveries hieronder.</div>}
+      {tested && <div className="rounded-lg bg-orange-50 px-3 py-2 text-sm text-orange-700 ring-1 ring-orange-200">{L.tested}</div>}
 
       {/* API keys */}
       <section className="ph-card p-4">
         <div className="flex items-center justify-between">
-          <SectionTitle sub="Authenticatie voor de publieke API">API-sleutels</SectionTitle>
+          <SectionTitle sub={L.keys_sub}>{L.keys}</SectionTitle>
           <form action={createApiKeyAction} className="flex gap-2">
-            <input name="label" placeholder="Label" className="rounded-lg border border-slate-300 px-2 py-1 text-sm" />
-            <button className="ph-btn ph-btn-primary text-sm">+ Sleutel</button>
+            <input name="label" placeholder={L.label_ph} className="rounded-lg border border-slate-300 px-2 py-1 text-sm" />
+            <button className="ph-btn ph-btn-primary text-sm">{L.add_key}</button>
           </form>
         </div>
         <div className="mt-2 divide-y divide-slate-100">
@@ -61,10 +63,10 @@ export default async function BusinessPage({ searchParams }: { searchParams: Pro
               <div>
                 <span className="font-mono font-semibold text-slate-800">{k.prefix}_••••</span>
                 <span className="ml-2 text-slate-500">{k.label} · {k.scopes.join(", ")}</span>
-                <span className="ml-2 text-xs text-slate-400">{k.last_used_at ? `laatst gebruikt ${timeAgo(k.last_used_at)}` : "nog niet gebruikt"}</span>
+                <span className="ml-2 text-xs text-slate-400">{k.last_used_at ? `${L.last_used} ${timeAgo(k.last_used_at)}` : L.never_used}</span>
               </div>
-              {k.revoked ? <Chip tone="bad">ingetrokken</Chip> : (
-                <form action={revokeApiKeyAction}><input type="hidden" name="key_id" value={k.id} /><button className="text-xs text-rose-500 hover:underline">Intrekken</button></form>
+              {k.revoked ? <Chip tone="bad">{L.revoked}</Chip> : (
+                <form action={revokeApiKeyAction}><input type="hidden" name="key_id" value={k.id} /><button className="text-xs text-rose-500 hover:underline">{L.revoke}</button></form>
               )}
             </div>
           ))}
@@ -73,8 +75,8 @@ export default async function BusinessPage({ searchParams }: { searchParams: Pro
 
       {/* API docs */}
       <section className="ph-card p-4">
-        <SectionTitle sub="Test direct met de sandbox-sleutel">API-voorbeeld</SectionTitle>
-        <p className="mb-2 text-xs text-slate-500">Demo-sleutel: <code className="rounded bg-slate-100 px-1 font-mono">pk_sandbox_pakkethub_demo_key_2026</code></p>
+        <SectionTitle sub={L.example_sub}>{L.example}</SectionTitle>
+        <p className="mb-2 text-xs text-slate-500">{L.demo_key} <code className="rounded bg-slate-100 px-1 font-mono">pk_sandbox_pakkethub_demo_key_2026</code></p>
         <pre className="overflow-x-auto rounded-lg bg-slate-900 p-3 text-xs text-slate-100">{`curl -X POST http://localhost:3070/api/v1/quote \\
   -H "Authorization: Bearer pk_sandbox_pakkethub_demo_key_2026" \\
   -H "Content-Type: application/json" \\
@@ -88,25 +90,25 @@ curl http://localhost:3070/api/v1/track/PH-2026-000101 \\
       {/* Webhooks */}
       <section className="ph-card p-4">
         <div className="flex items-center justify-between">
-          <SectionTitle sub="Ontvang events bij statuswijziging, boeking en uitbetaling">Webhooks</SectionTitle>
-          <form action={testWebhookAction}><button className="ph-btn ph-btn-ghost text-sm">Test-event sturen</button></form>
+          <SectionTitle sub={L.webhooks_sub}>{L.webhooks}</SectionTitle>
+          <form action={testWebhookAction}><button className="ph-btn ph-btn-ghost text-sm">{L.send_test}</button></form>
         </div>
         <form action={createWebhookAction} className="mb-3 flex flex-wrap gap-2">
-          <input name="url" placeholder="https://jouw-endpoint/webhook" className="min-w-56 flex-1 rounded-lg border border-slate-300 px-2 py-1.5 text-sm" />
+          <input name="url" placeholder={L.url_ph} className="min-w-56 flex-1 rounded-lg border border-slate-300 px-2 py-1.5 text-sm" />
           <label className="flex items-center gap-1 text-xs"><input type="checkbox" name="events" value="shipment.status" defaultChecked /> status</label>
           <label className="flex items-center gap-1 text-xs"><input type="checkbox" name="events" value="payout.released" /> payout</label>
-          <button className="ph-btn ph-btn-primary text-sm">+ Webhook</button>
+          <button className="ph-btn ph-btn-primary text-sm">{L.add_hook}</button>
         </form>
         {hooks.map((h: any) => (
           <div key={h.id} className="flex items-center justify-between py-1 text-sm">
             <span className="truncate font-mono text-slate-700">{h.url}</span>
-            <span className="flex items-center gap-2"><span className="text-xs text-slate-400">{h.events.join(", ")}</span><Chip tone={h.active ? "ok" : "neutral"}>{h.active ? "actief" : "uit"}</Chip></span>
+            <span className="flex items-center gap-2"><span className="text-xs text-slate-400">{h.events.join(", ")}</span><Chip tone={h.active ? "ok" : "neutral"}>{h.active ? L.active : L.off}</Chip></span>
           </div>
         ))}
 
         <div className="mt-3 border-t border-slate-100 pt-2">
-          <div className="mb-1 text-xs font-semibold text-slate-500">Recente deliveries (simulatie)</div>
-          {deliveries.length === 0 ? <p className="text-xs text-slate-400">Nog geen deliveries.</p> :
+          <div className="mb-1 text-xs font-semibold text-slate-500">{L.recent}</div>
+          {deliveries.length === 0 ? <p className="text-xs text-slate-400">{L.no_deliveries}</p> :
             deliveries.map((d: any, i: number) => (
               <div key={i} className="flex items-center justify-between py-0.5 text-xs">
                 <span className="text-slate-600">{d.event}</span>

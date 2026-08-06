@@ -4,12 +4,14 @@ import { PROVIDERS } from "@/lib/adapters/config";
 import { Chip, SectionTitle, EmptyState } from "@/components/ui";
 import { eur } from "@/lib/format";
 import { simPaymentAction, simKycAction, simDeliveryAction, setCorridorStatusAction } from "./actions";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Test Console" };
 
 export default async function ConsolePage() {
   const user = await requireCapability("control.view");
   const t = user.tenantId;
+  const L = (await getMessages()).ui_con;
 
   const pendingPayments = await query<any>(
     `SELECT pi.id, pi.amount_eur::float8 AS amount, pi.description, s.reference
@@ -26,16 +28,13 @@ export default async function ConsolePage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">🧪 Test / Simulatie Console</h1>
-        <p className="text-sm text-slate-500">
-          Drijf hier de gesimuleerde externe events aan om te zien hoe de flow werkt. Bij livegang
-          komen deze events van de echte providers (betaal-webhooks, IDV-beslissingen, scans).
-        </p>
+        <h1 className="text-xl font-bold text-slate-900">{L.title}</h1>
+        <p className="text-sm text-slate-500">{L.sub}</p>
       </div>
 
       {/* Provider modes */}
       <section className="ph-card p-4">
-        <SectionTitle>Actieve providers</SectionTitle>
+        <SectionTitle>{L.providers}</SectionTitle>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(PROVIDERS).map(([k, p]) => (
             <div key={k} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm">
@@ -48,15 +47,15 @@ export default async function ConsolePage() {
 
       {/* Payments */}
       <section className="ph-card p-4">
-        <SectionTitle sub="Betalingen die op klantactie wachten">💳 Betalingen simuleren</SectionTitle>
-        {pendingPayments.length === 0 ? <p className="text-sm text-slate-400">Geen openstaande betalingen.</p> : (
+        <SectionTitle sub={L.pay_sub}>{L.pay}</SectionTitle>
+        {pendingPayments.length === 0 ? <p className="text-sm text-slate-400">{L.no_pay}</p> : (
           <div className="space-y-2">
             {pendingPayments.map((p: any) => (
               <div key={p.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 p-2">
                 <span className="text-sm text-slate-700"><span className="font-mono font-semibold">{p.reference}</span> · {eur(p.amount)}</span>
                 <div className="flex gap-2">
-                  <form action={simPaymentAction}><input type="hidden" name="intent_id" value={p.id} /><input type="hidden" name="outcome" value="success" /><button className="ph-btn ph-btn-primary text-xs">✓ Geslaagd</button></form>
-                  <form action={simPaymentAction}><input type="hidden" name="intent_id" value={p.id} /><input type="hidden" name="outcome" value="fail" /><button className="ph-btn ph-btn-ghost text-xs">✕ Mislukt</button></form>
+                  <form action={simPaymentAction}><input type="hidden" name="intent_id" value={p.id} /><input type="hidden" name="outcome" value="success" /><button className="ph-btn ph-btn-primary text-xs">{L.ok}</button></form>
+                  <form action={simPaymentAction}><input type="hidden" name="intent_id" value={p.id} /><input type="hidden" name="outcome" value="fail" /><button className="ph-btn ph-btn-ghost text-xs">{L.fail}</button></form>
                 </div>
               </div>
             ))}
@@ -66,15 +65,15 @@ export default async function ConsolePage() {
 
       {/* KYC */}
       <section className="ph-card p-4">
-        <SectionTitle sub="Identiteitsverificaties in afwachting">🪪 KYC simuleren</SectionTitle>
-        {pendingKyc.length === 0 ? <p className="text-sm text-slate-400">Geen openstaande verificaties.</p> : (
+        <SectionTitle sub={L.kyc_sub}>{L.kyc}</SectionTitle>
+        {pendingKyc.length === 0 ? <p className="text-sm text-slate-400">{L.no_kyc}</p> : (
           <div className="space-y-2">
             {pendingKyc.map((k: any) => (
               <div key={k.id} className="flex items-center justify-between gap-2 rounded-lg border border-slate-200 p-2">
                 <span className="text-sm text-slate-700">{k.name} · {k.method}</span>
                 <div className="flex gap-2">
-                  <form action={simKycAction}><input type="hidden" name="verification_id" value={k.id} /><input type="hidden" name="outcome" value="approve" /><button className="ph-btn ph-btn-primary text-xs">Goedkeuren</button></form>
-                  <form action={simKycAction}><input type="hidden" name="verification_id" value={k.id} /><input type="hidden" name="outcome" value="reject" /><button className="ph-btn ph-btn-ghost text-xs">Afwijzen</button></form>
+                  <form action={simKycAction}><input type="hidden" name="verification_id" value={k.id} /><input type="hidden" name="outcome" value="approve" /><button className="ph-btn ph-btn-primary text-xs">{L.approve}</button></form>
+                  <form action={simKycAction}><input type="hidden" name="verification_id" value={k.id} /><input type="hidden" name="outcome" value="reject" /><button className="ph-btn ph-btn-ghost text-xs">{L.reject}</button></form>
                 </div>
               </div>
             ))}
@@ -84,13 +83,13 @@ export default async function ConsolePage() {
 
       {/* Delivery */}
       <section className="ph-card p-4">
-        <SectionTitle sub="Zet direct op afgeleverd + betaal de reiziger uit">📦 Levering simuleren</SectionTitle>
-        {inTransit.length === 0 ? <EmptyState icon="✅" title="Geen zendingen onderweg" /> : (
+        <SectionTitle sub={L.delivery_sub}>{L.delivery}</SectionTitle>
+        {inTransit.length === 0 ? <EmptyState icon="✅" title={L.no_transit} /> : (
           <div className="space-y-1">
             {inTransit.map((s: any) => (
               <div key={s.id} className="flex items-center justify-between gap-2 py-1 text-sm">
                 <span><span className="font-mono font-semibold text-slate-800">{s.reference}</span> <Chip>{s.status}</Chip></span>
-                <form action={simDeliveryAction}><input type="hidden" name="shipment_id" value={s.id} /><button className="ph-btn ph-btn-ghost text-xs">Simuleer levering →</button></form>
+                <form action={simDeliveryAction}><input type="hidden" name="shipment_id" value={s.id} /><button className="ph-btn ph-btn-ghost text-xs">{L.sim_delivery}</button></form>
               </div>
             ))}
           </div>
@@ -99,7 +98,7 @@ export default async function ConsolePage() {
 
       {/* Corridors (white-label / activatie) */}
       <section className="ph-card p-4">
-        <SectionTitle sub="Activeer of pauzeer corridors (white-label / uitbreiding)">🌍 Corridors</SectionTitle>
+        <SectionTitle sub={L.corridors_sub}>{L.corridors}</SectionTitle>
         <div className="space-y-2">
           {corridors.map((c: any) => (
             <div key={c.id} className="flex items-center justify-between gap-2 text-sm">
@@ -109,7 +108,7 @@ export default async function ConsolePage() {
                 <select name="status" defaultValue={c.status} className="rounded border border-slate-300 px-2 py-1 text-xs">
                   {["PLANNED", "PILOT", "LIVE", "PAUSED"].map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>
-                <button className="ph-btn ph-btn-ghost text-xs">Zet</button>
+                <button className="ph-btn ph-btn-ghost text-xs">{L.set}</button>
               </form>
             </div>
           ))}
