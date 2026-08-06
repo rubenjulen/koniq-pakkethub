@@ -4,12 +4,15 @@ import { query } from "@/db/client";
 import { StatCard, EligibilityBadge, EmptyState, SectionTitle, Chip } from "@/components/ui";
 import { timeAgo } from "@/lib/format";
 import { toggleKillSwitchAction } from "./actions";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Control Center" };
 
 export default async function ControlCenter() {
   const user = await requireCapability("control.view");
   const t = user.tenantId;
+  const m = await getMessages();
+  const C = m.ctrl, D = m.dash;
 
   const kri = await query<{ k: string; n: number }>(
     `SELECT 'total' k, count(*)::int n FROM shipments WHERE tenant_id=$1
@@ -38,21 +41,21 @@ export default async function ControlCenter() {
     <div className="mx-auto max-w-5xl space-y-6">
       <div>
         <h1 className="text-xl font-bold text-slate-900">🛡️ Control Center</h1>
-        <p className="text-sm text-slate-500">Beoordeling, kill switches en controlemetrieken (KRI)</p>
+        <p className="text-sm text-slate-500">{C.sub}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Zendingen" value={c.total ?? 0} />
-        <StatCard label="In beoordeling" value={c.review ?? 0} hint="REVIEW / HOLD / STEP_UP" />
-        <StatCard label="Geweigerd / freight" value={c.reject ?? 0} />
-        <StatCard label="Afgeleverd" value={c.delivered ?? 0} />
+        <StatCard label={D.stat_shipments} value={c.total ?? 0} />
+        <StatCard label={D.stat_review} value={c.review ?? 0} hint="REVIEW / HOLD / STEP_UP" />
+        <StatCard label={C.stat_reject} value={c.reject ?? 0} />
+        <StatCard label={D.stat_delivered} value={c.delivered ?? 0} />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <section className="lg:col-span-2">
-          <SectionTitle sub="Zendingen die een menselijk besluit vragen">Beoordelingswachtrij</SectionTitle>
+          <SectionTitle sub={C.queue_sub}>{D.review_queue}</SectionTitle>
           {queue.length === 0 ? (
-            <EmptyState icon="✅" title="Wachtrij leeg">Geen zendingen in beoordeling.</EmptyState>
+            <EmptyState icon="✅" title={D.queue_empty}>{C.queue_empty_d}</EmptyState>
           ) : (
             <div className="ph-card divide-y divide-slate-100">
               {queue.map((s) => (
@@ -70,7 +73,7 @@ export default async function ControlCenter() {
 
         <div className="space-y-6">
           <section>
-            <SectionTitle sub="Beschermende blokkade per corridor">Kill switches</SectionTitle>
+            <SectionTitle sub={C.kills_sub}>{C.kills}</SectionTitle>
             <div className="ph-card divide-y divide-slate-100">
               {corridors.map((cor) => (
                 <div key={cor.id} className="flex items-center justify-between p-3">
@@ -82,7 +85,7 @@ export default async function ControlCenter() {
                     <input type="hidden" name="corridor_id" value={cor.id} />
                     <input type="hidden" name="on" value={(!cor.kill_switch).toString()} />
                     <button className={`ph-btn text-xs ${cor.kill_switch ? "ph-btn-primary" : "ph-btn-ghost"}`}>
-                      {cor.kill_switch ? "🔴 Geblokkeerd — heropen" : "Blokkeer"}
+                      {cor.kill_switch ? C.blocked : C.block}
                     </button>
                   </form>
                 </div>
@@ -91,7 +94,7 @@ export default async function ControlCenter() {
           </section>
 
           <section>
-            <SectionTitle sub="Laatste gebeurtenissen">Audit</SectionTitle>
+            <SectionTitle sub={C.audit_sub}>{C.audit}</SectionTitle>
             <div className="ph-card divide-y divide-slate-100 text-xs">
               {auditRows.map((a, i) => (
                 <div key={i} className="p-2.5">

@@ -230,6 +230,14 @@ const nl = {
     HOLD: "Geblokkeerd (hold)", FREIGHT_ONLY: "Alleen freight", REJECT: "Geweigerd",
   },
   kyc: { VERIFIED: "✓ Geverifieerd", PENDING: "Verificatie loopt", UNVERIFIED: "Niet geverifieerd", REJECTED: "Afgewezen" },
+  ctrl: {
+    sub: "Beoordeling, kill switches en controlemetrieken (KRI)",
+    stat_reject: "Geweigerd / freight",
+    queue_sub: "Zendingen die een menselijk besluit vragen", queue_empty_d: "Geen zendingen in beoordeling.",
+    kills: "Kill switches", kills_sub: "Beschermende blokkade per corridor",
+    blocked: "🔴 Geblokkeerd — heropen", block: "Blokkeer",
+    audit: "Audit", audit_sub: "Laatste gebeurtenissen",
+  },
   dash: {
     hello: "Hallo", install_as_app: "Installeer als app",
     stat_shipments: "Zendingen", stat_delivered: "Afgeleverd", stat_review: "In beoordeling",

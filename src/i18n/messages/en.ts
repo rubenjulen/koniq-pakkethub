@@ -231,6 +231,14 @@ const en: Messages = {
     HOLD: "Blocked (hold)", FREIGHT_ONLY: "Freight only", REJECT: "Refused",
   },
   kyc: { VERIFIED: "✓ Verified", PENDING: "Verification pending", UNVERIFIED: "Not verified", REJECTED: "Rejected" },
+  ctrl: {
+    sub: "Review, kill switches and control metrics (KRI)",
+    stat_reject: "Refused / freight",
+    queue_sub: "Shipments that need a human decision", queue_empty_d: "No shipments in review.",
+    kills: "Kill switches", kills_sub: "Protective block per corridor",
+    blocked: "🔴 Blocked — reopen", block: "Block",
+    audit: "Audit", audit_sub: "Latest events",
+  },
   dash: {
     hello: "Hi", install_as_app: "Install as app",
     stat_shipments: "Shipments", stat_delivered: "Delivered", stat_review: "In review",

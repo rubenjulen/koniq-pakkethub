@@ -232,6 +232,14 @@ const pt: Messages = {
     HOLD: "Bloqueado (retido)", FREIGHT_ONLY: "Somente frete", REJECT: "Recusado",
   },
   kyc: { VERIFIED: "✓ Verificado", PENDING: "Verificação em andamento", UNVERIFIED: "Não verificado", REJECTED: "Rejeitado" },
+  ctrl: {
+    sub: "Análise, kill switches e métricas de controle (KRI)",
+    stat_reject: "Recusado / frete",
+    queue_sub: "Envios que precisam de decisão humana", queue_empty_d: "Nenhum envio em análise.",
+    kills: "Kill switches", kills_sub: "Bloqueio protetor por corredor",
+    blocked: "🔴 Bloqueado — reabrir", block: "Bloquear",
+    audit: "Auditoria", audit_sub: "Últimos eventos",
+  },
   dash: {
     hello: "Olá", install_as_app: "Instalar como app",
     stat_shipments: "Envios", stat_delivered: "Entregues", stat_review: "Em análise",
