@@ -124,6 +124,22 @@ const pt: Messages = {
     report_title: "Relatar uma preocupação ou incidente?",
     report_body: "Relate pelo seu envio no app ou entre em contato. Guardamos provas (fotos, lacre, log de custódia) para investigação. Nunca responda a pedidos de pagamento fora da PakketHub.",
   },
+  wallet: {
+    title: "💶 Carteira e pagamentos", balance: "Saldo da carteira", balance_hint: "Ganhos recebidos",
+    escrow: "Retido (custódia)", escrow_hint: "Toda a plataforma", fees: "Taxas de serviço", fees_hint: "Receita da plataforma",
+    transactions: "Transações", transactions_sub: "Pagamentos, repasses e reembolsos",
+    no_tx: "Ainda sem transações", no_tx_d: "Assim que você reservar ou receber, aparecerá aqui.",
+    charge: "Pagamento", payout: "Repasse", refund: "Reembolso",
+    history: "Histórico da carteira", history_sub: "Lançamentos contábeis na sua carteira",
+    note: "Os pagamentos passam por um adaptador de simulação. No lançamento, a PakketHub integra um provedor de pagamento/custódia licenciado.",
+  },
+  trips: {
+    title: "Minhas viagens", new_trip: "Nova viagem", new_trip_sub: "Publique sua capacidade para que os remetentes o encontrem",
+    corridor: "Corredor", depart: "Data de partida", arrive: "Data de chegada", capacity: "Capacidade (kg)",
+    price_ind: "Preço indicativo (€/kg)", note: "Nota", publish: "Publicar viagem",
+    none: "Ainda sem viagens", none_d: "Publique a sua primeira viagem acima.",
+    depart_s: "Partida", arrive_s: "chegada",
+  },
   status: {
     DRAFT: "Rascunho", SCREENING: "Triagem", QUOTED: "Oferta recebida", BOOKED: "Reservado",
     INTAKE: "Recebido no hub", SEALED: "Lacrado", IN_CUSTODY: "Sob custódia", IN_TRANSIT: "Em trânsito",

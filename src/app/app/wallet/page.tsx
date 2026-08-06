@@ -1,23 +1,23 @@
-import Link from "next/link";
-import { requireSession } from "@/lib/auth";
+import { requireSession, hasCapability } from "@/lib/auth";
 import { query } from "@/db/client";
 import { walletBalance, accountBalance } from "@/lib/finance";
-import { hasCapability } from "@/lib/auth";
 import { StatCard, EmptyState, SectionTitle, Chip } from "@/components/ui";
 import { eur, dateTimeNL } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Wallet & betalingen" };
 
 const STATUS_TONE: Record<string, "ok" | "warn" | "bad" | "neutral"> = {
   SUCCEEDED: "ok", REQUIRES_ACTION: "warn", PROCESSING: "warn", FAILED: "bad", REFUNDED: "neutral",
 };
-const PURPOSE_LABEL: Record<string, string> = { CHARGE: "Betaling", PAYOUT: "Uitbetaling", REFUND: "Terugboeking" };
 
 export default async function WalletPage() {
   const user = await requireSession();
   const t = user.tenantId;
+  const w = (await getMessages()).wallet;
   const balance = await walletBalance(t, user.id);
   const isAdmin = hasCapability(user, "control.view");
+  const PURPOSE_LABEL: Record<string, string> = { CHARGE: w.charge, PAYOUT: w.payout, REFUND: w.refund };
 
   const intents = await query<any>(
     `SELECT id, purpose, amount_eur::float8 AS amount, currency, status, description, reference_id, created_at,
@@ -32,24 +32,23 @@ export default async function WalletPage() {
        FROM ledger_entries WHERE tenant_id=$1 AND account=$2 ORDER BY id DESC LIMIT 20`,
     [t, `WALLET:${user.id}`]
   );
-
   const escrow = isAdmin ? await accountBalance(t, "ESCROW") : 0;
   const fees = isAdmin ? await accountBalance(t, "PLATFORM_FEE") : 0;
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <h1 className="text-xl font-bold text-slate-900">💶 Wallet & betalingen</h1>
+      <h1 className="text-xl font-bold text-slate-900">{w.title}</h1>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        <StatCard label="Wallet-saldo" value={eur(balance)} hint="Uitbetaalde verdiensten" />
-        {isAdmin && <StatCard label="In bewaring (escrow)" value={eur(escrow)} hint="Platform-breed" />}
-        {isAdmin && <StatCard label="Servicekosten (fees)" value={eur(fees)} hint="Platform-omzet" />}
+        <StatCard label={w.balance} value={eur(balance)} hint={w.balance_hint} />
+        {isAdmin && <StatCard label={w.escrow} value={eur(escrow)} hint={w.escrow_hint} />}
+        {isAdmin && <StatCard label={w.fees} value={eur(fees)} hint={w.fees_hint} />}
       </div>
 
       <section>
-        <SectionTitle sub="Betalingen, uitbetalingen en terugboekingen">Transacties</SectionTitle>
+        <SectionTitle sub={w.transactions_sub}>{w.transactions}</SectionTitle>
         {intents.length === 0 ? (
-          <EmptyState icon="🧾" title="Nog geen transacties">Zodra je boekt of uitbetaald wordt, zie je het hier.</EmptyState>
+          <EmptyState icon="🧾" title={w.no_tx}>{w.no_tx_d}</EmptyState>
         ) : (
           <div className="ph-card divide-y divide-slate-100">
             {intents.map((i) => (
@@ -72,7 +71,7 @@ export default async function WalletPage() {
 
       {ledger.length > 0 && (
         <section>
-          <SectionTitle sub="Grootboekmutaties op je wallet">Wallet-historie</SectionTitle>
+          <SectionTitle sub={w.history_sub}>{w.history}</SectionTitle>
           <div className="ph-card divide-y divide-slate-100 text-sm">
             {ledger.map((l, i) => (
               <div key={i} className="flex items-center justify-between p-3">
@@ -86,11 +85,7 @@ export default async function WalletPage() {
         </section>
       )}
 
-      <p className="text-xs text-slate-400">
-        Betalingen lopen via {" "}
-        <Link href="/app/console" className="text-orange-600 hover:underline">de simulatie-adapter</Link>.
-        Bij livegang koppelt PakketHub een gelicentieerde betaal-/escrow-partij.
-      </p>
+      <p className="text-xs text-slate-400">{w.note}</p>
     </div>
   );
 }

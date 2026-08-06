@@ -124,6 +124,22 @@ const fr: Messages = {
     report_title: "Signaler une inquiétude ou un incident ?",
     report_body: "Signalez-le via votre envoi dans l'app ou contactez-nous. Nous conservons les preuves (photos, scellé, journal de traçabilité) pour enquête. Ne répondez jamais à des demandes de paiement en dehors de PakketHub.",
   },
+  wallet: {
+    title: "💶 Portefeuille et paiements", balance: "Solde du portefeuille", balance_hint: "Gains versés",
+    escrow: "Bloqué (séquestre)", escrow_hint: "Toute la plateforme", fees: "Frais de service", fees_hint: "Revenus de la plateforme",
+    transactions: "Transactions", transactions_sub: "Paiements, versements et remboursements",
+    no_tx: "Aucune transaction", no_tx_d: "Dès que vous réservez ou êtes payé, cela apparaît ici.",
+    charge: "Paiement", payout: "Versement", refund: "Remboursement",
+    history: "Historique du portefeuille", history_sub: "Écritures comptables sur votre portefeuille",
+    note: "Les paiements passent par un adaptateur de simulation. Au lancement, PakketHub intègre un prestataire de paiement/séquestre agréé.",
+  },
+  trips: {
+    title: "Mes trajets", new_trip: "Nouveau trajet", new_trip_sub: "Publiez votre capacité pour que les expéditeurs vous trouvent",
+    corridor: "Corridor", depart: "Date de départ", arrive: "Date d'arrivée", capacity: "Capacité (kg)",
+    price_ind: "Prix indicatif (€/kg)", note: "Note", publish: "Publier le trajet",
+    none: "Aucun trajet", none_d: "Publiez votre premier trajet ci-dessus.",
+    depart_s: "Départ", arrive_s: "arrivée",
+  },
   status: {
     DRAFT: "Brouillon", SCREENING: "Filtrage", QUOTED: "Offre reçue", BOOKED: "Réservé",
     INTAKE: "Réception au hub", SEALED: "Scellé", IN_CUSTODY: "Sous garde", IN_TRANSIT: "En transit",

@@ -122,6 +122,22 @@ const nl = {
     report_title: "Een zorg of incident melden?",
     report_body: "Meld het via je zending in de app of neem contact op. We bewaren bewijs (foto's, verzegeling, custody-log) voor onderzoek. Reageer nooit op verzoeken om betalingen buiten PakketHub om.",
   },
+  wallet: {
+    title: "💶 Wallet & betalingen", balance: "Wallet-saldo", balance_hint: "Uitbetaalde verdiensten",
+    escrow: "In bewaring (escrow)", escrow_hint: "Platform-breed", fees: "Servicekosten", fees_hint: "Platform-omzet",
+    transactions: "Transacties", transactions_sub: "Betalingen, uitbetalingen en terugboekingen",
+    no_tx: "Nog geen transacties", no_tx_d: "Zodra je boekt of uitbetaald wordt, zie je het hier.",
+    charge: "Betaling", payout: "Uitbetaling", refund: "Terugboeking",
+    history: "Wallet-historie", history_sub: "Grootboekmutaties op je wallet",
+    note: "Betalingen lopen via een simulatie-adapter. Bij livegang koppelt PakketHub een gelicentieerde betaal-/escrow-partij.",
+  },
+  trips: {
+    title: "Mijn ritten", new_trip: "Nieuwe rit", new_trip_sub: "Publiceer je capaciteit zodat afzenders je kunnen vinden",
+    corridor: "Corridor", depart: "Vertrekdatum", arrive: "Aankomstdatum", capacity: "Capaciteit (kg)",
+    price_ind: "Prijsindicatie (€/kg)", note: "Notitie", publish: "Rit publiceren",
+    none: "Nog geen ritten", none_d: "Publiceer je eerste rit hierboven.",
+    depart_s: "Vertrek", arrive_s: "aankomst",
+  },
   status: {
     DRAFT: "Concept", SCREENING: "Screening", QUOTED: "Aanbod ontvangen", BOOKED: "Geboekt",
     INTAKE: "Intake bij hub", SEALED: "Verzegeld", IN_CUSTODY: "In beheer", IN_TRANSIT: "Onderweg",

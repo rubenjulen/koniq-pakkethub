@@ -123,6 +123,22 @@ const en: Messages = {
     report_title: "Report a concern or incident?",
     report_body: "Report it via your shipment in the app or contact us. We keep evidence (photos, seal, custody log) for investigation. Never respond to requests to pay outside of PakketHub.",
   },
+  wallet: {
+    title: "💶 Wallet & payments", balance: "Wallet balance", balance_hint: "Paid-out earnings",
+    escrow: "Held (escrow)", escrow_hint: "Platform-wide", fees: "Service fees", fees_hint: "Platform revenue",
+    transactions: "Transactions", transactions_sub: "Payments, payouts and refunds",
+    no_tx: "No transactions yet", no_tx_d: "Once you book or get paid, you'll see it here.",
+    charge: "Payment", payout: "Payout", refund: "Refund",
+    history: "Wallet history", history_sub: "Ledger entries on your wallet",
+    note: "Payments run through a simulation adapter. At go-live PakketHub connects a licensed payment/escrow provider.",
+  },
+  trips: {
+    title: "My trips", new_trip: "New trip", new_trip_sub: "Publish your capacity so senders can find you",
+    corridor: "Corridor", depart: "Departure date", arrive: "Arrival date", capacity: "Capacity (kg)",
+    price_ind: "Price indication (€/kg)", note: "Note", publish: "Publish trip",
+    none: "No trips yet", none_d: "Publish your first trip above.",
+    depart_s: "Departs", arrive_s: "arrives",
+  },
   status: {
     DRAFT: "Draft", SCREENING: "Screening", QUOTED: "Offer received", BOOKED: "Booked",
     INTAKE: "Hub intake", SEALED: "Sealed", IN_CUSTODY: "In custody", IN_TRANSIT: "In transit",
