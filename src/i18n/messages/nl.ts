@@ -323,6 +323,12 @@ const nl = {
     title: "🔔 Notificaties", sub: "Verzonden berichten (simulatie-outbox: WhatsApp / e-mail / push)",
     empty: "Nog geen notificaties",
   },
+  route: {
+    title: "Route & legs", sub: "De multimodale reis van dit pakket", none: "Nog geen legs gepland.",
+    manifest: "Manifest",
+    lt_PICKUP: "Ophalen", lt_HUB_TRANSFER: "Hub-overslag", lt_LINEHAUL: "Hoofdtransport", lt_CUSTOMS: "Douane", lt_DELIVERY: "Bezorging",
+    st_PLANNED: "Gepland", st_ASSIGNED: "Toegewezen", st_IN_TRANSIT: "Onderweg", st_ARRIVED: "Aangekomen", st_COMPLETED: "Voltooid", st_FAILED: "Mislukt",
+  },
   ctrl: {
     sub: "Beoordeling, kill switches en controlemetrieken (KRI)",
     stat_reject: "Geweigerd / freight",
@@ -357,6 +363,8 @@ const nl = {
     ops: "Hub & intake",
     freight: "Warehouse & freight",
     dispatch: "Fleet & dispatch",
+    manifests: "Manifesten & legs",
+    lockers: "Lockers & tijdslots",
     business: "Business & API",
     analytics: "Analytics",
     control: "Control Center",

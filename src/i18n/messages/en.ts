@@ -324,6 +324,12 @@ const en: Messages = {
     title: "🔔 Notifications", sub: "Sent messages (simulation outbox: WhatsApp / email / push)",
     empty: "No notifications yet",
   },
+  route: {
+    title: "Route & legs", sub: "The multimodal journey of this parcel", none: "No legs planned yet.",
+    manifest: "Manifest",
+    lt_PICKUP: "Pickup", lt_HUB_TRANSFER: "Hub transfer", lt_LINEHAUL: "Line haul", lt_CUSTOMS: "Customs", lt_DELIVERY: "Delivery",
+    st_PLANNED: "Planned", st_ASSIGNED: "Assigned", st_IN_TRANSIT: "In transit", st_ARRIVED: "Arrived", st_COMPLETED: "Completed", st_FAILED: "Failed",
+  },
   ctrl: {
     sub: "Review, kill switches and control metrics (KRI)",
     stat_reject: "Refused / freight",
@@ -358,6 +364,8 @@ const en: Messages = {
     ops: "Hub & intake",
     freight: "Warehouse & freight",
     dispatch: "Fleet & dispatch",
+    manifests: "Manifests & legs",
+    lockers: "Lockers & timeslots",
     business: "Business & API",
     analytics: "Analytics",
     control: "Control Center",

@@ -325,6 +325,12 @@ const es: Messages = {
     title: "🔔 Notificaciones", sub: "Mensajes enviados (bandeja de simulación: WhatsApp / correo / push)",
     empty: "Aún no hay notificaciones",
   },
+  route: {
+    title: "Ruta y tramos", sub: "El viaje multimodal de este paquete", none: "Aún no hay tramos planificados.",
+    manifest: "Manifiesto",
+    lt_PICKUP: "Recogida", lt_HUB_TRANSFER: "Transferencia de hub", lt_LINEHAUL: "Transporte principal", lt_CUSTOMS: "Aduana", lt_DELIVERY: "Entrega",
+    st_PLANNED: "Planificado", st_ASSIGNED: "Asignado", st_IN_TRANSIT: "En tránsito", st_ARRIVED: "Llegó", st_COMPLETED: "Completado", st_FAILED: "Fallido",
+  },
   ctrl: {
     sub: "Revisión, kill switches y métricas de control (KRI)",
     stat_reject: "Rechazado / flete",
@@ -359,6 +365,8 @@ const es: Messages = {
     ops: "Hub y recepción",
     freight: "Almacén y flete",
     dispatch: "Flota y despacho",
+    manifests: "Manifiestos y tramos",
+    lockers: "Casilleros y franjas",
     business: "Business y API",
     analytics: "Analíticas",
     control: "Centro de Control",

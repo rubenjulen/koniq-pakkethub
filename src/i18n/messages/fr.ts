@@ -325,6 +325,12 @@ const fr: Messages = {
     title: "🔔 Notifications", sub: "Messages envoyés (boîte d'envoi de simulation : WhatsApp / e-mail / push)",
     empty: "Aucune notification pour le moment",
   },
+  route: {
+    title: "Itinéraire & tronçons", sub: "Le trajet multimodal de ce colis", none: "Aucun tronçon planifié pour le moment.",
+    manifest: "Manifeste",
+    lt_PICKUP: "Enlèvement", lt_HUB_TRANSFER: "Transfert de hub", lt_LINEHAUL: "Transport principal", lt_CUSTOMS: "Douane", lt_DELIVERY: "Livraison",
+    st_PLANNED: "Planifié", st_ASSIGNED: "Affecté", st_IN_TRANSIT: "En transit", st_ARRIVED: "Arrivé", st_COMPLETED: "Terminé", st_FAILED: "Échoué",
+  },
   ctrl: {
     sub: "Examen, kill switches et métriques de contrôle (KRI)",
     stat_reject: "Refusé / fret",
@@ -359,6 +365,8 @@ const fr: Messages = {
     ops: "Hub et réception",
     freight: "Entrepôt et fret",
     dispatch: "Flotte et répartition",
+    manifests: "Manifestes & tronçons",
+    lockers: "Casiers & créneaux",
     business: "Business et API",
     analytics: "Analytique",
     control: "Centre de Contrôle",

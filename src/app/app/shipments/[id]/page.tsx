@@ -7,6 +7,8 @@ import { eur, dateNL, dateTimeNL, timeAgo } from "@/lib/format";
 import { acceptOfferAction, advanceStatusAction, submitInspectionAction } from "../actions";
 import { openClaimAction, requestReturnAction } from "../../claims/actions";
 import { VOLUMETRIC_DIVISOR, volumetricKg as calcVol, chargeableKg as calcChargeable } from "@/lib/packaging";
+import { getShipmentLegs } from "@/lib/legs";
+import { RouteTimeline } from "@/components/RouteTimeline";
 import { getMessages } from "@/i18n";
 import type { Messages } from "@/i18n/messages/nl";
 
@@ -27,7 +29,8 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
   const user = await requireSession();
   const { id } = await params;
   const { error } = await searchParams;
-  const d = (await getMessages()).shipd;
+  const m = await getMessages();
+  const d = m.shipd;
 
   const s = await queryOne<any>(
     `SELECT s.*, s.total_declared_value_eur::float8 AS value, c.name AS corridor_name, c.code AS corridor_code,
@@ -57,6 +60,7 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
     `SELECT ce.seq, ce.event_type, ce.notes, ce.seal_no, ce.created_at, u.name AS actor
        FROM custody_events ce LEFT JOIN users u ON u.id=ce.actor_id WHERE ce.shipment_id=$1 ORDER BY ce.seq`, [id]
   );
+  const legs = await getShipmentLegs(id);
   const conv = await queryOne<{ id: string }>(`SELECT id FROM conversations WHERE shipment_id=$1 LIMIT 1`, [id]);
   const booking = await queryOne<any>(`SELECT agreed_price_eur::float8 AS price, payout_status FROM bookings WHERE shipment_id=$1`, [id]);
   const reasons: string[] = decision?.reasons ?? [];
@@ -107,6 +111,13 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
               </tbody>
             </table>
           </section>
+
+          {legs.length > 0 && (
+            <section className="ph-card p-4">
+              <SectionTitle sub={m.route.sub}>{m.route.title}</SectionTitle>
+              <RouteTimeline legs={legs} t={m.route} />
+            </section>
+          )}
 
           <section className="ph-card p-4">
             <SectionTitle sub={s.eligibility === "ALLOW" ? d.offers_sub_allow : d.offers_sub_wait}>
