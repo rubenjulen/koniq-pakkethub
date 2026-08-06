@@ -84,12 +84,12 @@ export async function getManifest(tenantId: string, id: string) {
   return { manifest, legs };
 }
 
-/** Geldige overgangen voor een manifest. */
-export const MANIFEST_FLOW: Record<string, { to: string; label: string }[]> = {
-  DRAFT: [{ to: "SEALED", label: "Verzegelen" }],
-  SEALED: [{ to: "IN_TRANSIT", label: "Vertrek registreren" }],
-  IN_TRANSIT: [{ to: "ARRIVED", label: "Aankomst registreren" }],
-  ARRIVED: [{ to: "CLOSED", label: "Manifest sluiten" }],
+/** Geldige overgangen voor een manifest. Labels komen uit i18n (ui_man.flow_<to>). */
+export const MANIFEST_FLOW: Record<string, { to: string }[]> = {
+  DRAFT: [{ to: "SEALED" }],
+  SEALED: [{ to: "IN_TRANSIT" }],
+  IN_TRANSIT: [{ to: "ARRIVED" }],
+  ARRIVED: [{ to: "CLOSED" }],
   CLOSED: [],
 };
 

@@ -6,6 +6,7 @@ import { Chip, SectionTitle, EmptyState } from "@/components/ui";
 import { dateTimeNL } from "@/lib/format";
 import { getManifest, MANIFEST_FLOW, MODE_ICON } from "@/lib/legs";
 import { advanceManifestAction, attachLegAction, detachLegAction } from "../actions";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Manifest" };
 
@@ -19,6 +20,7 @@ export default async function ManifestDetail({ params, searchParams }: {
   const user = await requireCapability("ops.intake");
   const { id } = await params;
   const { error } = await searchParams;
+  const L = (await getMessages()).ui_man;
   const data = await getManifest(user.tenantId, id);
   if (!data) notFound();
   const { manifest: m, legs } = data;
@@ -37,7 +39,7 @@ export default async function ManifestDetail({ params, searchParams }: {
   return (
     <div className="mx-auto max-w-4xl space-y-5">
       <div>
-        <Link href="/app/manifests" className="text-sm text-orange-600 hover:underline">← Manifesten</Link>
+        <Link href="/app/manifests" className="text-sm text-orange-600 hover:underline">{L.back}</Link>
         <div className="mt-1 flex flex-wrap items-center gap-2">
           <span className="text-lg">{MODE_ICON[m.mode] ?? "•"}</span>
           <h1 className="font-mono text-xl font-bold text-slate-900">{m.reference}</h1>
@@ -45,20 +47,20 @@ export default async function ManifestDetail({ params, searchParams }: {
         </div>
         <p className="text-sm text-slate-500">
           {(m.origin_name ?? "—")} → {(m.dest_name ?? "—")} · {m.carrier_type}{m.carrier_ref ? ` · ${m.carrier_ref}` : ""}
-          {m.depart_at ? ` · vertrek ${dateTimeNL(m.depart_at)}` : ""}
+          {m.depart_at ? ` · ${L.depart} ${dateTimeNL(m.depart_at)}` : ""}
         </p>
       </div>
 
       {error && <div className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">
-        {error === "locked" ? "Manifest is al vertrokken — koppelen kan niet meer." : "Actie niet mogelijk."}
+        {error === "locked" ? L.err_locked : L.err_generic}
       </div>}
 
       <div className="grid gap-5 md:grid-cols-3">
         <div className="space-y-5 md:col-span-2">
           <section className="ph-card p-4">
-            <SectionTitle sub={`${legs.length} zending(en) op dit manifest`}>Gekoppelde zendingen</SectionTitle>
+            <SectionTitle sub={`${legs.length} ${L.linked_sub}`}>{L.linked}</SectionTitle>
             {legs.length === 0 ? (
-              <EmptyState icon="📦" title="Nog geen zendingen gekoppeld" />
+              <EmptyState icon="📦" title={L.no_linked} />
             ) : (
               <div className="divide-y divide-slate-100">
                 {legs.map((l: any) => (
@@ -72,7 +74,7 @@ export default async function ManifestDetail({ params, searchParams }: {
                       <form action={detachLegAction}>
                         <input type="hidden" name="manifest_id" value={m.id} />
                         <input type="hidden" name="leg_id" value={l.id} />
-                        <button className="text-slate-400 hover:text-rose-500" title="Loskoppelen">✕</button>
+                        <button className="text-slate-400 hover:text-rose-500" title={L.detach}>✕</button>
                       </form>
                     )}
                   </div>
@@ -83,16 +85,16 @@ export default async function ManifestDetail({ params, searchParams }: {
 
           {!locked && (
             <section className="ph-card p-4">
-              <SectionTitle sub="Voeg een toegestane zending toe aan de linehaul">Zending koppelen</SectionTitle>
+              <SectionTitle sub={L.attach_sub}>{L.attach}</SectionTitle>
               {candidates.length === 0 ? (
-                <p className="text-sm text-slate-500">Geen koppelbare zendingen beschikbaar.</p>
+                <p className="text-sm text-slate-500">{L.no_candidates}</p>
               ) : (
                 <form action={attachLegAction} className="flex flex-wrap gap-2">
                   <input type="hidden" name="manifest_id" value={m.id} />
                   <select name="shipment_id" className="flex-1 rounded-lg border border-slate-300 px-2 py-1.5 text-sm">
                     {candidates.map((c) => <option key={c.id} value={c.id}>{c.reference} — {c.recipient_city} ({c.status})</option>)}
                   </select>
-                  <button className="ph-btn ph-btn-primary text-sm">+ Koppelen</button>
+                  <button className="ph-btn ph-btn-primary text-sm">{L.attach_btn}</button>
                 </form>
               )}
             </section>
@@ -101,7 +103,7 @@ export default async function ManifestDetail({ params, searchParams }: {
 
         <div className="space-y-5">
           <section className="ph-card p-4">
-            <SectionTitle sub="Voortgang van de beweging">Status</SectionTitle>
+            <SectionTitle sub={L.status_sub}>{L.status}</SectionTitle>
             <ol className="space-y-1.5 text-sm">
               {["DRAFT", "SEALED", "IN_TRANSIT", "ARRIVED", "CLOSED"].map((st) => {
                 const order = ["DRAFT", "SEALED", "IN_TRANSIT", "ARRIVED", "CLOSED"];
@@ -120,12 +122,12 @@ export default async function ManifestDetail({ params, searchParams }: {
                   <form key={f.to} action={advanceManifestAction}>
                     <input type="hidden" name="manifest_id" value={m.id} />
                     <input type="hidden" name="to" value={f.to} />
-                    <button className="ph-btn ph-btn-primary w-full text-sm">{f.label}</button>
+                    <button className="ph-btn ph-btn-primary w-full text-sm">{(L as Record<string, string>)[`flow_${f.to}`] ?? f.to}</button>
                   </form>
                 ))}
               </div>
             )}
-            {flow.length === 0 && <p className="mt-3 text-xs text-slate-400">Manifest is afgerond.</p>}
+            {flow.length === 0 && <p className="mt-3 text-xs text-slate-400">{L.done}</p>}
           </section>
         </div>
       </div>
