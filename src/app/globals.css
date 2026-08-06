@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Dark-mode via .dark-class op <html> (handmatige toggle + systeem). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* =========================================================================
    PakketHub design tokens. Corridor-platform look: trustworthy, operational.
    ========================================================================= */
@@ -62,3 +65,47 @@ body {
 /* Thin scrollbar for chat panes */
 .ph-scroll::-webkit-scrollbar { width: 8px; }
 .ph-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+
+/* =========================================================================
+   Dark mode. Eén set overrides op de veelgebruikte utilities flipt de hele app
+   coherent, zonder elke pagina aan te passen. Merk-oranje + chips blijven staan.
+   ========================================================================= */
+.dark { color-scheme: dark; }
+.dark {
+  --ph-bg: #0b1220;
+  --ph-line: #22304a;
+  --ph-ink: #e2e8f0;
+}
+.dark body { background: #0b1220; color: #e2e8f0; }
+
+.dark .ph-card { background: #0f1a2e; border-color: #22304a; }
+.dark .ph-btn-ghost { background: #0f1a2e; border-color: #33415a; color: #e2e8f0; }
+.dark .ph-btn-ghost:hover { background: #17233c; }
+
+.dark .bg-white { background-color: #0f1a2e; }
+.dark .bg-white\/90 { background-color: rgba(11,18,32,.9); }
+.dark .bg-slate-50 { background-color: #0b1220; }
+.dark .bg-slate-100 { background-color: #1e293b; }
+
+.dark .text-slate-900 { color: #f1f5f9; }
+.dark .text-slate-800 { color: #e2e8f0; }
+.dark .text-slate-700 { color: #cbd5e1; }
+.dark .text-slate-600 { color: #b6c2d4; }
+.dark .text-slate-500 { color: #93a1b5; }
+.dark .text-slate-400 { color: #6b7a90; }
+
+.dark .border-slate-200 { border-color: #22304a; }
+.dark .border-slate-100 { border-color: #1a2438; }
+.dark .border-slate-300 { border-color: #33415a; }
+.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) { border-color: #1a2438; }
+
+.dark input, .dark select, .dark textarea { background-color: #0f1a2e; color: #e2e8f0; border-color: #33415a; }
+.dark input::placeholder, .dark textarea::placeholder { color: #64748b; }
+
+/* Zachte tinten leesbaar houden op donker */
+.dark .bg-orange-50 { background-color: rgba(233,72,28,.14); }
+.dark .bg-amber-50 { background-color: rgba(245,158,11,.14); }
+.dark .bg-teal-50, .dark .bg-emerald-50 { background-color: rgba(13,148,136,.16); }
+.dark .bg-rose-50 { background-color: rgba(244,63,94,.14); }
+.dark .hover\:bg-slate-50:hover { background-color: #17233c; }
+.dark .hover\:bg-slate-100:hover { background-color: #1e293b; }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 import type { Messages } from "@/i18n/messages/nl";
 import type { Locale } from "@/i18n/config";
 
@@ -22,6 +23,7 @@ export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
           ))}
         </nav>
         <div className="flex items-center gap-1.5">
+          <ThemeToggle />
           <LanguageSwitcher current={locale} />
           <Link href="/login" className="ph-btn ph-btn-ghost text-sm">{m.common.login}</Link>
           <Link href="/verzenden" className="ph-btn ph-btn-primary text-sm">{m.common.send_package}</Link>

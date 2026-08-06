@@ -4,6 +4,7 @@ import { getSession, logout } from "@/lib/auth";
 import { navFor } from "@/lib/nav";
 import { Logo } from "@/components/Logo";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { KycBadge } from "@/components/ui";
 import { initials } from "@/lib/format";
 import { query } from "@/db/client";
@@ -62,10 +63,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             </div>
           </div>
           <div className="mt-1 px-2"><KycBadge status={user.kycStatus} /></div>
-          <div className="mt-2 flex gap-1">
-            <Link href="/app/account" className="flex-1 rounded-lg px-2 py-1.5 text-center text-xs text-slate-500 hover:bg-slate-50">{A.account}</Link>
-            <Link href="/app/notifications" className="flex-1 rounded-lg px-2 py-1.5 text-center text-xs text-slate-500 hover:bg-slate-50">{A.notifications}</Link>
+          <div className="mt-2 flex items-center justify-between gap-1">
+            <Link href="/app/account" className="rounded-lg px-2 py-1.5 text-xs text-slate-500 hover:bg-slate-50">{A.account}</Link>
+            <Link href="/app/notifications" className="rounded-lg px-2 py-1.5 text-xs text-slate-500 hover:bg-slate-50">{A.notifications}</Link>
           </div>
+          <div className="mt-1 flex justify-center"><ThemeToggle /></div>
           <form action={doLogout} className="mt-1">
             <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-slate-500 hover:bg-slate-50">{m.common.logout}</button>
           </form>
