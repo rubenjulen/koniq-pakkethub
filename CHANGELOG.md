@@ -1,5 +1,14 @@
 # Changelog — PakketHub
 
+## v0.4.1 — Interne ops/admin in 5 talen + testgids
+
+- **Ops/admin-schermen vertaald** (5 talen): Hub & intake, Analytics, Control-beoordeling,
+  Fleet & dispatch, Warehouse & freight, Business & API, Test/Simulatie-console. Nieuwe dict-
+  namespaces `ui_ops/ui_anl/ui_ctrl/ui_disp/ui_frt/ui_biz/ui_con`. Hiermee is vrijwel de hele app
+  meertalig; alleen de nieuwste bucket-3 ops-schermen (manifesten, lockers, content-CMS) staan nog in NL.
+- **Testgids voor compagnons** (`docs/TESTGIDS-compagnons.md`): rollen, demo-accounts, scenario's
+  per rol en een overzicht van de simulatiegrenzen.
+
 ## v0.4.0 — Bucket 3: multimodaal, lockers, boeken & video-CMS
 
 - **Schema v0.3** (10 nieuwe tabellen, CREATE IF NOT EXISTS): `manifests`, `shipment_legs`,
