@@ -3,6 +3,7 @@ import { requireSession, hasCapability } from "@/lib/auth";
 import { query } from "@/db/client";
 import { EmptyState, Chip, SectionTitle } from "@/components/ui";
 import { timeAgo } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Claims & retour" };
 
@@ -12,6 +13,7 @@ const TONE: Record<string, "ok" | "warn" | "bad" | "neutral"> = {
 
 export default async function ClaimsPage() {
   const user = await requireSession();
+  const cl = (await getMessages()).claims;
   const isOps = hasCapability(user, "ops.review");
   const rows = await query<any>(
     `SELECT c.id, c.claim_type, c.status, c.description, c.amount_eur::float8 AS amount, c.created_at,
@@ -32,14 +34,12 @@ export default async function ClaimsPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-4">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">🛟 Claims & retour</h1>
-        <p className="text-sm text-slate-500">{isOps ? "Alle claims" : "Jouw claims"} · schade, verlies, vertraging of afwijkende inhoud</p>
+        <h1 className="text-xl font-bold text-slate-900">{cl.title}</h1>
+        <p className="text-sm text-slate-500">{isOps ? cl.all : cl.mine} · {cl.tail}</p>
       </div>
 
       {rows.length === 0 ? (
-        <EmptyState icon="✅" title="Geen claims">
-          Open een claim vanaf een zending als er iets mis is. Je betaling blijft dan vastgehouden.
-        </EmptyState>
+        <EmptyState icon="✅" title={cl.none}>{cl.none_d}</EmptyState>
       ) : (
         <div className="ph-card divide-y divide-slate-100">
           {rows.map((c) => (
@@ -49,7 +49,7 @@ export default async function ClaimsPage() {
                   <span className="font-mono text-sm font-semibold text-slate-800">{c.reference}</span>
                   <Chip>{c.claim_type}</Chip>
                 </div>
-                <div className="truncate text-xs text-slate-500">{c.description} · {isOps ? c.opened_by : "jij"} · {timeAgo(c.created_at)}</div>
+                <div className="truncate text-xs text-slate-500">{c.description} · {isOps ? c.opened_by : cl.you} · {timeAgo(c.created_at)}</div>
               </div>
               <Chip tone={TONE[c.status] ?? "neutral"}>{c.status}</Chip>
             </Link>
@@ -59,7 +59,7 @@ export default async function ClaimsPage() {
 
       {returns.length > 0 && (
         <section>
-          <SectionTitle sub="Aangevraagde retourzendingen">Retouren</SectionTitle>
+          <SectionTitle sub={cl.returns_sub}>{cl.returns}</SectionTitle>
           <div className="ph-card divide-y divide-slate-100">
             {returns.map((r) => (
               <div key={r.id} className="flex items-center justify-between gap-3 p-3">

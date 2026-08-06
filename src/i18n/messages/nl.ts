@@ -122,6 +122,12 @@ const nl = {
     report_title: "Een zorg of incident melden?",
     report_body: "Meld het via je zending in de app of neem contact op. We bewaren bewijs (foto's, verzegeling, custody-log) voor onderzoek. Reageer nooit op verzoeken om betalingen buiten PakketHub om.",
   },
+  claims: {
+    title: "🛟 Claims & retour", mine: "Jouw claims", all: "Alle claims",
+    tail: "schade, verlies, vertraging of afwijkende inhoud",
+    none: "Geen claims", none_d: "Open een claim vanaf een zending als er iets mis is. Je betaling blijft dan vastgehouden.",
+    returns: "Retouren", returns_sub: "Aangevraagde retourzendingen", you: "jij",
+  },
   shop: {
     title: "🛒 Shop-verzoeken (jastip)", sub: "Vraag een reiziger om een product voor je te kopen en mee te nemen — met bonnetje als bewijs.",
     new_req: "Nieuw verzoek", new_req_sub: "De categorie wordt automatisch voorgesteld (AI)", placed: "Verzoek geplaatst.",

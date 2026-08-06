@@ -124,6 +124,12 @@ const es: Messages = {
     report_title: "¿Informar de una inquietud o incidente?",
     report_body: "Infórmalo mediante tu envío en la app o contáctanos. Conservamos pruebas (fotos, precinto, log de custodia) para la investigación. Nunca respondas a solicitudes de pago fuera de PakketHub.",
   },
+  claims: {
+    title: "🛟 Reclamaciones y devoluciones", mine: "Tus reclamaciones", all: "Todas las reclamaciones",
+    tail: "daño, pérdida, retraso o contenido divergente",
+    none: "Sin reclamaciones", none_d: "Abre una reclamación desde un envío si algo va mal. Tu pago queda retenido.",
+    returns: "Devoluciones", returns_sub: "Devoluciones solicitadas", you: "tú",
+  },
   shop: {
     title: "🛒 Solicitudes de compra (jastip)", sub: "Pide a un viajero que compre un producto y lo traiga — con recibo como prueba.",
     new_req: "Nueva solicitud", new_req_sub: "La categoría se sugiere automáticamente (IA)", placed: "Solicitud enviada.",

@@ -124,6 +124,12 @@ const fr: Messages = {
     report_title: "Signaler une inquiétude ou un incident ?",
     report_body: "Signalez-le via votre envoi dans l'app ou contactez-nous. Nous conservons les preuves (photos, scellé, journal de traçabilité) pour enquête. Ne répondez jamais à des demandes de paiement en dehors de PakketHub.",
   },
+  claims: {
+    title: "🛟 Réclamations et retours", mine: "Vos réclamations", all: "Toutes les réclamations",
+    tail: "dommage, perte, retard ou contenu non conforme",
+    none: "Aucune réclamation", none_d: "Ouvrez une réclamation depuis un envoi si quelque chose ne va pas. Votre paiement reste bloqué.",
+    returns: "Retours", returns_sub: "Retours demandés", you: "vous",
+  },
   shop: {
     title: "🛒 Demandes d'achat (jastip)", sub: "Demandez à un voyageur d'acheter un produit et de vous l'apporter — avec reçu comme preuve.",
     new_req: "Nouvelle demande", new_req_sub: "La catégorie est suggérée automatiquement (IA)", placed: "Demande envoyée.",

@@ -123,6 +123,12 @@ const en: Messages = {
     report_title: "Report a concern or incident?",
     report_body: "Report it via your shipment in the app or contact us. We keep evidence (photos, seal, custody log) for investigation. Never respond to requests to pay outside of PakketHub.",
   },
+  claims: {
+    title: "🛟 Claims & returns", mine: "Your claims", all: "All claims",
+    tail: "damage, loss, delay or content mismatch",
+    none: "No claims", none_d: "Open a claim from a shipment if something is wrong. Your payment stays held then.",
+    returns: "Returns", returns_sub: "Requested return shipments", you: "you",
+  },
   shop: {
     title: "🛒 Shopping requests (jastip)", sub: "Ask a traveler to buy a product for you and bring it along — with a receipt as proof.",
     new_req: "New request", new_req_sub: "The category is suggested automatically (AI)", placed: "Request placed.",
