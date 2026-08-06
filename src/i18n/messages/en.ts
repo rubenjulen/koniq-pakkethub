@@ -128,6 +128,12 @@ const en: Messages = {
     tail: "damage, loss, delay or content mismatch",
     none: "No claims", none_d: "Open a claim from a shipment if something is wrong. Your payment stays held then.",
     returns: "Returns", returns_sub: "Requested return shipments", you: "you",
+    opened_by: "Opened by", claimed_amt: "claimed", description: "Description", outcome: "Outcome:",
+    view_shipment: "View shipment & custody →", messages: "Messages", messages_sub: "Communication about this claim",
+    no_msg: "No messages yet.", reply_ph: "Reply…", send: "Send",
+    review_ops: "Review (ops)", review_ops_sub: "Grant = refund to the sender via the payment adapter",
+    ai_draft: "🤖 AI draft reply (suggestion):", reason_ph: "Reasoning…",
+    grant: "Grant & refund", investigate: "Investigate", reject: "Reject",
   },
   shop: {
     title: "🛒 Shopping requests (jastip)", sub: "Ask a traveler to buy a product for you and bring it along — with a receipt as proof.",

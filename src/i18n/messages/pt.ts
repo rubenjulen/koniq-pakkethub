@@ -129,6 +129,12 @@ const pt: Messages = {
     tail: "dano, perda, atraso ou conteúdo divergente",
     none: "Sem reclamações", none_d: "Abra uma reclamação a partir de um envio se algo estiver errado. Seu pagamento fica retido.",
     returns: "Devoluções", returns_sub: "Devoluções solicitadas", you: "você",
+    opened_by: "Aberto por", claimed_amt: "reclamado", description: "Descrição", outcome: "Resultado:",
+    view_shipment: "Ver envio e custódia →", messages: "Mensagens", messages_sub: "Comunicação sobre esta reclamação",
+    no_msg: "Ainda sem mensagens.", reply_ph: "Resposta…", send: "Enviar",
+    review_ops: "Análise (ops)", review_ops_sub: "Conceder = reembolso ao remetente pelo adaptador de pagamento",
+    ai_draft: "🤖 Resposta-rascunho da IA (sugestão):", reason_ph: "Fundamentação…",
+    grant: "Conceder e reembolsar", investigate: "Em investigação", reject: "Recusar",
   },
   shop: {
     title: "🛒 Pedidos de compra (jastip)", sub: "Peça a um viajante para comprar um produto e trazer para você — com recibo como prova.",

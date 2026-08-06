@@ -127,6 +127,12 @@ const nl = {
     tail: "schade, verlies, vertraging of afwijkende inhoud",
     none: "Geen claims", none_d: "Open een claim vanaf een zending als er iets mis is. Je betaling blijft dan vastgehouden.",
     returns: "Retouren", returns_sub: "Aangevraagde retourzendingen", you: "jij",
+    opened_by: "Geopend door", claimed_amt: "geclaimd", description: "Omschrijving", outcome: "Uitkomst:",
+    view_shipment: "Bekijk zending & custody →", messages: "Berichten", messages_sub: "Communicatie over deze claim",
+    no_msg: "Nog geen berichten.", reply_ph: "Reactie…", send: "Stuur",
+    review_ops: "Beoordeling (ops)", review_ops_sub: "Toekennen = terugboeking naar de afzender via de betaal-adapter",
+    ai_draft: "🤖 AI-conceptantwoord (suggestie):", reason_ph: "Onderbouwing…",
+    grant: "Toekennen & terugboeken", investigate: "In onderzoek", reject: "Afwijzen",
   },
   shop: {
     title: "🛒 Shop-verzoeken (jastip)", sub: "Vraag een reiziger om een product voor je te kopen en mee te nemen — met bonnetje als bewijs.",

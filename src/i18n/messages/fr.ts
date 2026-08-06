@@ -129,6 +129,12 @@ const fr: Messages = {
     tail: "dommage, perte, retard ou contenu non conforme",
     none: "Aucune réclamation", none_d: "Ouvrez une réclamation depuis un envoi si quelque chose ne va pas. Votre paiement reste bloqué.",
     returns: "Retours", returns_sub: "Retours demandés", you: "vous",
+    opened_by: "Ouvert par", claimed_amt: "réclamé", description: "Description", outcome: "Résultat :",
+    view_shipment: "Voir l'envoi et la traçabilité →", messages: "Messages", messages_sub: "Communication sur cette réclamation",
+    no_msg: "Aucun message.", reply_ph: "Réponse…", send: "Envoyer",
+    review_ops: "Examen (ops)", review_ops_sub: "Accorder = remboursement à l'expéditeur via l'adaptateur de paiement",
+    ai_draft: "🤖 Brouillon de réponse IA (suggestion) :", reason_ph: "Justification…",
+    grant: "Accorder et rembourser", investigate: "En enquête", reject: "Refuser",
   },
   shop: {
     title: "🛒 Demandes d'achat (jastip)", sub: "Demandez à un voyageur d'acheter un produit et de vous l'apporter — avec reçu comme preuve.",
