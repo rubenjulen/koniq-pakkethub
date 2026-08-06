@@ -113,6 +113,17 @@ const nl = {
     submit: "Toegang",
     hint: "Daarna log je in met een demo-account (bijv. sender@pakkethub.com / demo12345).",
   },
+  send: {
+    badge: "Gratis check", title: "Mag mijn pakket via een reiziger?",
+    intro: "Geef de inhoud aan en zie meteen of het via crowdshipping mag, naar freight moet, of geweigerd wordt — plus een indicatieve prijs. Dezelfde regels als in de app.",
+    calc_corridor: "Corridor", calc_weight: "Gewicht (kg)", calc_content: "Inhoud", add_item: "+ Item",
+    desc_opt: "Omschrijving (optioneel)", value_t: "Waarde €", estimate: "Indicatie:",
+    calc_note: "Dit is een indicatie op basis van je invoer, exclusief eventuele douaneheffingen. De definitieve beoordeling en prijs zie je bij het aanmaken van de zending.",
+    continue: "Doorgaan & zending aanmaken →",
+    f1_t: "Volledige aangifte", f1_d: "Elk item met omschrijving, aantal en waarde.",
+    f2_t: "Open inspectie", f2_d: "De hub controleert en verzegelt je pakket.",
+    f3_t: "Chat & afspraak", f3_d: "Overleg met de reiziger en leg de overdracht vast.",
+  },
   partner: {
     title: "Bouw mee aan de corridor",
     intro: "We breiden het netwerk gecontroleerd uit — fleets, hubs, warehouses en zakelijke verzenders. Onboarding met KYB, documenten en heldere afspraken.",

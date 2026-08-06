@@ -114,6 +114,17 @@ const en: Messages = {
     submit: "Enter",
     hint: "Then log in with a demo account (e.g. sender@pakkethub.com / demo12345).",
   },
+  send: {
+    badge: "Free check", title: "Can my package travel with a traveler?",
+    intro: "Declare the contents and instantly see whether it can go via crowdshipping, must go to freight, or is refused — plus an indicative price. The same rules as in the app.",
+    calc_corridor: "Corridor", calc_weight: "Weight (kg)", calc_content: "Contents", add_item: "+ Item",
+    desc_opt: "Description (optional)", value_t: "Value €", estimate: "Estimate:",
+    calc_note: "This is an estimate based on your input, excluding any customs duties. The final assessment and price appear when you create the shipment.",
+    continue: "Continue & create shipment →",
+    f1_t: "Full declaration", f1_d: "Every item with description, quantity and value.",
+    f2_t: "Open inspection", f2_d: "The hub checks and seals your package.",
+    f3_t: "Chat & arrange", f3_d: "Coordinate with the traveler and set the handover.",
+  },
   partner: {
     title: "Help build the corridor",
     intro: "We're expanding the network in a controlled way — fleets, hubs, warehouses and business shippers. Onboarding with KYB, documents and clear agreements.",

@@ -115,6 +115,17 @@ const fr: Messages = {
     submit: "Accéder",
     hint: "Connectez-vous ensuite avec un compte de démo (par ex. sender@pakkethub.com / demo12345).",
   },
+  send: {
+    badge: "Vérification gratuite", title: "Mon colis peut-il voyager avec un voyageur ?",
+    intro: "Déclarez le contenu et voyez aussitôt s'il peut partir via le crowdshipping, doit aller en fret ou est refusé — plus un prix indicatif. Les mêmes règles que dans l'app.",
+    calc_corridor: "Corridor", calc_weight: "Poids (kg)", calc_content: "Contenu", add_item: "+ Article",
+    desc_opt: "Description (facultatif)", value_t: "Valeur €", estimate: "Estimation :",
+    calc_note: "Ceci est une estimation basée sur votre saisie, hors éventuels droits de douane. L'évaluation et le prix définitifs apparaissent lors de la création de l'envoi.",
+    continue: "Continuer et créer l'envoi →",
+    f1_t: "Déclaration complète", f1_d: "Chaque article avec description, quantité et valeur.",
+    f2_t: "Inspection ouverte", f2_d: "Le hub vérifie et scelle votre colis.",
+    f3_t: "Chat et accord", f3_d: "Concertez-vous avec le voyageur et fixez la remise.",
+  },
   partner: {
     title: "Participez à la construction du corridor",
     intro: "Nous étendons le réseau de façon contrôlée — flottes, hubs, entrepôts et expéditeurs professionnels. Intégration avec KYB, documents et accords clairs.",

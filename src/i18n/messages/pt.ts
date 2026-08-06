@@ -115,6 +115,17 @@ const pt: Messages = {
     submit: "Acessar",
     hint: "Depois faça login com uma conta de demonstração (ex.: sender@pakkethub.com / demo12345).",
   },
+  send: {
+    badge: "Verificação grátis", title: "Meu pacote pode viajar com um viajante?",
+    intro: "Declare o conteúdo e veja na hora se pode ir via crowdshipping, se deve ir para o frete ou se é recusado — além de um preço indicativo. As mesmas regras do app.",
+    calc_corridor: "Corredor", calc_weight: "Peso (kg)", calc_content: "Conteúdo", add_item: "+ Item",
+    desc_opt: "Descrição (opcional)", value_t: "Valor €", estimate: "Estimativa:",
+    calc_note: "Isto é uma estimativa com base no que você informou, sem eventuais taxas alfandegárias. A avaliação e o preço finais aparecem ao criar o envio.",
+    continue: "Continuar e criar envio →",
+    f1_t: "Declaração completa", f1_d: "Cada item com descrição, quantidade e valor.",
+    f2_t: "Inspeção aberta", f2_d: "O hub verifica e lacra o seu pacote.",
+    f3_t: "Chat e combinado", f3_d: "Converse com o viajante e defina a entrega.",
+  },
   partner: {
     title: "Ajude a construir o corredor",
     intro: "Estamos expandindo a rede de forma controlada — frotas, hubs, armazéns e remetentes empresariais. Integração com KYB, documentos e acordos claros.",
