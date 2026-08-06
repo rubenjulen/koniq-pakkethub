@@ -345,8 +345,75 @@ export async function seedDatabase(db: DbAdapter) {
     `INSERT INTO drivers (tenant_id, fleet_id, name, phone, license_ref, status)
      VALUES ($1,$2,'Marlon Pinas','+597 712345','SR-DL-8890','ACTIVE')`, [T, FLEET]);
 
+  // =========================================================================
+  //  v0.3 (bucket 3) demo-data: legs/manifest, locker, tijdslots, boeken
+  // =========================================================================
+
+  // ---- Multimodale legs voor de voorbeeldzending + een manifest (vlucht) ----
+  const MANIFEST = "19000000-0000-0000-0000-000000000c01";
+  await q(db,
+    `INSERT INTO manifests (id, tenant_id, reference, mode, carrier_type, carrier_ref, trip_id, origin_hub_id, dest_hub_id, depart_at, status)
+     VALUES ($1,$2,'MF-2026-0001','AIR','TRAVELER','KL-713',$3,$4,$5, now() + interval '10 days','SEALED')`,
+    [MANIFEST, T, TRIP, HUB.AMS, HUB.PBM]);
+  const legs: [number, string, string, string, string, string, string | null, string | null, string | null][] = [
+    // seq, leg_type, mode, from_label, to_label, carrier_type, from_hub, to_hub, manifest
+    [1, "PICKUP",      "ROAD",     "Afzender (thuis)",  "Hub Amsterdam",     "FLEET",    null,    HUB.AMS, null],
+    [2, "LINEHAUL",    "AIR",      "Hub Amsterdam",     "Hub Paramaribo",    "TRAVELER", HUB.AMS, HUB.PBM, MANIFEST],
+    [3, "CUSTOMS",     "AIR",      "Douane Zanderij",   "Hub Paramaribo",    "HUB",      HUB.PBM, HUB.PBM, null],
+    [4, "DELIVERY",    "ROAD",     "Hub Paramaribo",    "Ontvanger (thuis)", "FLEET",    HUB.PBM, null,    null],
+  ];
+  for (const [seq, lt, mode, fl, tl, ct, fh, th, mf] of legs) {
+    await q(db,
+      `INSERT INTO shipment_legs (tenant_id, shipment_id, seq, leg_type, mode, from_label, to_label, carrier_type, from_hub_id, to_hub_id, manifest_id, status)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11, $12)`,
+      [T, SHIPMENT, seq, lt, mode, fl, tl, ct, fh, th, mf, seq === 1 ? "COMPLETED" : "PLANNED"]);
+  }
+
+  // ---- Locker met compartimenten in Paramaribo ----
+  const LOCKER = "1a000000-0000-0000-0000-000000000d01";
+  await q(db,
+    `INSERT INTO lockers (id, tenant_id, hub_id, code, name, address, city, country, status)
+     VALUES ($1,$2,$3,'LK-PBM-01','PakketHub Locker Centrum','Domineestraat 12','Paramaribo','SR','ACTIVE')`,
+    [LOCKER, T, HUB.PBM]);
+  const comps: [string, string, string][] = [
+    ["A1", "S", "FREE"], ["A2", "S", "FREE"], ["B1", "M", "OCCUPIED"],
+    ["B2", "M", "FREE"], ["C1", "L", "RESERVED"], ["C2", "XL", "FREE"],
+  ];
+  for (const [label, size, st] of comps) {
+    await q(db,
+      `INSERT INTO locker_compartments (tenant_id, locker_id, label, size, status, shipment_id, pin_code)
+       VALUES ($1,$2,$3,$4,$5, $6, $7)`,
+      [T, LOCKER, label, size, st, st === "OCCUPIED" ? SHIPMENT : null, st === "OCCUPIED" ? "4821" : null]);
+  }
+
+  // ---- Tijdslots (intake/afgifte) voor de komende dagen ----
+  for (let d = 1; d <= 4; d++) {
+    for (const [h, type] of [[9, "DROPOFF"], [13, "INTAKE"], [16, "PICKUP"]] as [number, string][]) {
+      await q(db,
+        `INSERT INTO timeslots (tenant_id, hub_id, slot_type, starts_at, ends_at, capacity, booked)
+         VALUES ($1,$2,$3,
+                 date_trunc('day', now()) + make_interval(days => $4::int, hours => $5::int),
+                 date_trunc('day', now()) + make_interval(days => $4::int, hours => $6::int),
+                 5, $7::int)`,
+        [T, HUB.AMS, type, d, h, h + 2, d === 1 && h === 9 ? 2 : 0]);
+    }
+  }
+
+  // ---- Adresboek + productboek voor de afzender ----
+  await q(db,
+    `INSERT INTO address_book (tenant_id, owner_id, label, name, phone, line1, city, country, postal, is_default)
+     VALUES ($1,$2,'Familie Paramaribo','R, Julen','+597700012345','Kwattaweg 155','Paramaribo','SR',NULL,true),
+            ($1,$2,'Neef Nickerie','A, Amatstan','+597850067','Waldeckstraat 3','Nieuw-Nickerie','SR',NULL,false)`,
+    [T, USER.SENDER]);
+  await q(db,
+    `INSERT INTO product_book (tenant_id, owner_id, name, category_code, default_value_eur, default_weight_kg, hs_code)
+     VALUES ($1,$2,'Kinderkleding set','CLOTHING',25,0.6,'6209'),
+            ($1,$2,'Verpakte koffie 500g','FOOD_DRY',8,0.5,'0901'),
+            ($1,$2,'Vitaminen (verzegeld)','HEALTH',15,0.3,'2106')`,
+    [T, USER.SENDER]);
+
   await q(db,
     `INSERT INTO audit_log (tenant_id, user_id, action, entity_type, summary)
-     VALUES ($1,$2,'SEED','system','PakketHub NL–SR pilot geseed (demo v0.2.0).')`,
+     VALUES ($1,$2,'SEED','system','PakketHub NL–SR pilot geseed (demo v0.3.0: legs/manifests, lockers, slots, boeken).')`,
     [T, USER.ADMIN]);
 }

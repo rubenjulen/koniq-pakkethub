@@ -630,3 +630,185 @@ CREATE TABLE IF NOT EXISTS webhook_deliveries (
   response_code integer,
   created_at  timestamptz NOT NULL DEFAULT now()
 );
+
+-- ===========================================================================
+--  v0.3 ADDENDUM (bucket 3) — multimodale legs/manifests, lockers/tijdslots/
+--  reconciliatie, zakelijke bulk + adres-/productboeken. Alle CREATE IF NOT
+--  EXISTS zodat bestaande PGlite/Postgres-databases meegroeien.
+-- ===========================================================================
+
+-- ---------- Block A: multimodale legs & manifests --------------------------
+-- Een manifest bundelt zendingen op één fysieke beweging (bv. een vlucht of
+-- een busrit). Elke zending krijgt een keten van legs (pickup→hub→linehaul→
+-- hub→delivery); een leg kan aan een manifest hangen.
+CREATE TABLE IF NOT EXISTS manifests (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  reference     text NOT NULL,
+  mode          text NOT NULL DEFAULT 'AIR',       -- ROAD|AIR|SEA|RAIL|TRAVELER
+  carrier_type  text NOT NULL DEFAULT 'FREIGHT',   -- FLEET|TRAVELER|FREIGHT|HUB
+  carrier_ref   text,                              -- vluchtnr/kenteken/vervoerder
+  trip_id       uuid REFERENCES trips(id),
+  fleet_id      uuid REFERENCES fleets(id),
+  origin_hub_id uuid REFERENCES hubs(id),
+  dest_hub_id   uuid REFERENCES hubs(id),
+  depart_at     timestamptz,
+  arrive_at     timestamptz,
+  status        text NOT NULL DEFAULT 'DRAFT',     -- DRAFT|SEALED|IN_TRANSIT|ARRIVED|CLOSED
+  sealed_at     timestamptz,
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS manifests_status_idx ON manifests(tenant_id, status);
+
+CREATE TABLE IF NOT EXISTS shipment_legs (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  shipment_id   uuid NOT NULL REFERENCES shipments(id) ON DELETE CASCADE,
+  seq           integer NOT NULL DEFAULT 1,
+  leg_type      text NOT NULL DEFAULT 'LINEHAUL',  -- PICKUP|HUB_TRANSFER|LINEHAUL|CUSTOMS|DELIVERY
+  mode          text NOT NULL DEFAULT 'ROAD',      -- ROAD|AIR|SEA|RAIL|TRAVELER
+  from_label    text,
+  to_label      text,
+  from_hub_id   uuid REFERENCES hubs(id),
+  to_hub_id     uuid REFERENCES hubs(id),
+  carrier_type  text NOT NULL DEFAULT 'FLEET',     -- FLEET|TRAVELER|FREIGHT|HUB
+  carrier_ref   text,
+  manifest_id   uuid REFERENCES manifests(id) ON DELETE SET NULL,
+  status        text NOT NULL DEFAULT 'PLANNED',   -- PLANNED|ASSIGNED|IN_TRANSIT|ARRIVED|COMPLETED|FAILED
+  scan_in_ref   text,
+  scan_out_ref  text,
+  planned_at    timestamptz,
+  completed_at  timestamptz,
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS legs_shipment_idx ON shipment_legs(shipment_id, seq);
+CREATE INDEX IF NOT EXISTS legs_manifest_idx ON shipment_legs(manifest_id);
+
+-- ---------- Block B: lockers, compartimenten, tijdslots & reconciliatie -----
+CREATE TABLE IF NOT EXISTS lockers (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  hub_id        uuid REFERENCES hubs(id),
+  code          text NOT NULL,
+  name          text NOT NULL,
+  address       text,
+  city          text,
+  country       text NOT NULL DEFAULT 'SR',
+  status        text NOT NULL DEFAULT 'ACTIVE',    -- ACTIVE|OFFLINE
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS locker_compartments (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  locker_id     uuid NOT NULL REFERENCES lockers(id) ON DELETE CASCADE,
+  label         text NOT NULL,
+  size          text NOT NULL DEFAULT 'M',         -- S|M|L|XL
+  status        text NOT NULL DEFAULT 'FREE',      -- FREE|RESERVED|OCCUPIED|OUT_OF_SERVICE
+  shipment_id   uuid REFERENCES shipments(id) ON DELETE SET NULL,
+  pin_code      text,
+  updated_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS compartments_locker_idx ON locker_compartments(locker_id, status);
+
+CREATE TABLE IF NOT EXISTS timeslots (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  hub_id        uuid REFERENCES hubs(id),
+  locker_id     uuid REFERENCES lockers(id),
+  slot_type     text NOT NULL DEFAULT 'DROPOFF',   -- DROPOFF|PICKUP|INTAKE
+  starts_at     timestamptz NOT NULL,
+  ends_at       timestamptz NOT NULL,
+  capacity      integer NOT NULL DEFAULT 5,
+  booked        integer NOT NULL DEFAULT 0,
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS timeslots_when_idx ON timeslots(tenant_id, starts_at);
+
+CREATE TABLE IF NOT EXISTS slot_bookings (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  timeslot_id   uuid NOT NULL REFERENCES timeslots(id) ON DELETE CASCADE,
+  shipment_id   uuid REFERENCES shipments(id) ON DELETE SET NULL,
+  user_id       uuid NOT NULL REFERENCES users(id),
+  purpose       text NOT NULL DEFAULT 'DROPOFF',
+  status        text NOT NULL DEFAULT 'BOOKED',    -- BOOKED|CHECKED_IN|COMPLETED|NO_SHOW|CANCELLED
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS reconciliations (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  hub_id        uuid REFERENCES hubs(id),
+  reference     text NOT NULL,
+  status        text NOT NULL DEFAULT 'OPEN',      -- OPEN|BALANCED|DISCREPANCY|CLOSED
+  expected_count integer NOT NULL DEFAULT 0,
+  scanned_count  integer NOT NULL DEFAULT 0,
+  note          text,
+  created_at    timestamptz NOT NULL DEFAULT now(),
+  closed_at     timestamptz
+);
+
+CREATE TABLE IF NOT EXISTS reconciliation_scans (
+  id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  reconciliation_id uuid NOT NULL REFERENCES reconciliations(id) ON DELETE CASCADE,
+  shipment_ref      text NOT NULL,
+  result            text NOT NULL DEFAULT 'MATCH', -- MATCH|UNEXPECTED|MISSING
+  scanned_at        timestamptz NOT NULL DEFAULT now()
+);
+
+-- ---------- Block C: adres- & productboeken + zakelijke bulk-upload ---------
+CREATE TABLE IF NOT EXISTS address_book (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  owner_id      uuid REFERENCES users(id) ON DELETE CASCADE,
+  business_id   uuid REFERENCES business_accounts(id) ON DELETE CASCADE,
+  label         text NOT NULL,
+  name          text NOT NULL,
+  phone         text,
+  line1         text,
+  city          text,
+  country       text NOT NULL DEFAULT 'SR',
+  postal        text,
+  is_default    boolean NOT NULL DEFAULT false,
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS addressbook_owner_idx ON address_book(tenant_id, owner_id);
+
+CREATE TABLE IF NOT EXISTS product_book (
+  id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id         uuid NOT NULL REFERENCES tenants(id),
+  owner_id          uuid REFERENCES users(id) ON DELETE CASCADE,
+  business_id       uuid REFERENCES business_accounts(id) ON DELETE CASCADE,
+  name              text NOT NULL,
+  category_code     text NOT NULL DEFAULT 'UNKNOWN',
+  default_value_eur numeric(18,2),
+  default_weight_kg numeric(10,2),
+  hs_code           text,
+  url               text,
+  created_at        timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS productbook_owner_idx ON product_book(tenant_id, owner_id);
+
+CREATE TABLE IF NOT EXISTS bulk_uploads (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  business_id   uuid REFERENCES business_accounts(id) ON DELETE CASCADE,
+  uploaded_by   uuid NOT NULL REFERENCES users(id),
+  filename      text,
+  total_rows    integer NOT NULL DEFAULT 0,
+  ok_rows       integer NOT NULL DEFAULT 0,
+  error_rows    integer NOT NULL DEFAULT 0,
+  status        text NOT NULL DEFAULT 'PARSED',    -- PARSED|COMMITTED|FAILED
+  rows          jsonb NOT NULL DEFAULT '[]'::jsonb,-- geparste regels + validatie
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS bulk_upload_items (
+  id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  bulk_upload_id uuid NOT NULL REFERENCES bulk_uploads(id) ON DELETE CASCADE,
+  row_no         integer NOT NULL,
+  shipment_id    uuid REFERENCES shipments(id) ON DELETE SET NULL,
+  status         text NOT NULL DEFAULT 'OK',       -- OK|ERROR|CREATED
+  error          text
+);
