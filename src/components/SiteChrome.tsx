@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
+import { InstallAppButton } from "./InstallAppButton";
+import { MobileNav } from "./MobileNav";
 import type { Messages } from "@/i18n/messages/nl";
 import type { Locale } from "@/i18n/config";
 
@@ -15,18 +17,24 @@ export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
   ];
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link href="/"><Logo /></Link>
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3">
+        <Link href="/" className="shrink-0"><Logo /></Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
           {NAV.map(([href, label]) => (
             <Link key={href} href={href} className="hover:text-orange-600">{label}</Link>
           ))}
         </nav>
         <div className="flex items-center gap-1.5">
-          <ThemeToggle />
-          <LanguageSwitcher current={locale} />
-          <Link href="/login" className="ph-btn ph-btn-ghost text-sm">{m.common.login}</Link>
-          <Link href="/verzenden" className="ph-btn ph-btn-primary text-sm">{m.common.send_package}</Link>
+          {/* Desktop: volledige set */}
+          <div className="hidden items-center gap-1.5 md:flex">
+            <ThemeToggle />
+            <LanguageSwitcher current={locale} />
+            <Link href="/login" className="ph-btn ph-btn-ghost text-sm">{m.common.login}</Link>
+            <Link href="/verzenden" className="ph-btn ph-btn-primary text-sm">{m.common.send_package}</Link>
+          </div>
+          {/* Mobiel: altijd zichtbare install-knop + hamburger */}
+          <InstallAppButton compact label={m.home.install_app} className="md:hidden" />
+          <MobileNav nav={NAV} login={m.common.login} send={m.common.send_package} installLabel={m.home.install_app} locale={locale} />
         </div>
       </div>
     </header>
