@@ -5,21 +5,17 @@ import { query, queryOne } from "@/db/client";
 import { EligibilityBadge, Chip, SectionTitle } from "@/components/ui";
 import { eur, dateTimeNL } from "@/lib/format";
 import { overrideEligibilityAction } from "../actions";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Beoordeling" };
 
-const OPTIONS = [
-  ["ALLOW", "Toestaan"],
-  ["REVIEW", "In beoordeling houden"],
-  ["FREIGHT_ONLY", "Alleen via freight"],
-  ["HOLD", "Blokkeren (hold)"],
-  ["REJECT", "Weigeren"],
-];
+const OPTION_KEYS = ["ALLOW", "REVIEW", "FREIGHT_ONLY", "HOLD", "REJECT"] as const;
 
 export default async function ControlReview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ error?: string }> }) {
   const user = await requireCapability("ops.review");
   const { id } = await params;
   const { error } = await searchParams;
+  const L = (await getMessages()).ui_ctrl;
 
   const s = await queryOne<any>(
     `SELECT s.*, s.total_declared_value_eur::float8 AS value, u.name AS sender, u.kyc_status AS sender_kyc, c.name AS corridor
@@ -41,18 +37,18 @@ export default async function ControlReview({ params, searchParams }: { params: 
   return (
     <div className="mx-auto max-w-3xl space-y-5">
       <div>
-        <Link href="/app/control" className="text-sm text-orange-600 hover:underline">← Control Center</Link>
+        <Link href="/app/control" className="text-sm text-orange-600 hover:underline">{L.back}</Link>
         <div className="mt-1 flex items-center gap-2">
           <h1 className="font-mono text-xl font-bold text-slate-900">{s.reference}</h1>
           <EligibilityBadge decision={s.eligibility} />
         </div>
-        <p className="text-sm text-slate-500">{s.corridor} · afzender {s.sender} ({s.sender_kyc}) · {eur(s.value)}</p>
+        <p className="text-sm text-slate-500">{s.corridor} · {L.sender} {s.sender} ({s.sender_kyc}) · {eur(s.value)}</p>
       </div>
 
       {error && <div className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">{error}</div>}
 
       <section className="ph-card p-4">
-        <SectionTitle sub="Aangegeven inhoud">Items</SectionTitle>
+        <SectionTitle sub={L.items_sub}>{L.items}</SectionTitle>
         <ul className="divide-y divide-slate-100 text-sm">
           {items.map((it, i) => (
             <li key={i} className="flex justify-between py-1.5">
@@ -64,32 +60,32 @@ export default async function ControlReview({ params, searchParams }: { params: 
       </section>
 
       <section className="ph-card p-4">
-        <SectionTitle sub={`Huidige beslissing (${latest?.rule_version ?? "v1"})`}>Redenen</SectionTitle>
+        <SectionTitle sub={`${L.reasons_sub} (${latest?.rule_version ?? "v1"})`}>{L.reasons}</SectionTitle>
         <ul className="list-inside list-disc space-y-1 text-sm text-slate-600">
           {(latest?.reasons ?? []).map((r: string, i: number) => <li key={i}>{r}</li>)}
         </ul>
       </section>
 
       <section className="ph-card p-4">
-        <SectionTitle sub="Reden verplicht · wordt gelogd (four-eyes)">Handmatige beslissing</SectionTitle>
+        <SectionTitle sub={L.decision_sub}>{L.decision}</SectionTitle>
         <form action={overrideEligibilityAction} className="space-y-3">
           <input type="hidden" name="shipment_id" value={s.id} />
           <div className="flex flex-wrap gap-2">
-            {OPTIONS.map(([val, label]) => (
+            {OPTION_KEYS.map((val) => (
               <label key={val} className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50">
                 <input type="radio" name="decision" value={val} defaultChecked={val === s.eligibility} />
-                {label}
+                {(L as Record<string, string>)[`opt_${val}`]}
               </label>
             ))}
           </div>
-          <textarea name="reason" rows={2} required minLength={5} placeholder="Onderbouwing van het besluit (verplicht)…"
+          <textarea name="reason" rows={2} required minLength={5} placeholder={L.reason_ph}
             className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" />
-          <button className="ph-btn ph-btn-primary">Beslissing vastleggen</button>
+          <button className="ph-btn ph-btn-primary">{L.submit}</button>
         </form>
       </section>
 
       <section className="ph-card p-4">
-        <SectionTitle>Beslishistorie</SectionTitle>
+        <SectionTitle>{L.history}</SectionTitle>
         <ol className="space-y-2 text-sm">
           {decisions.map((d, i) => (
             <li key={i} className="flex items-center justify-between border-b border-slate-100 pb-2 last:border-0">

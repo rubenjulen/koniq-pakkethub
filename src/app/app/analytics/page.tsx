@@ -3,12 +3,14 @@ import { query } from "@/db/client";
 import { accountBalance } from "@/lib/finance";
 import { StatCard, SectionTitle, Chip } from "@/components/ui";
 import { eur } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Analytics" };
 
 export default async function AnalyticsPage() {
   const user = await requireCapability("control.view");
   const t = user.tenantId;
+  const L = (await getMessages()).ui_anl;
 
   const [totals] = await query<any>(
     `SELECT
@@ -36,23 +38,23 @@ export default async function AnalyticsPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">📊 Analytics & unit economics</h1>
-        <p className="text-sm text-slate-500">Afgeleid uit live data (grootboek + zendingen)</p>
+        <h1 className="text-xl font-bold text-slate-900">{L.title}</h1>
+        <p className="text-sm text-slate-500">{L.sub}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="GMV (geboekt)" value={eur(gmv)} hint="Bruto vervoerswaarde" />
-        <StatCard label="Platform-omzet" value={eur(fees)} hint="Servicekosten" />
-        <StatCard label="Take rate" value={`${takeRate.toFixed(1)}%`} hint="Omzet / GMV" />
-        <StatCard label="Omzet / zending" value={eur(revenuePerShipment)} />
-        <StatCard label="In bewaring" value={eur(escrow)} hint="Escrow-saldo" />
-        <StatCard label="Uitbetaald" value={eur(payouts[0]?.s ?? 0)} />
-        <StatCard label="Leverratio" value={`${deliveryRate.toFixed(0)}%`} hint={`${totals.delivered}/${totals.shipments}`} />
-        <StatCard label="Claimratio" value={`${claimRate.toFixed(1)}%`} hint={`${totals.claims} claims`} />
+        <StatCard label={L.gmv} value={eur(gmv)} hint={L.gmv_h} />
+        <StatCard label={L.fees} value={eur(fees)} hint={L.fees_h} />
+        <StatCard label={L.take} value={`${takeRate.toFixed(1)}%`} hint={L.take_h} />
+        <StatCard label={L.rev_ship} value={eur(revenuePerShipment)} />
+        <StatCard label={L.escrow} value={eur(escrow)} hint={L.escrow_h} />
+        <StatCard label={L.payout} value={eur(payouts[0]?.s ?? 0)} />
+        <StatCard label={L.deliver} value={`${deliveryRate.toFixed(0)}%`} hint={`${totals.delivered}/${totals.shipments}`} />
+        <StatCard label={L.claim} value={`${claimRate.toFixed(1)}%`} hint={`${totals.claims} claims`} />
       </div>
 
       <section className="ph-card p-4">
-        <SectionTitle sub="Uitkomsten van de eligibility-engine">Beoordeling-verdeling</SectionTitle>
+        <SectionTitle sub={L.dist_sub}>{L.dist}</SectionTitle>
         <div className="space-y-2">
           {elig.map((e) => (
             <div key={e.eligibility} className="flex items-center gap-3">
@@ -66,10 +68,7 @@ export default async function AnalyticsPage() {
         </div>
       </section>
 
-      <p className="text-xs text-slate-400">
-        Cijfers zijn illustratief op basis van demo-data. Voor echte KRI's/claims geldt de meet- en
-        verificatiepolicy uit de baseline — geen 99%-claim zonder onafhankelijke verificatie.
-      </p>
+      <p className="text-xs text-slate-400">{L.note}</p>
     </div>
   );
 }

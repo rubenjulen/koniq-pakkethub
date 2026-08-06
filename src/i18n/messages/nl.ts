@@ -367,6 +367,28 @@ const nl = {
     review_queue: "Beoordelingswachtrij", review_queue_sub: "Zendingen die menselijke beoordeling nodig hebben",
     queue_empty: "Wachtrij leeg", queue_empty_d: "Geen zendingen in beoordeling of hold.",
   },
+  ui_ops: {
+    title: "🏭 Hub & intake", sub: "Intake, inspectie, verzegeling en overdracht",
+    worklist: "Werklijst", worklist_sub: "Geboekte zendingen die intake/inspectie nodig hebben",
+    empty_t: "Niets te doen", empty_b: "Er staan geen zendingen klaar voor intake.", deadline: "deadline",
+    hubs: "Hubs & service points", hubs_sub: "Locaties in de corridor",
+  },
+  ui_anl: {
+    title: "📊 Analytics & unit economics", sub: "Afgeleid uit live data (grootboek + zendingen)",
+    gmv: "GMV (geboekt)", gmv_h: "Bruto vervoerswaarde", fees: "Platform-omzet", fees_h: "Servicekosten",
+    take: "Take rate", take_h: "Omzet / GMV", rev_ship: "Omzet / zending",
+    escrow: "In bewaring", escrow_h: "Escrow-saldo", payout: "Uitbetaald", deliver: "Leverratio", claim: "Claimratio",
+    dist: "Beoordeling-verdeling", dist_sub: "Uitkomsten van de eligibility-engine",
+    note: "Cijfers zijn illustratief op basis van demo-data. Voor echte KRI's/claims geldt de meet- en verificatiepolicy uit de baseline — geen 99%-claim zonder onafhankelijke verificatie.",
+  },
+  ui_ctrl: {
+    back: "← Control Center", sender: "afzender",
+    items: "Items", items_sub: "Aangegeven inhoud",
+    reasons: "Redenen", reasons_sub: "Huidige beslissing",
+    decision: "Handmatige beslissing", decision_sub: "Reden verplicht · wordt gelogd (four-eyes)",
+    reason_ph: "Onderbouwing van het besluit (verplicht)…", submit: "Beslissing vastleggen", history: "Beslishistorie",
+    opt_ALLOW: "Toestaan", opt_REVIEW: "In beoordeling houden", opt_FREIGHT_ONLY: "Alleen via freight", opt_HOLD: "Blokkeren (hold)", opt_REJECT: "Weigeren",
+  },
   appnav: {
     overview: "Overzicht",
     shipments: "Mijn zendingen",

@@ -369,6 +369,28 @@ const es: Messages = {
     review_queue: "Cola de revisión", review_queue_sub: "Envíos que necesitan revisión humana",
     queue_empty: "Cola vacía", queue_empty_d: "Ningún envío en revisión o retenido.",
   },
+  ui_ops: {
+    title: "🏭 Hub e intake", sub: "Intake, inspección, sellado y entrega",
+    worklist: "Lista de trabajo", worklist_sub: "Envíos reservados que necesitan intake/inspección",
+    empty_t: "Nada que hacer", empty_b: "No hay envíos listos para intake.", deadline: "fecha límite",
+    hubs: "Hubs y puntos de servicio", hubs_sub: "Ubicaciones en el corredor",
+  },
+  ui_anl: {
+    title: "📊 Analítica y unit economics", sub: "Derivado de datos en vivo (libro mayor + envíos)",
+    gmv: "GMV (reservado)", gmv_h: "Valor bruto de transporte", fees: "Ingresos de plataforma", fees_h: "Cargos de servicio",
+    take: "Take rate", take_h: "Ingresos / GMV", rev_ship: "Ingresos / envío",
+    escrow: "En depósito", escrow_h: "Saldo en escrow", payout: "Pagado", deliver: "Tasa de entrega", claim: "Tasa de reclamos",
+    dist: "Distribución de elegibilidad", dist_sub: "Resultados del motor de elegibilidad",
+    note: "Las cifras son ilustrativas, basadas en datos de demostración. Para KRI/reclamos reales aplica la política de medición y verificación de la baseline — ninguna afirmación del 99% sin verificación independiente.",
+  },
+  ui_ctrl: {
+    back: "← Control Center", sender: "remitente",
+    items: "Artículos", items_sub: "Contenido declarado",
+    reasons: "Motivos", reasons_sub: "Decisión actual",
+    decision: "Decisión manual", decision_sub: "Motivo obligatorio · registrado (cuatro ojos)",
+    reason_ph: "Justificación de la decisión (obligatorio)…", submit: "Registrar decisión", history: "Historial de decisiones",
+    opt_ALLOW: "Permitir", opt_REVIEW: "Mantener en revisión", opt_FREIGHT_ONLY: "Solo freight", opt_HOLD: "Bloquear (hold)", opt_REJECT: "Rechazar",
+  },
   appnav: {
     overview: "Resumen",
     shipments: "Mis envíos",

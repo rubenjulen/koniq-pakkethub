@@ -368,6 +368,28 @@ const en: Messages = {
     review_queue: "Review queue", review_queue_sub: "Shipments that need human review",
     queue_empty: "Queue empty", queue_empty_d: "No shipments in review or hold.",
   },
+  ui_ops: {
+    title: "🏭 Hub & intake", sub: "Intake, inspection, sealing and handover",
+    worklist: "Work list", worklist_sub: "Booked shipments needing intake/inspection",
+    empty_t: "Nothing to do", empty_b: "No shipments are ready for intake.", deadline: "deadline",
+    hubs: "Hubs & service points", hubs_sub: "Locations in the corridor",
+  },
+  ui_anl: {
+    title: "📊 Analytics & unit economics", sub: "Derived from live data (ledger + shipments)",
+    gmv: "GMV (booked)", gmv_h: "Gross transport value", fees: "Platform revenue", fees_h: "Service fees",
+    take: "Take rate", take_h: "Revenue / GMV", rev_ship: "Revenue / shipment",
+    escrow: "In escrow", escrow_h: "Escrow balance", payout: "Paid out", deliver: "Delivery rate", claim: "Claim rate",
+    dist: "Eligibility distribution", dist_sub: "Outcomes of the eligibility engine",
+    note: "Figures are illustrative, based on demo data. For real KRIs/claims the baseline's measurement and verification policy applies — no 99% claim without independent verification.",
+  },
+  ui_ctrl: {
+    back: "← Control Center", sender: "sender",
+    items: "Items", items_sub: "Declared contents",
+    reasons: "Reasons", reasons_sub: "Current decision",
+    decision: "Manual decision", decision_sub: "Reason required · logged (four-eyes)",
+    reason_ph: "Justification for the decision (required)…", submit: "Record decision", history: "Decision history",
+    opt_ALLOW: "Allow", opt_REVIEW: "Keep under review", opt_FREIGHT_ONLY: "Freight only", opt_HOLD: "Block (hold)", opt_REJECT: "Reject",
+  },
   appnav: {
     overview: "Overview",
     shipments: "My shipments",

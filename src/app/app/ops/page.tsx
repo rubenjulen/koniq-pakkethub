@@ -3,12 +3,14 @@ import { requireCapability } from "@/lib/auth";
 import { query } from "@/db/client";
 import { StatusBadge, EmptyState, SectionTitle, Chip } from "@/components/ui";
 import { dateNL } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Hub & intake" };
 
 export default async function OpsPage() {
   const user = await requireCapability("ops.intake");
   const t = user.tenantId;
+  const L = (await getMessages()).ui_ops;
 
   const worklist = await query<any>(
     `SELECT s.id, s.reference, s.status, s.recipient_city, s.deadline, s.pickup_choice,
@@ -23,21 +25,21 @@ export default async function OpsPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">🏭 Hub & intake</h1>
-        <p className="text-sm text-slate-500">Intake, inspectie, verzegeling en overdracht</p>
+        <h1 className="text-xl font-bold text-slate-900">{L.title}</h1>
+        <p className="text-sm text-slate-500">{L.sub}</p>
       </div>
 
       <section>
-        <SectionTitle sub="Geboekte zendingen die intake/inspectie nodig hebben">Werklijst</SectionTitle>
+        <SectionTitle sub={L.worklist_sub}>{L.worklist}</SectionTitle>
         {worklist.length === 0 ? (
-          <EmptyState icon="📋" title="Niets te doen">Er staan geen zendingen klaar voor intake.</EmptyState>
+          <EmptyState icon="📋" title={L.empty_t}>{L.empty_b}</EmptyState>
         ) : (
           <div className="ph-card divide-y divide-slate-100">
             {worklist.map((s) => (
               <Link key={s.id} href={`/app/shipments/${s.id}`} className="flex items-center justify-between gap-3 p-3 hover:bg-slate-50">
                 <div>
                   <div className="font-mono text-sm font-semibold text-slate-800">{s.reference}</div>
-                  <div className="text-xs text-slate-500">{s.sender} · {s.kg ?? "?"} kg · {s.pickup_choice} · deadline {dateNL(s.deadline)}</div>
+                  <div className="text-xs text-slate-500">{s.sender} · {s.kg ?? "?"} kg · {s.pickup_choice} · {L.deadline} {dateNL(s.deadline)}</div>
                 </div>
                 <StatusBadge status={s.status} />
               </Link>
@@ -47,7 +49,7 @@ export default async function OpsPage() {
       </section>
 
       <section>
-        <SectionTitle sub="Locaties in de corridor">Hubs & service points</SectionTitle>
+        <SectionTitle sub={L.hubs_sub}>{L.hubs}</SectionTitle>
         <div className="grid gap-3 sm:grid-cols-2">
           {hubs.map((h, i) => (
             <div key={i} className="ph-card p-4">

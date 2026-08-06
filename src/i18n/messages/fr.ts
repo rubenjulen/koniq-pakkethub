@@ -369,6 +369,28 @@ const fr: Messages = {
     review_queue: "File d'examen", review_queue_sub: "Envois nécessitant un examen humain",
     queue_empty: "File vide", queue_empty_d: "Aucun envoi en examen ou bloqué.",
   },
+  ui_ops: {
+    title: "🏭 Hub & intake", sub: "Réception, inspection, scellage et transfert",
+    worklist: "Liste de travail", worklist_sub: "Envois réservés nécessitant réception/inspection",
+    empty_t: "Rien à faire", empty_b: "Aucun envoi prêt pour la réception.", deadline: "échéance",
+    hubs: "Hubs & points de service", hubs_sub: "Emplacements dans le corridor",
+  },
+  ui_anl: {
+    title: "📊 Analytique & unit economics", sub: "Dérivé de données en direct (grand livre + envois)",
+    gmv: "GMV (réservé)", gmv_h: "Valeur brute de transport", fees: "Revenus de la plateforme", fees_h: "Frais de service",
+    take: "Take rate", take_h: "Revenus / GMV", rev_ship: "Revenus / envoi",
+    escrow: "Sous séquestre", escrow_h: "Solde séquestre", payout: "Versé", deliver: "Taux de livraison", claim: "Taux de réclamations",
+    dist: "Répartition d'éligibilité", dist_sub: "Résultats du moteur d'éligibilité",
+    note: "Les chiffres sont indicatifs, basés sur des données de démonstration. Pour de vrais KRI/réclamations, la politique de mesure et de vérification de la baseline s'applique — aucune affirmation de 99 % sans vérification indépendante.",
+  },
+  ui_ctrl: {
+    back: "← Control Center", sender: "expéditeur",
+    items: "Articles", items_sub: "Contenu déclaré",
+    reasons: "Motifs", reasons_sub: "Décision actuelle",
+    decision: "Décision manuelle", decision_sub: "Motif obligatoire · journalisé (quatre yeux)",
+    reason_ph: "Justification de la décision (obligatoire)…", submit: "Enregistrer la décision", history: "Historique des décisions",
+    opt_ALLOW: "Autoriser", opt_REVIEW: "Maintenir en examen", opt_FREIGHT_ONLY: "Fret uniquement", opt_HOLD: "Bloquer (hold)", opt_REJECT: "Refuser",
+  },
   appnav: {
     overview: "Aperçu",
     shipments: "Mes envois",

@@ -369,6 +369,28 @@ const pt: Messages = {
     review_queue: "Fila de análise", review_queue_sub: "Envios que precisam de análise humana",
     queue_empty: "Fila vazia", queue_empty_d: "Nenhum envio em análise ou retido.",
   },
+  ui_ops: {
+    title: "🏭 Hub e intake", sub: "Intake, inspeção, lacre e transferência",
+    worklist: "Lista de trabalho", worklist_sub: "Envios reservados que precisam de intake/inspeção",
+    empty_t: "Nada a fazer", empty_b: "Nenhum envio pronto para intake.", deadline: "prazo",
+    hubs: "Hubs e pontos de serviço", hubs_sub: "Locais no corredor",
+  },
+  ui_anl: {
+    title: "📊 Analytics e unit economics", sub: "Derivado de dados ao vivo (livro-razão + envios)",
+    gmv: "GMV (reservado)", gmv_h: "Valor bruto de transporte", fees: "Receita da plataforma", fees_h: "Taxas de serviço",
+    take: "Take rate", take_h: "Receita / GMV", rev_ship: "Receita / envio",
+    escrow: "Em custódia", escrow_h: "Saldo em escrow", payout: "Pago", deliver: "Taxa de entrega", claim: "Taxa de reclamações",
+    dist: "Distribuição de elegibilidade", dist_sub: "Resultados do motor de elegibilidade",
+    note: "Os números são ilustrativos, com base em dados de demonstração. Para KRIs/reclamações reais vale a política de medição e verificação da baseline — nenhuma alegação de 99% sem verificação independente.",
+  },
+  ui_ctrl: {
+    back: "← Control Center", sender: "remetente",
+    items: "Itens", items_sub: "Conteúdo declarado",
+    reasons: "Motivos", reasons_sub: "Decisão atual",
+    decision: "Decisão manual", decision_sub: "Motivo obrigatório · registrado (quatro olhos)",
+    reason_ph: "Justificativa da decisão (obrigatório)…", submit: "Registrar decisão", history: "Histórico de decisões",
+    opt_ALLOW: "Permitir", opt_REVIEW: "Manter em análise", opt_FREIGHT_ONLY: "Somente freight", opt_HOLD: "Bloquear (hold)", opt_REJECT: "Rejeitar",
+  },
   appnav: {
     overview: "Visão geral",
     shipments: "Meus envios",
