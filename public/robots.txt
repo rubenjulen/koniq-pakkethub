@@ -1,0 +1,3 @@
+# PakketHub.com — domein nog niet geactiveerd. Niet indexeren tot livegang.
+User-agent: *
+Disallow: /

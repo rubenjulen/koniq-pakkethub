@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   PakketHub design tokens. Corridor-platform look: trustworthy, operational.
+   ========================================================================= */
+:root {
+  /* PakketHub officiële merkkleuren (uit logo/huisstijl) */
+  --ph-orange: #e9481c;       /* primair accent */
+  --ph-orange-dark: #c93c15;
+  --ph-charcoal: #2e2e2e;     /* donkere achtergrond huisstijl */
+  --ph-beige: #cdbfa7;        /* zacht secundair */
+  --ph-ink: #1a1a1a;          /* bijna-zwart */
+  --ph-slate: #2e2e2e;
+  --ph-amber: #f59e0b;
+  --ph-bg: #f6f5f3;           /* lichte tint met warme ondertoon */
+  --ph-line: #e5e1da;
+  /* Backwards-compat alias: 'teal' verwijst nu naar het merkoranje. */
+  --ph-teal: var(--ph-orange);
+  --ph-orange-dark: var(--ph-orange-dark);
+}
+
+@theme inline {
+  --color-brand: var(--ph-orange);
+  --color-brand-dark: var(--ph-orange-dark);
+  --color-ink: var(--ph-ink);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--ph-bg);
+  color: var(--ph-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utility helpers reused across the app */
+.ph-card {
+  background: #fff;
+  border: 1px solid var(--ph-line);
+  border-radius: 14px;
+}
+.ph-chip {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .15rem .55rem; border-radius: 999px;
+  font-size: .72rem; font-weight: 600; line-height: 1.4;
+}
+.ph-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  border-radius: 10px; font-weight: 600; padding: .6rem 1rem;
+  transition: background .15s, opacity .15s; cursor: pointer;
+}
+.ph-btn-primary { background: var(--ph-orange); color: #fff; }
+.ph-btn-primary:hover { background: var(--ph-orange-dark); }
+.ph-btn-ghost { background: #fff; border: 1px solid var(--ph-line); color: var(--ph-ink); }
+.ph-btn-ghost:hover { background: #f1f5f9; }
+
+/* Fade-in for chat/messages */
+@keyframes ph-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.ph-fade { animation: ph-fade .18s ease-out; }
+
+/* Thin scrollbar for chat panes */
+.ph-scroll::-webkit-scrollbar { width: 8px; }
+.ph-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }

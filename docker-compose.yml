@@ -1,0 +1,35 @@
+# PakketHub staging — app + Postgres met duurzame opslag.
+# Geschikt voor Coolify (New Resource → Docker Compose) of lokaal: `docker compose up -d`.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pakkethub
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      POSTGRES_DB: pakkethub
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pakkethub"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      # Duurzame data via Postgres (i.p.v. de ingebedde PGlite):
+      DATABASE_URL: postgres://pakkethub:${DB_PASSWORD:-changeme}@db:5432/pakkethub
+      SEED_ON_BOOT: "true"            # maakt demo-accounts bij eerste boot
+      STAGING_PASSWORD: ${STAGING_PASSWORD:-verander-dit}
+    ports:
+      - "3070:3070"
+
+volumes:
+  pgdata:
