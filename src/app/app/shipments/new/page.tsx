@@ -3,12 +3,14 @@ import { requireCapability } from "@/lib/auth";
 import { getCorridors, getCategoriesList } from "@/lib/tenant";
 import { NewShipmentForm } from "@/components/NewShipmentForm";
 import { createShipmentAction } from "../actions";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Pakket versturen" };
 
 export default async function NewShipmentPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const user = await requireCapability("shipment.create");
   const { error } = await searchParams;
+  const m = await getMessages();
   const corridors = await getCorridors(user.tenantId);
   const categories = await getCategoriesList(user.tenantId);
 
@@ -22,14 +24,11 @@ export default async function NewShipmentPage({ searchParams }: { searchParams: 
   return (
     <div className="mx-auto max-w-3xl space-y-4">
       <div>
-        <Link href="/app/shipments" className="text-sm text-orange-600 hover:underline">← Zendingen</Link>
-        <h1 className="mt-1 text-xl font-bold text-slate-900">Pakket versturen</h1>
-        <p className="text-sm text-slate-500">
-          Geef de inhoud volledig aan. We controleren meteen of het via een reiziger mag of naar freight moet.
-        </p>
+        <Link href="/app/shipments" className="text-sm text-orange-600 hover:underline">← {m.appnav.shipments}</Link>
+        <h1 className="mt-1 text-xl font-bold text-slate-900">{m.common.send_package}</h1>
       </div>
       {error && <div className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">{error}</div>}
-      <NewShipmentForm corridors={corridors} categories={cats} action={createShipmentAction} />
+      <NewShipmentForm corridors={corridors} categories={cats} action={createShipmentAction} t={m.newship} eligLabels={m.elig} />
     </div>
   );
 }
