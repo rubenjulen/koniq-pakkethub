@@ -1,5 +1,26 @@
 # Changelog — PakketHub
 
+## v0.4.0 — Bucket 3: multimodaal, lockers, boeken & video-CMS
+
+- **Schema v0.3** (10 nieuwe tabellen, CREATE IF NOT EXISTS): `manifests`, `shipment_legs`,
+  `lockers`, `locker_compartments`, `timeslots`, `slot_bookings`, `reconciliations`,
+  `reconciliation_scans`, `address_book`, `product_book`, `bulk_uploads(+items)`. Demo-seed
+  uitgebreid (4-legs-keten + vlucht-manifest, locker met 6 compartimenten, tijdslots, boeken).
+- **Multimodale legs & manifesten**: `/app/shipments/[id]` toont een **route-tijdlijn** (5 talen)
+  met de multimodale keten (pickup → hub → linehaul → douane → bezorging). Ops-scherm
+  **`/app/manifests`**: manifest aanmaken, zendingen koppelen/loskoppelen, status-flow
+  (verzegel → vertrek → aankomst → sluit) die leg-status, zending-status én custody-events cascadeert.
+- **Lockers, tijdslots & reconciliatie** (`/app/lockers`, ops): compartiment-grid met toewijzen
+  (PIN-simulatie + custody-event) / vrijgeven; tijdslots met capaciteit en boeken; voorraad-
+  reconciliatie (scannen → MATCH/UNEXPECTED/MISSING, status BALANCED/DISCREPANCY, afsluiten).
+- **Adres- & productboek** (`/app/books`, 5 talen): bewaar ontvangers en producten voor snellere
+  aanmaak. **Zakelijke bulk-upload** (`/app/bulk`, 5 talen): CSV plakken → valideren → voorvertoning
+  → echte zendingen aanmaken (incl. eligibility-check + custody), vastgelegd in `bulk_uploads`.
+- **Video-CMS** (`/app/content`, admin): YouTube-video's toevoegen/bewerken/(de)publiceren/
+  verwijderen; gepubliceerde video's verschijnen op de homepage.
+- **i18n compleet voor klant-facing**: alle member-pagina's + betaal-/label-/account-/notificatie-
+  scherm + verzend-calculator vertaald. Resteert alleen interne ops/admin-schermen (NL-bemensing).
+
 ## v0.3.0 — Meertaligheid (5 talen)
 
 - **i18n-fundament**: taal-cookie + Accept-Language-detectie, woordenboeken per taal
