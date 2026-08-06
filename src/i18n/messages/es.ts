@@ -391,6 +391,22 @@ const es: Messages = {
     reason_ph: "Justificación de la decisión (obligatorio)…", submit: "Registrar decisión", history: "Historial de decisiones",
     opt_ALLOW: "Permitir", opt_REVIEW: "Mantener en revisión", opt_FREIGHT_ONLY: "Solo freight", opt_HOLD: "Bloquear (hold)", opt_REJECT: "Rechazar",
   },
+  ui_disp: {
+    title: "🚚 Flota y despacho", sub: "Entrega de última milla vía flotas verificadas",
+    fleets: "Flotas", fleet_name_ph: "Nombre de flota", area_ph: "Zona", add_fleet: "+ Flota",
+    vehicles_n: "vehículo(s)", drivers_n: "conductor(es)", plate_ph: "Matrícula", driver_ph: "Conductor",
+    new_job: "Nuevo trabajo", new_job_sub: "Crea un trabajo de última milla desde un envío", no_shipment: "— sin envío —",
+    jt_last: "Última milla", jt_pickup: "Recogida", jt_hub: "Transferencia de hub", add_job: "+ Trabajo",
+    workbench: "Mesa de despacho", workbench_sub: "Asigna y sigue el estado", no_jobs: "Sin trabajos",
+    assign: "Asignar", enroute: "En ruta", finish: "Completar",
+  },
+  ui_frt: {
+    title: "🚢 Almacén y freight gestionado", sub: "Consolidación en almacén y carga profesional (ETA vía adaptador de routing)",
+    cons: "Consolidaciones", cons_sub: "Agrupa envíos para un tramo de salida", new: "+ Nuevo", none: "Aún no hay consolidaciones.",
+    add_ship: "+ envío…", add: "Añadir", seal_send: "Sellar y enviar →",
+    book: "Reservar freight", book_sub: "Reserva un transportista con licencia (sandbox)", loose: "— reserva suelta —", carrier_ph: "Transportista",
+    m_air: "Aéreo", m_sea: "Marítimo", m_road: "Terrestre", orders: "Órdenes de freight", no_orders: "Sin órdenes de freight", eta: "ETA",
+  },
   appnav: {
     overview: "Resumen",
     shipments: "Mis envíos",

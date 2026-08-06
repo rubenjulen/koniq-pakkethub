@@ -389,6 +389,22 @@ const nl = {
     reason_ph: "Onderbouwing van het besluit (verplicht)…", submit: "Beslissing vastleggen", history: "Beslishistorie",
     opt_ALLOW: "Toestaan", opt_REVIEW: "In beoordeling houden", opt_FREIGHT_ONLY: "Alleen via freight", opt_HOLD: "Blokkeren (hold)", opt_REJECT: "Weigeren",
   },
+  ui_disp: {
+    title: "🚚 Fleet & dispatch", sub: "Last-mile bezorging via geverifieerde fleets",
+    fleets: "Fleets", fleet_name_ph: "Naam fleet", area_ph: "Gebied", add_fleet: "+ Fleet",
+    vehicles_n: "voertuig(en)", drivers_n: "chauffeur(s)", plate_ph: "Kenteken", driver_ph: "Chauffeur",
+    new_job: "Nieuwe job", new_job_sub: "Maak een last-mile job aan uit een zending", no_shipment: "— geen zending —",
+    jt_last: "Last mile", jt_pickup: "Pickup", jt_hub: "Hub-transfer", add_job: "+ Job",
+    workbench: "Dispatch-workbench", workbench_sub: "Wijs toe en volg de status", no_jobs: "Geen jobs",
+    assign: "Toewijzen", enroute: "Onderweg", finish: "Afronden",
+  },
+  ui_frt: {
+    title: "🚢 Warehouse & managed freight", sub: "Consolidatie in het magazijn en professionele vracht (ETA via routing-adapter)",
+    cons: "Consolidaties", cons_sub: "Bundel zendingen voor uitgaande leg", new: "+ Nieuw", none: "Nog geen consolidaties.",
+    add_ship: "+ zending…", add: "Toevoegen", seal_send: "Verzegel & verzend →",
+    book: "Freight boeken", book_sub: "Boek een gelicentieerde vervoerder (sandbox)", loose: "— losse boeking —", carrier_ph: "Vervoerder",
+    m_air: "Lucht", m_sea: "Zee", m_road: "Weg", orders: "Freight-orders", no_orders: "Geen freight-orders", eta: "ETA",
+  },
   appnav: {
     overview: "Overzicht",
     shipments: "Mijn zendingen",

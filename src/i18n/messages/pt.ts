@@ -391,6 +391,22 @@ const pt: Messages = {
     reason_ph: "Justificativa da decisão (obrigatório)…", submit: "Registrar decisão", history: "Histórico de decisões",
     opt_ALLOW: "Permitir", opt_REVIEW: "Manter em análise", opt_FREIGHT_ONLY: "Somente freight", opt_HOLD: "Bloquear (hold)", opt_REJECT: "Rejeitar",
   },
+  ui_disp: {
+    title: "🚚 Frota e despacho", sub: "Entrega de última milha via frotas verificadas",
+    fleets: "Frotas", fleet_name_ph: "Nome da frota", area_ph: "Área", add_fleet: "+ Frota",
+    vehicles_n: "veículo(s)", drivers_n: "motorista(s)", plate_ph: "Placa", driver_ph: "Motorista",
+    new_job: "Novo trabalho", new_job_sub: "Crie um trabalho de última milha a partir de um envio", no_shipment: "— sem envio —",
+    jt_last: "Última milha", jt_pickup: "Coleta", jt_hub: "Transferência de hub", add_job: "+ Trabalho",
+    workbench: "Mesa de despacho", workbench_sub: "Atribua e acompanhe o estado", no_jobs: "Sem trabalhos",
+    assign: "Atribuir", enroute: "A caminho", finish: "Concluir",
+  },
+  ui_frt: {
+    title: "🚢 Armazém e freight gerenciado", sub: "Consolidação no armazém e frete profissional (ETA via adaptador de routing)",
+    cons: "Consolidações", cons_sub: "Agrupe envios para um trecho de saída", new: "+ Novo", none: "Ainda não há consolidações.",
+    add_ship: "+ envio…", add: "Adicionar", seal_send: "Lacrar e enviar →",
+    book: "Reservar freight", book_sub: "Reserve uma transportadora licenciada (sandbox)", loose: "— reserva avulsa —", carrier_ph: "Transportadora",
+    m_air: "Aéreo", m_sea: "Marítimo", m_road: "Rodoviário", orders: "Ordens de freight", no_orders: "Sem ordens de freight", eta: "ETA",
+  },
   appnav: {
     overview: "Visão geral",
     shipments: "Meus envios",

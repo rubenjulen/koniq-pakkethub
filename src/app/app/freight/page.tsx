@@ -3,12 +3,14 @@ import { query } from "@/db/client";
 import { EmptyState, Chip, SectionTitle } from "@/components/ui";
 import { timeAgo } from "@/lib/format";
 import { createConsolidationAction, bookFreightAction, addToConsolidationAction, advanceConsolidationAction } from "./actions";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Warehouse & freight" };
 
 export default async function FreightPage() {
   const user = await requireCapability("ops.intake");
   const t = user.tenantId;
+  const L = (await getMessages()).ui_frt;
   const inp = "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-orange-500";
 
   const hubs = await query<any>(`SELECT id, name FROM hubs WHERE tenant_id=$1 AND services @> ARRAY['CONSOLIDATION']`, [t]);
@@ -31,20 +33,20 @@ export default async function FreightPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">🚢 Warehouse & managed freight</h1>
-        <p className="text-sm text-slate-500">Consolidatie in het magazijn en professionele vracht (ETA via routing-adapter)</p>
+        <h1 className="text-xl font-bold text-slate-900">{L.title}</h1>
+        <p className="text-sm text-slate-500">{L.sub}</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="ph-card p-4">
-          <SectionTitle sub="Bundel zendingen voor uitgaande leg">Consolidaties</SectionTitle>
+          <SectionTitle sub={L.cons_sub}>{L.cons}</SectionTitle>
           <form action={createConsolidationAction} className="mb-3 flex gap-2">
             <select name="hub_id" className={inp}>
               {hubs.map((h: any) => <option key={h.id} value={h.id}>{h.name}</option>)}
             </select>
-            <button className="ph-btn ph-btn-primary text-sm">+ Nieuw</button>
+            <button className="ph-btn ph-btn-primary text-sm">{L.new}</button>
           </form>
-          {consolidations.length === 0 ? <p className="text-sm text-slate-400">Nog geen consolidaties.</p> : (
+          {consolidations.length === 0 ? <p className="text-sm text-slate-400">{L.none}</p> : (
             <div className="space-y-3">
               {consolidations.map((c: any) => {
                 const items = consItems.filter((ci: any) => ci.consolidation_id === c.id);
@@ -64,16 +66,16 @@ export default async function FreightPage() {
                         <form action={addToConsolidationAction} className="flex gap-1">
                           <input type="hidden" name="consolidation_id" value={c.id} />
                           <select name="shipment_id" className="rounded border border-slate-300 px-2 py-1 text-xs">
-                            <option value="">+ zending…</option>
+                            <option value="">{L.add_ship}</option>
                             {addable.map((s: any) => <option key={s.id} value={s.id}>{s.reference}</option>)}
                           </select>
-                          <button className="ph-btn ph-btn-ghost text-xs">Toevoegen</button>
+                          <button className="ph-btn ph-btn-ghost text-xs">{L.add}</button>
                         </form>
                         {items.length > 0 && (
                           <form action={advanceConsolidationAction}>
                             <input type="hidden" name="consolidation_id" value={c.id} />
                             <input type="hidden" name="to_status" value="DISPATCHED" />
-                            <button className="ph-btn ph-btn-primary text-xs">Verzegel & verzend →</button>
+                            <button className="ph-btn ph-btn-primary text-xs">{L.seal_send}</button>
                           </form>
                         )}
                       </div>
@@ -86,28 +88,28 @@ export default async function FreightPage() {
         </section>
 
         <section className="ph-card p-4">
-          <SectionTitle sub="Boek een gelicentieerde vervoerder (sandbox)">Freight boeken</SectionTitle>
+          <SectionTitle sub={L.book_sub}>{L.book}</SectionTitle>
           <form action={bookFreightAction} className="space-y-2">
             <select name="shipment_id" className={inp}>
-              <option value="">— losse boeking —</option>
+              <option value="">{L.loose}</option>
               {freightEligible.map((s: any) => <option key={s.id} value={s.id}>{s.reference}</option>)}
             </select>
-            <input name="carrier_name" placeholder="Vervoerder" className={inp} />
-            <select name="mode" className={inp}><option value="AIR">Lucht</option><option value="SEA">Zee</option><option value="ROAD">Weg</option></select>
-            <button className="ph-btn ph-btn-primary w-full text-sm">Freight boeken</button>
+            <input name="carrier_name" placeholder={L.carrier_ph} className={inp} />
+            <select name="mode" className={inp}><option value="AIR">{L.m_air}</option><option value="SEA">{L.m_sea}</option><option value="ROAD">{L.m_road}</option></select>
+            <button className="ph-btn ph-btn-primary w-full text-sm">{L.book}</button>
           </form>
         </section>
       </div>
 
       <section>
-        <SectionTitle>Freight-orders</SectionTitle>
-        {freight.length === 0 ? <EmptyState icon="📦" title="Geen freight-orders" /> : (
+        <SectionTitle>{L.orders}</SectionTitle>
+        {freight.length === 0 ? <EmptyState icon="📦" title={L.no_orders} /> : (
           <div className="ph-card divide-y divide-slate-100">
             {freight.map((f: any, i: number) => (
               <div key={i} className="flex items-center justify-between gap-3 p-3 text-sm">
                 <div>
                   <span className="font-mono font-semibold text-slate-800">{f.reference}</span>
-                  <span className="ml-2 text-slate-500">{f.carrier_name} · {f.mode} · ETA {f.eta_days}d{f.shipment_ref ? ` · ${f.shipment_ref}` : ""}</span>
+                  <span className="ml-2 text-slate-500">{f.carrier_name} · {f.mode} · {L.eta} {f.eta_days}d{f.shipment_ref ? ` · ${f.shipment_ref}` : ""}</span>
                 </div>
                 <div className="flex items-center gap-2"><Chip tone={f.status === "DELIVERED" ? "ok" : "warn"}>{f.status}</Chip><span className="text-xs text-slate-400">{timeAgo(f.created_at)}</span></div>
               </div>

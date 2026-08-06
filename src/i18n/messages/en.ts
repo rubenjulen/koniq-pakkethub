@@ -390,6 +390,22 @@ const en: Messages = {
     reason_ph: "Justification for the decision (required)…", submit: "Record decision", history: "Decision history",
     opt_ALLOW: "Allow", opt_REVIEW: "Keep under review", opt_FREIGHT_ONLY: "Freight only", opt_HOLD: "Block (hold)", opt_REJECT: "Reject",
   },
+  ui_disp: {
+    title: "🚚 Fleet & dispatch", sub: "Last-mile delivery via verified fleets",
+    fleets: "Fleets", fleet_name_ph: "Fleet name", area_ph: "Area", add_fleet: "+ Fleet",
+    vehicles_n: "vehicle(s)", drivers_n: "driver(s)", plate_ph: "Plate", driver_ph: "Driver",
+    new_job: "New job", new_job_sub: "Create a last-mile job from a shipment", no_shipment: "— no shipment —",
+    jt_last: "Last mile", jt_pickup: "Pickup", jt_hub: "Hub transfer", add_job: "+ Job",
+    workbench: "Dispatch workbench", workbench_sub: "Assign and track status", no_jobs: "No jobs",
+    assign: "Assign", enroute: "En route", finish: "Complete",
+  },
+  ui_frt: {
+    title: "🚢 Warehouse & managed freight", sub: "Warehouse consolidation and professional freight (ETA via routing adapter)",
+    cons: "Consolidations", cons_sub: "Bundle shipments for an outbound leg", new: "+ New", none: "No consolidations yet.",
+    add_ship: "+ shipment…", add: "Add", seal_send: "Seal & dispatch →",
+    book: "Book freight", book_sub: "Book a licensed carrier (sandbox)", loose: "— standalone booking —", carrier_ph: "Carrier",
+    m_air: "Air", m_sea: "Sea", m_road: "Road", orders: "Freight orders", no_orders: "No freight orders", eta: "ETA",
+  },
   appnav: {
     overview: "Overview",
     shipments: "My shipments",

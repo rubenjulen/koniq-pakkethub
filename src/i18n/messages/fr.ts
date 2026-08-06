@@ -391,6 +391,22 @@ const fr: Messages = {
     reason_ph: "Justification de la décision (obligatoire)…", submit: "Enregistrer la décision", history: "Historique des décisions",
     opt_ALLOW: "Autoriser", opt_REVIEW: "Maintenir en examen", opt_FREIGHT_ONLY: "Fret uniquement", opt_HOLD: "Bloquer (hold)", opt_REJECT: "Refuser",
   },
+  ui_disp: {
+    title: "🚚 Flotte & répartition", sub: "Livraison du dernier kilomètre via des flottes vérifiées",
+    fleets: "Flottes", fleet_name_ph: "Nom de la flotte", area_ph: "Zone", add_fleet: "+ Flotte",
+    vehicles_n: "véhicule(s)", drivers_n: "chauffeur(s)", plate_ph: "Plaque", driver_ph: "Chauffeur",
+    new_job: "Nouvelle tâche", new_job_sub: "Créez une tâche de dernier kilomètre depuis un envoi", no_shipment: "— aucun envoi —",
+    jt_last: "Dernier km", jt_pickup: "Enlèvement", jt_hub: "Transfert de hub", add_job: "+ Tâche",
+    workbench: "Poste de répartition", workbench_sub: "Affectez et suivez le statut", no_jobs: "Aucune tâche",
+    assign: "Affecter", enroute: "En route", finish: "Terminer",
+  },
+  ui_frt: {
+    title: "🚢 Entrepôt & fret géré", sub: "Consolidation en entrepôt et fret professionnel (ETA via l'adaptateur de routing)",
+    cons: "Consolidations", cons_sub: "Regroupez des envois pour un tronçon sortant", new: "+ Nouveau", none: "Aucune consolidation pour le moment.",
+    add_ship: "+ envoi…", add: "Ajouter", seal_send: "Sceller & expédier →",
+    book: "Réserver le fret", book_sub: "Réservez un transporteur licencié (sandbox)", loose: "— réservation isolée —", carrier_ph: "Transporteur",
+    m_air: "Aérien", m_sea: "Maritime", m_road: "Routier", orders: "Ordres de fret", no_orders: "Aucun ordre de fret", eta: "ETA",
+  },
   appnav: {
     overview: "Aperçu",
     shipments: "Mes envois",
