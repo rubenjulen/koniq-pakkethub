@@ -5,6 +5,7 @@ import { queryOne } from "@/db/client";
 import { assertParticipant, fetchMessages, markRead } from "@/lib/chat";
 import { ChatThread } from "@/components/ChatThread";
 import { StatusBadge } from "@/components/ui";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Gesprek" };
 
@@ -24,12 +25,13 @@ export default async function ConversationPage({ params }: { params: Promise<{ i
   );
   const messages = await fetchMessages(id);
   await markRead(id, user.id);
+  const m = await getMessages();
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-3">
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
-          <Link href="/app/messages" className="text-sm text-orange-600 hover:underline">← Berichten</Link>
+          <Link href="/app/messages" className="text-sm text-orange-600 hover:underline">← {m.msg.title}</Link>
           <h1 className="truncate text-lg font-bold text-slate-900">{meta?.others ?? meta?.subject ?? "Gesprek"}</h1>
         </div>
         {meta?.shipment_id && (
@@ -45,6 +47,7 @@ export default async function ConversationPage({ params }: { params: Promise<{ i
         currentUserId={user.id}
         initialMessages={messages}
         locked={meta?.conv_status !== "OPEN"}
+        t={m.chat}
       />
     </div>
   );

@@ -123,6 +123,14 @@ const en: Messages = {
     report_title: "Report a concern or incident?",
     report_body: "Report it via your shipment in the app or contact us. We keep evidence (photos, seal, custody log) for investigation. Never respond to requests to pay outside of PakketHub.",
   },
+  chat: {
+    closed: "This conversation is closed.", propose: "Propose an arrangement",
+    type_msg: "Type a message…  (Enter to send)", send: "Send",
+    ag_confirmed: "Confirmed", ag_declined: "Declined", ag_proposal: "Proposal", ag_title: "Arrangement",
+    confirm: "Confirm", decline: "Decline",
+    place_ph: "Place (e.g. Hub Amsterdam)", time_ph: "Time (e.g. Tue 2pm)", price_ph: "Price €", note_ph: "Note",
+    cancel: "Cancel", send_proposal: "Send proposal",
+  },
   newship: {
     s1: "1. Corridor & recipient", s2: "2. Package", s3: "3. Declare contents",
     corridor: "Corridor", recipient_name: "Recipient name", full_name: "Full name",

@@ -124,6 +124,14 @@ const es: Messages = {
     report_title: "¿Informar de una inquietud o incidente?",
     report_body: "Infórmalo mediante tu envío en la app o contáctanos. Conservamos pruebas (fotos, precinto, log de custodia) para la investigación. Nunca respondas a solicitudes de pago fuera de PakketHub.",
   },
+  chat: {
+    closed: "Esta conversación está cerrada.", propose: "Proponer un acuerdo",
+    type_msg: "Escribe un mensaje…  (Enter para enviar)", send: "Enviar",
+    ag_confirmed: "Confirmado", ag_declined: "Rechazado", ag_proposal: "Propuesta", ag_title: "Acuerdo",
+    confirm: "Confirmar", decline: "Rechazar",
+    place_ph: "Lugar (p. ej. Hub Amsterdam)", time_ph: "Hora (p. ej. mar 14:00)", price_ph: "Precio €", note_ph: "Nota",
+    cancel: "Cancelar", send_proposal: "Enviar propuesta",
+  },
   newship: {
     s1: "1. Corredor y destinatario", s2: "2. Paquete", s3: "3. Declarar contenido",
     corridor: "Corredor", recipient_name: "Nombre del destinatario", full_name: "Nombre completo",

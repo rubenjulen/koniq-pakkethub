@@ -124,6 +124,14 @@ const fr: Messages = {
     report_title: "Signaler une inquiétude ou un incident ?",
     report_body: "Signalez-le via votre envoi dans l'app ou contactez-nous. Nous conservons les preuves (photos, scellé, journal de traçabilité) pour enquête. Ne répondez jamais à des demandes de paiement en dehors de PakketHub.",
   },
+  chat: {
+    closed: "Cette conversation est fermée.", propose: "Proposer un arrangement",
+    type_msg: "Tapez un message…  (Entrée pour envoyer)", send: "Envoyer",
+    ag_confirmed: "Confirmé", ag_declined: "Refusé", ag_proposal: "Proposition", ag_title: "Arrangement",
+    confirm: "Confirmer", decline: "Refuser",
+    place_ph: "Lieu (ex. Hub Amsterdam)", time_ph: "Heure (ex. mar 14h)", price_ph: "Prix €", note_ph: "Note",
+    cancel: "Annuler", send_proposal: "Envoyer la proposition",
+  },
   newship: {
     s1: "1. Corridor et destinataire", s2: "2. Colis", s3: "3. Déclarer le contenu",
     corridor: "Corridor", recipient_name: "Nom du destinataire", full_name: "Nom complet",

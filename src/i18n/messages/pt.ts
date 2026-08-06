@@ -124,6 +124,14 @@ const pt: Messages = {
     report_title: "Relatar uma preocupação ou incidente?",
     report_body: "Relate pelo seu envio no app ou entre em contato. Guardamos provas (fotos, lacre, log de custódia) para investigação. Nunca responda a pedidos de pagamento fora da PakketHub.",
   },
+  chat: {
+    closed: "Esta conversa está encerrada.", propose: "Propor um combinado",
+    type_msg: "Digite uma mensagem…  (Enter para enviar)", send: "Enviar",
+    ag_confirmed: "Confirmado", ag_declined: "Recusado", ag_proposal: "Proposta", ag_title: "Combinado",
+    confirm: "Confirmar", decline: "Recusar",
+    place_ph: "Local (ex.: Hub Amsterdam)", time_ph: "Horário (ex.: ter 14h)", price_ph: "Preço €", note_ph: "Nota",
+    cancel: "Cancelar", send_proposal: "Enviar proposta",
+  },
   newship: {
     s1: "1. Corredor e destinatário", s2: "2. Pacote", s3: "3. Declarar conteúdo",
     corridor: "Corredor", recipient_name: "Nome do destinatário", full_name: "Nome completo",

@@ -122,6 +122,14 @@ const nl = {
     report_title: "Een zorg of incident melden?",
     report_body: "Meld het via je zending in de app of neem contact op. We bewaren bewijs (foto's, verzegeling, custody-log) voor onderzoek. Reageer nooit op verzoeken om betalingen buiten PakketHub om.",
   },
+  chat: {
+    closed: "Dit gesprek is gesloten.", propose: "Afspraak voorstellen",
+    type_msg: "Typ een bericht…  (Enter = versturen)", send: "Stuur",
+    ag_confirmed: "Bevestigd", ag_declined: "Afgewezen", ag_proposal: "Voorstel", ag_title: "Afspraak",
+    confirm: "Bevestigen", decline: "Afwijzen",
+    place_ph: "Plaats (bijv. Hub Amsterdam)", time_ph: "Tijd (bijv. di 14:00)", price_ph: "Prijs €", note_ph: "Notitie",
+    cancel: "Annuleren", send_proposal: "Voorstel sturen",
+  },
   newship: {
     s1: "1. Corridor & ontvanger", s2: "2. Pakket", s3: "3. Inhoud aangeven",
     corridor: "Corridor", recipient_name: "Naam ontvanger", full_name: "Volledige naam",

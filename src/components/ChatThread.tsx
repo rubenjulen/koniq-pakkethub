@@ -1,5 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { Messages } from "@/i18n/messages/nl";
+
+type ChatT = Messages["chat"];
 
 type Msg = {
   id: string;
@@ -21,12 +24,13 @@ function timeShort(iso: string) {
 }
 
 export function ChatThread({
-  conversationId, currentUserId, initialMessages, locked,
+  conversationId, currentUserId, initialMessages, locked, t,
 }: {
   conversationId: string;
   currentUserId: string;
   initialMessages: Msg[];
   locked: boolean;
+  t: ChatT;
 }) {
   const [messages, setMessages] = useState<Msg[]>(initialMessages);
   const [text, setText] = useState("");
@@ -134,6 +138,7 @@ export function ChatThread({
                     terms={m.agreement_terms}
                     canRespond={!mine && m.agreement_status === "PROPOSED"}
                     onRespond={(a) => respondAgreement(m.agreement_id!, a)}
+                    t={t}
                   />
                 )}
                 <div className={`mt-1 text-right text-[10px] ${mine ? "text-orange-100" : "text-slate-400"}`}>{timeShort(m.created_at)}</div>
@@ -146,26 +151,26 @@ export function ChatThread({
 
       {/* Afspraak-voorstel */}
       {showPropose && !locked && (
-        <ProposeForm conversationId={conversationId} onDone={async () => { setShowPropose(false); await poll(); }} />
+        <ProposeForm conversationId={conversationId} onDone={async () => { setShowPropose(false); await poll(); }} t={t} />
       )}
 
       {/* Composer */}
       {locked ? (
-        <div className="border-t border-slate-100 p-3 text-center text-sm text-slate-400">Dit gesprek is gesloten.</div>
+        <div className="border-t border-slate-100 p-3 text-center text-sm text-slate-400">{t.closed}</div>
       ) : (
         <div className="border-t border-slate-100 p-3">
           <div className="flex items-end gap-2">
-            <button onClick={() => setShowPropose((v) => !v)} title="Afspraak voorstellen"
+            <button onClick={() => setShowPropose((v) => !v)} title={t.propose}
               className="ph-btn ph-btn-ghost shrink-0 px-3">🤝</button>
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
               rows={1}
-              placeholder="Typ een bericht…  (Enter = versturen)"
+              placeholder={t.type_msg}
               className="max-h-32 flex-1 resize-none rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
             />
-            <button onClick={send} disabled={sending || !text.trim()} className="ph-btn ph-btn-primary shrink-0 disabled:opacity-40">Stuur</button>
+            <button onClick={send} disabled={sending || !text.trim()} className="ph-btn ph-btn-primary shrink-0 disabled:opacity-40">{t.send}</button>
           </div>
         </div>
       )}
@@ -173,17 +178,17 @@ export function ChatThread({
   );
 }
 
-function AgreementCard({ status, terms, canRespond, onRespond, mine }: {
+function AgreementCard({ status, terms, canRespond, onRespond, mine, t }: {
   status: string; terms: Record<string, any>; canRespond: boolean; mine: boolean;
-  onRespond: (a: "accept" | "decline") => void;
+  onRespond: (a: "accept" | "decline") => void; t: ChatT;
 }) {
   const tone = status === "ACCEPTED" ? "bg-orange-50 text-orange-800 ring-orange-300"
     : status === "DECLINED" ? "bg-rose-50 text-rose-800 ring-rose-300"
     : mine ? "bg-white/15 text-white ring-white/30" : "bg-white text-slate-700 ring-slate-200";
-  const label = status === "ACCEPTED" ? "Bevestigd" : status === "DECLINED" ? "Afgewezen" : "Voorstel";
+  const label = status === "ACCEPTED" ? t.ag_confirmed : status === "DECLINED" ? t.ag_declined : t.ag_proposal;
   return (
     <div className={`mt-2 rounded-xl p-2 text-xs ring-1 ${tone}`}>
-      <div className="mb-1 font-semibold">🤝 Afspraak · {label}</div>
+      <div className="mb-1 font-semibold">🤝 {t.ag_title} · {label}</div>
       <ul className="space-y-0.5">
         {terms.handover_place && <li>📍 {terms.handover_place}</li>}
         {terms.handover_time && <li>🕒 {terms.handover_time}</li>}
@@ -192,15 +197,15 @@ function AgreementCard({ status, terms, canRespond, onRespond, mine }: {
       </ul>
       {canRespond && (
         <div className="mt-2 flex gap-2">
-          <button onClick={() => onRespond("accept")} className="rounded-lg bg-orange-600 px-2 py-1 font-semibold text-white">Bevestigen</button>
-          <button onClick={() => onRespond("decline")} className="rounded-lg bg-slate-200 px-2 py-1 font-semibold text-slate-700">Afwijzen</button>
+          <button onClick={() => onRespond("accept")} className="rounded-lg bg-orange-600 px-2 py-1 font-semibold text-white">{t.confirm}</button>
+          <button onClick={() => onRespond("decline")} className="rounded-lg bg-slate-200 px-2 py-1 font-semibold text-slate-700">{t.decline}</button>
         </div>
       )}
     </div>
   );
 }
 
-function ProposeForm({ conversationId, onDone }: { conversationId: string; onDone: () => void }) {
+function ProposeForm({ conversationId, onDone, t }: { conversationId: string; onDone: () => void; t: ChatT }) {
   const [place, setPlace] = useState("");
   const [time, setTime] = useState("");
   const [price, setPrice] = useState("");
@@ -221,16 +226,16 @@ function ProposeForm({ conversationId, onDone }: { conversationId: string; onDon
 
   return (
     <div className="border-t border-slate-100 bg-slate-50 p-3">
-      <div className="mb-2 text-xs font-semibold text-slate-600">Afspraak voorstellen</div>
+      <div className="mb-2 text-xs font-semibold text-slate-600">{t.propose}</div>
       <div className="grid gap-2 sm:grid-cols-2">
-        <input value={place} onChange={(e) => setPlace(e.target.value)} placeholder="Plaats (bijv. Hub Amsterdam)" className={inp} />
-        <input value={time} onChange={(e) => setTime(e.target.value)} placeholder="Tijd (bijv. di 14:00)" className={inp} />
-        <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" step="0.5" placeholder="Prijs €" className={inp} />
-        <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Notitie" className={inp} />
+        <input value={place} onChange={(e) => setPlace(e.target.value)} placeholder={t.place_ph} className={inp} />
+        <input value={time} onChange={(e) => setTime(e.target.value)} placeholder={t.time_ph} className={inp} />
+        <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" step="0.5" placeholder={t.price_ph} className={inp} />
+        <input value={note} onChange={(e) => setNote(e.target.value)} placeholder={t.note_ph} className={inp} />
       </div>
       <div className="mt-2 flex justify-end gap-2">
-        <button onClick={onDone} className="ph-btn ph-btn-ghost text-xs">Annuleren</button>
-        <button onClick={submit} disabled={busy} className="ph-btn ph-btn-primary text-xs">Voorstel sturen</button>
+        <button onClick={onDone} className="ph-btn ph-btn-ghost text-xs">{t.cancel}</button>
+        <button onClick={submit} disabled={busy} className="ph-btn ph-btn-primary text-xs">{t.send_proposal}</button>
       </div>
     </div>
   );
