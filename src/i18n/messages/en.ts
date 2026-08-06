@@ -114,6 +114,22 @@ const en: Messages = {
     submit: "Enter",
     hint: "Then log in with a demo account (e.g. sender@pakkethub.com / demo12345).",
   },
+  partner: {
+    title: "Help build the corridor",
+    intro: "We're expanding the network in a controlled way — fleets, hubs, warehouses and business shippers. Onboarding with KYB, documents and clear agreements.",
+    fleet_t: "Fleet / carrier", fleet_d: "Publish routes, run legs with scan proof, and settle per trip.",
+    hub_t: "Hub / service point", hub_d: "Become an intake, inspection or pickup point in the corridor.",
+    biz_t: "Business shipper", biz_d: "SMEs and institutions: bulk, API, invoicing and SLAs.",
+    form_title: "Interested? Leave your details", ok: "Thanks! We'll get in touch.", err: "Please fill in at least name and email.",
+    i_am: "I am", name: "Name / organization", email: "Email", phone: "Phone", message: "Message", submit: "Send",
+    privacy: "We only use your details to contact you about partnership. See the Trust Center for privacy.",
+  },
+  track: {
+    title: "Track & trace", sub: "Follow a shipment's status with its reference (e.g. PH-2026-000101).",
+    follow: "Track", not_found: "No shipment found for", destination: "Destination:",
+    st_created: "Created", st_screened: "Screened", st_intake: "Received at hub", st_sealed: "Sealed",
+    st_handover: "Handed over", st_departed: "Departed", st_customs: "Customs", st_arrived: "Arrived", st_delivered: "Delivered",
+  },
   hiw: {
     title: "How PakketHub works",
     intro: "A clear flow for every role — all connected to the same controlled corridor and rules.",

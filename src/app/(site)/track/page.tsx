@@ -1,19 +1,21 @@
 import { getTenantId } from "@/lib/tenant";
 import { query, queryOne } from "@/db/client";
-import { SHIPMENT_STATUS_LABEL, dateTimeNL } from "@/lib/format";
+import { dateTimeNL } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Track & trace" };
 
-// Publieke, beperkte tracking op referentie. Geen persoons- of inhoudsgegevens.
-const PUBLIC_STEPS = ["CREATED", "SCREENED", "INTAKE", "SEALED", "HANDOVER", "DEPARTED", "CUSTOMS", "ARRIVED", "DELIVERED"];
-const STEP_LABEL: Record<string, string> = {
-  CREATED: "Aangemaakt", SCREENED: "Gecontroleerd", INTAKE: "Ingenomen bij hub", SEALED: "Verzegeld",
-  HANDOVER: "Overgedragen", DEPARTED: "Vertrokken", CUSTOMS: "Douane", ARRIVED: "Aangekomen", DELIVERED: "Afgeleverd",
-};
+const PUBLIC_STEPS = ["CREATED", "SCREENED", "INTAKE", "SEALED", "HANDOVER", "DEPARTED", "CUSTOMS", "ARRIVED", "DELIVERED"] as const;
 
 export default async function TrackPage({ searchParams }: { searchParams: Promise<{ ref?: string }> }) {
   const { ref } = await searchParams;
+  const m = await getMessages();
+  const T = m.track;
+  const STEP_LABEL: Record<string, string> = {
+    CREATED: T.st_created, SCREENED: T.st_screened, INTAKE: T.st_intake, SEALED: T.st_sealed,
+    HANDOVER: T.st_handover, DEPARTED: T.st_departed, CUSTOMS: T.st_customs, ARRIVED: T.st_arrived, DELIVERED: T.st_delivered,
+  };
   const tenantId = await getTenantId();
 
   let shipment: any = null;
@@ -35,26 +37,26 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
-      <h1 className="text-3xl font-bold text-slate-900">Track & trace</h1>
-      <p className="mt-2 text-slate-600">Volg de status van een zending met de referentie (bijv. PH-2026-000101).</p>
+      <h1 className="text-3xl font-bold text-slate-900">{T.title}</h1>
+      <p className="mt-2 text-slate-600">{T.sub}</p>
 
       <form method="get" className="mt-6 flex gap-2">
         <input name="ref" defaultValue={ref ?? ""} placeholder="PH-2026-000101"
           className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500" />
-        <button className="ph-btn ph-btn-primary">Volgen</button>
+        <button className="ph-btn ph-btn-primary">{T.follow}</button>
       </form>
 
       {ref && !shipment && (
-        <div className="mt-6 ph-card p-5 text-sm text-slate-600">Geen zending gevonden voor “{ref}”.</div>
+        <div className="mt-6 ph-card p-5 text-sm text-slate-600">{T.not_found} “{ref}”.</div>
       )}
 
       {shipment && (
         <div className="mt-8 ph-card p-6">
           <div className="flex items-center justify-between">
             <span className="font-mono text-lg font-bold text-slate-900">{shipment.reference}</span>
-            <span className="ph-chip bg-orange-50 text-orange-700">{SHIPMENT_STATUS_LABEL[shipment.status] ?? shipment.status}</span>
+            <span className="ph-chip bg-orange-50 text-orange-700">{(m.status as Record<string, string>)[shipment.status] ?? shipment.status}</span>
           </div>
-          <div className="text-sm text-slate-500">Bestemming: {shipment.recipient_city}, {shipment.recipient_country}</div>
+          <div className="text-sm text-slate-500">{T.destination} {shipment.recipient_city}, {shipment.recipient_country}</div>
 
           <ol className="mt-6 space-y-3">
             {PUBLIC_STEPS.map((step) => {

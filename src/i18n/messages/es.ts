@@ -115,6 +115,22 @@ const es: Messages = {
     submit: "Acceder",
     hint: "Después inicia sesión con una cuenta de demostración (p. ej. sender@pakkethub.com / demo12345).",
   },
+  partner: {
+    title: "Ayuda a construir el corredor",
+    intro: "Ampliamos la red de forma controlada — flotas, hubs, almacenes y remitentes empresariales. Alta con KYB, documentos y acuerdos claros.",
+    fleet_t: "Flota / transportista", fleet_d: "Publica rutas, ejecuta tramos con prueba de escaneo y liquida por viaje.",
+    hub_t: "Hub / punto de servicio", hub_d: "Conviértete en punto de recepción, inspección o recogida en el corredor.",
+    biz_t: "Remitente empresarial", biz_d: "Pymes e instituciones: masivo, API, facturación y SLAs.",
+    form_title: "¿Interesado? Deja tus datos", ok: "¡Gracias! Nos pondremos en contacto.", err: "Rellena al menos nombre y correo.",
+    i_am: "Soy", name: "Nombre / organización", email: "Correo", phone: "Teléfono", message: "Mensaje", submit: "Enviar",
+    privacy: "Solo usamos tus datos para contactarte sobre la colaboración. Consulta el Centro de Confianza sobre privacidad.",
+  },
+  track: {
+    title: "Seguimiento", sub: "Sigue el estado de un envío con su referencia (p. ej. PH-2026-000101).",
+    follow: "Seguir", not_found: "Ningún envío encontrado para", destination: "Destino:",
+    st_created: "Creado", st_screened: "Verificado", st_intake: "Recibido en hub", st_sealed: "Precintado",
+    st_handover: "Entregado", st_departed: "Salió", st_customs: "Aduana", st_arrived: "Llegó", st_delivered: "Entregado",
+  },
   hiw: {
     title: "Cómo funciona PakketHub",
     intro: "Un flujo claro para cada rol — todos conectados al mismo corredor controlado y las mismas reglas.",

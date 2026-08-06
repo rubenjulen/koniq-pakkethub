@@ -115,6 +115,22 @@ const fr: Messages = {
     submit: "Accéder",
     hint: "Connectez-vous ensuite avec un compte de démo (par ex. sender@pakkethub.com / demo12345).",
   },
+  partner: {
+    title: "Participez à la construction du corridor",
+    intro: "Nous étendons le réseau de façon contrôlée — flottes, hubs, entrepôts et expéditeurs professionnels. Intégration avec KYB, documents et accords clairs.",
+    fleet_t: "Flotte / transporteur", fleet_d: "Publiez des itinéraires, effectuez des trajets avec preuve de scan et réglez par trajet.",
+    hub_t: "Hub / point relais", hub_d: "Devenez point de réception, d'inspection ou de retrait dans le corridor.",
+    biz_t: "Expéditeur professionnel", biz_d: "PME et institutions : volume, API, facturation et SLA.",
+    form_title: "Intéressé ? Laissez vos coordonnées", ok: "Merci ! Nous vous contacterons.", err: "Renseignez au moins nom et e-mail.",
+    i_am: "Je suis", name: "Nom / organisation", email: "E-mail", phone: "Téléphone", message: "Message", submit: "Envoyer",
+    privacy: "Nous utilisons vos données uniquement pour vous contacter au sujet du partenariat. Voir le Centre de Confiance pour la confidentialité.",
+  },
+  track: {
+    title: "Suivi", sub: "Suivez le statut d'un envoi avec sa référence (ex. PH-2026-000101).",
+    follow: "Suivre", not_found: "Aucun envoi trouvé pour", destination: "Destination :",
+    st_created: "Créé", st_screened: "Vérifié", st_intake: "Reçu au hub", st_sealed: "Scellé",
+    st_handover: "Remis", st_departed: "Parti", st_customs: "Douane", st_arrived: "Arrivé", st_delivered: "Livré",
+  },
   hiw: {
     title: "Comment fonctionne PakketHub",
     intro: "Un parcours clair pour chaque rôle — tous reliés au même corridor contrôlé et aux mêmes règles.",

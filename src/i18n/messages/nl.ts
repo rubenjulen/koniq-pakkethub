@@ -113,6 +113,22 @@ const nl = {
     submit: "Toegang",
     hint: "Daarna log je in met een demo-account (bijv. sender@pakkethub.com / demo12345).",
   },
+  partner: {
+    title: "Bouw mee aan de corridor",
+    intro: "We breiden het netwerk gecontroleerd uit — fleets, hubs, warehouses en zakelijke verzenders. Onboarding met KYB, documenten en heldere afspraken.",
+    fleet_t: "Fleet / vervoerder", fleet_d: "Publiceer routes, voer legs uit met scan-bewijs, en reken per rit af.",
+    hub_t: "Hub / service point", hub_d: "Word intake-, inspectie- of afhaalpunt in de corridor.",
+    biz_t: "Zakelijke verzender", biz_d: "SME's en instellingen: bulk, API, facturatie en SLA's.",
+    form_title: "Interesse? Laat je gegevens achter", ok: "Bedankt! We nemen contact op.", err: "Vul minimaal naam en e-mail in.",
+    i_am: "Ik ben", name: "Naam / organisatie", email: "E-mail", phone: "Telefoon", message: "Bericht", submit: "Versturen",
+    privacy: "We gebruiken je gegevens alleen om contact op te nemen over partnerschap. Zie het Trust Center voor privacy.",
+  },
+  track: {
+    title: "Track & trace", sub: "Volg de status van een zending met de referentie (bijv. PH-2026-000101).",
+    follow: "Volgen", not_found: "Geen zending gevonden voor", destination: "Bestemming:",
+    st_created: "Aangemaakt", st_screened: "Gecontroleerd", st_intake: "Ingenomen bij hub", st_sealed: "Verzegeld",
+    st_handover: "Overgedragen", st_departed: "Vertrokken", st_customs: "Douane", st_arrived: "Aangekomen", st_delivered: "Afgeleverd",
+  },
   hiw: {
     title: "Hoe PakketHub werkt",
     intro: "Voor elke rol een eigen, duidelijke flow — verbonden met dezelfde gecontroleerde corridor en regels.",
