@@ -389,6 +389,7 @@ const es: Messages = {
     analytics: "Analíticas",
     control: "Centro de Control",
     console: "Consola de Prueba",
+    content: "Contenido y videos",
     account: "Cuenta",
     notifications: "🔔 Notificaciones",
   },

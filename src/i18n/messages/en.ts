@@ -388,6 +388,7 @@ const en: Messages = {
     analytics: "Analytics",
     control: "Control Center",
     console: "Test Console",
+    content: "Content & videos",
     account: "Account",
     notifications: "🔔 Notifications",
   },

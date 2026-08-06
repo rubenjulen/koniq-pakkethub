@@ -389,6 +389,7 @@ const pt: Messages = {
     analytics: "Análises",
     control: "Central de Controle",
     console: "Console de Teste",
+    content: "Conteúdo e vídeos",
     account: "Conta",
     notifications: "🔔 Notificações",
   },

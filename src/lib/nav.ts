@@ -25,6 +25,7 @@ const ALL: NavItem[] = [
   { href: "/app/analytics", key: "analytics", icon: "📊", cap: "control.view" },
   { href: "/app/control", key: "control", icon: "🛡️", cap: "control.view" },
   { href: "/app/console", key: "console", icon: "🧪", cap: "control.view" },
+  { href: "/app/content", key: "content", icon: "🎬", cap: "control.view" },
 ];
 
 export function navFor(user: SessionUser): NavItem[] {

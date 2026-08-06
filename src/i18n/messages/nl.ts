@@ -387,6 +387,7 @@ const nl = {
     analytics: "Analytics",
     control: "Control Center",
     console: "Test Console",
+    content: "Content & video's",
     account: "Account",
     notifications: "🔔 Meldingen",
   },
