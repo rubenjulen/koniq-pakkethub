@@ -124,6 +124,14 @@ const es: Messages = {
     report_title: "¿Informar de una inquietud o incidente?",
     report_body: "Infórmalo mediante tu envío en la app o contáctanos. Conservamos pruebas (fotos, precinto, log de custodia) para la investigación. Nunca respondas a solicitudes de pago fuera de PakketHub.",
   },
+  shop: {
+    title: "🛒 Solicitudes de compra (jastip)", sub: "Pide a un viajero que compre un producto y lo traiga — con recibo como prueba.",
+    new_req: "Nueva solicitud", new_req_sub: "La categoría se sugiere automáticamente (IA)", placed: "Solicitud enviada.",
+    product: "Producto", product_ph: "P. ej. regaliz Venco ×2", link: "Enlace (opcional)", qty: "Cantidad",
+    budget: "Presupuesto €", reward: "Recompensa del viajero €", note: "Nota", place: "Enviar solicitud",
+    requests: "Solicitudes", none: "Aún no hay solicitudes", you: "Tú", budget_l: "presupuesto", reward_l: "recompensa",
+    i_buy: "Yo lo compro", receipt: "Nº de recibo", paid: "Pagado €", confirm_buy: "Confirmar compra", traveler: "Viajero",
+  },
   market: {
     title: "Viajes y ofertas", sub: "Envíos permitidos que puedes llevar en tu viaje",
     my_trips: "✈️ Mis viajes", none: "Sin envíos abiertos",

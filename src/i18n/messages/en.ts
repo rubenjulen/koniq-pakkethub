@@ -123,6 +123,14 @@ const en: Messages = {
     report_title: "Report a concern or incident?",
     report_body: "Report it via your shipment in the app or contact us. We keep evidence (photos, seal, custody log) for investigation. Never respond to requests to pay outside of PakketHub.",
   },
+  shop: {
+    title: "🛒 Shopping requests (jastip)", sub: "Ask a traveler to buy a product for you and bring it along — with a receipt as proof.",
+    new_req: "New request", new_req_sub: "The category is suggested automatically (AI)", placed: "Request placed.",
+    product: "Product", product_ph: "E.g. Venco licorice ×2", link: "Link (optional)", qty: "Quantity",
+    budget: "Budget €", reward: "Traveler reward €", note: "Note", place: "Place request",
+    requests: "Requests", none: "No requests yet", you: "You", budget_l: "budget", reward_l: "reward",
+    i_buy: "I'll buy this", receipt: "Receipt no.", paid: "Paid €", confirm_buy: "Confirm purchase", traveler: "Traveler",
+  },
   market: {
     title: "Trips & offers", sub: "Allowed shipments you can carry on your trip",
     my_trips: "✈️ My trips", none: "No open shipments",

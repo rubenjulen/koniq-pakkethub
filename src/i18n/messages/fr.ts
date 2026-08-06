@@ -124,6 +124,14 @@ const fr: Messages = {
     report_title: "Signaler une inquiétude ou un incident ?",
     report_body: "Signalez-le via votre envoi dans l'app ou contactez-nous. Nous conservons les preuves (photos, scellé, journal de traçabilité) pour enquête. Ne répondez jamais à des demandes de paiement en dehors de PakketHub.",
   },
+  shop: {
+    title: "🛒 Demandes d'achat (jastip)", sub: "Demandez à un voyageur d'acheter un produit et de vous l'apporter — avec reçu comme preuve.",
+    new_req: "Nouvelle demande", new_req_sub: "La catégorie est suggérée automatiquement (IA)", placed: "Demande envoyée.",
+    product: "Produit", product_ph: "Ex. réglisse Venco ×2", link: "Lien (facultatif)", qty: "Quantité",
+    budget: "Budget €", reward: "Récompense du voyageur €", note: "Note", place: "Envoyer la demande",
+    requests: "Demandes", none: "Aucune demande", you: "Vous", budget_l: "budget", reward_l: "récompense",
+    i_buy: "J'achète ceci", receipt: "N° de reçu", paid: "Payé €", confirm_buy: "Confirmer l'achat", traveler: "Voyageur",
+  },
   market: {
     title: "Trajets et offres", sub: "Envois autorisés que vous pouvez transporter lors de votre voyage",
     my_trips: "✈️ Mes trajets", none: "Aucun envoi ouvert",

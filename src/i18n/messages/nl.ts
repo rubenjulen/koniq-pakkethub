@@ -122,6 +122,14 @@ const nl = {
     report_title: "Een zorg of incident melden?",
     report_body: "Meld het via je zending in de app of neem contact op. We bewaren bewijs (foto's, verzegeling, custody-log) voor onderzoek. Reageer nooit op verzoeken om betalingen buiten PakketHub om.",
   },
+  shop: {
+    title: "🛒 Shop-verzoeken (jastip)", sub: "Vraag een reiziger om een product voor je te kopen en mee te nemen — met bonnetje als bewijs.",
+    new_req: "Nieuw verzoek", new_req_sub: "De categorie wordt automatisch voorgesteld (AI)", placed: "Verzoek geplaatst.",
+    product: "Product", product_ph: "Bijv. Venco muntdrop 2×", link: "Link (optioneel)", qty: "Aantal",
+    budget: "Budget €", reward: "Vergoeding reiziger €", note: "Notitie", place: "Verzoek plaatsen",
+    requests: "Verzoeken", none: "Nog geen verzoeken", you: "Jij", budget_l: "budget", reward_l: "vergoeding",
+    i_buy: "Ik koop dit", receipt: "Bonnummer", paid: "Betaald €", confirm_buy: "Aankoop bevestigen", traveler: "Reiziger",
+  },
   market: {
     title: "Ritten & aanbod", sub: "Toegestane zendingen die je op je reis kunt meenemen",
     my_trips: "✈️ Mijn ritten", none: "Geen open zendingen",
