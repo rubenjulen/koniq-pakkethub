@@ -1,5 +1,18 @@
 # Changelog — PakketHub
 
+## v0.3.0 — Meertaligheid (5 talen)
+
+- **i18n-fundament**: taal-cookie + Accept-Language-detectie, woordenboeken per taal
+  (`src/i18n`), server-helpers `getLocale()/getMessages()`, `<html lang>` volgt de taal,
+  **taalwisselaar** in site-header, login, gate en app-sidebar. Geen route-verbouwing (staging blijft heel).
+- **Talen**: 🇧🇷 Português (BR) · 🇪🇸 Español · 🇬🇧 English · 🇫🇷 Français · 🇳🇱 Nederlands.
+- **Vertaald**: publieke homepage, header/footer/banner, login, staging-poort, app-navigatie,
+  **Trust Center-content** (titel/samenvatting/beleidstekst per taal, i18n-JSON op de records).
+- **Nog te vertalen (incrementeel)**: app-interne pagina's (zendingen, marktplaats, wallet,
+  claims, shop, ops, freight, dispatch, business, analytics, control, console) + categorienamen.
+
+
+
 ## v0.2.2 — Staging-klaar (Coolify/Hetzner)
 
 - **Dockerfile** (Next standalone) + **docker-compose.yml** (app + Postgres + volume) — Postgres-route

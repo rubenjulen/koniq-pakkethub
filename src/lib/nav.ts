@@ -1,24 +1,26 @@
 import type { SessionUser } from "./auth";
 import { hasCapability } from "./auth";
+import type { Messages } from "@/i18n/messages/nl";
 
-export type NavItem = { href: string; label: string; icon: string; cap?: string };
+type NavKey = keyof Messages["appnav"];
+export type NavItem = { href: string; key: NavKey; icon: string; cap?: string };
 
 const ALL: NavItem[] = [
-  { href: "/app", label: "Overzicht", icon: "🏠" },
-  { href: "/app/shipments", label: "Mijn zendingen", icon: "📦", cap: "shipment.create" },
-  { href: "/app/marketplace", label: "Ritten & aanbod", icon: "🧳", cap: "offer.create" },
-  { href: "/app/trips", label: "Mijn ritten", icon: "✈️", cap: "trip.create" },
-  { href: "/app/messages", label: "Berichten", icon: "💬", cap: "chat.use" },
-  { href: "/app/wallet", label: "Wallet & betalingen", icon: "💶" },
-  { href: "/app/claims", label: "Claims & retour", icon: "🛟" },
-  { href: "/app/shop", label: "Shop-verzoeken", icon: "🛒" },
-  { href: "/app/ops", label: "Hub & intake", icon: "🏭", cap: "ops.intake" },
-  { href: "/app/freight", label: "Warehouse & freight", icon: "🚢", cap: "ops.intake" },
-  { href: "/app/dispatch", label: "Fleet & dispatch", icon: "🚚", cap: "ops.intake" },
-  { href: "/app/business", label: "Business & API", icon: "🏢", cap: "control.view" },
-  { href: "/app/analytics", label: "Analytics", icon: "📊", cap: "control.view" },
-  { href: "/app/control", label: "Control Center", icon: "🛡️", cap: "control.view" },
-  { href: "/app/console", label: "Test Console", icon: "🧪", cap: "control.view" },
+  { href: "/app", key: "overview", icon: "🏠" },
+  { href: "/app/shipments", key: "shipments", icon: "📦", cap: "shipment.create" },
+  { href: "/app/marketplace", key: "marketplace", icon: "🧳", cap: "offer.create" },
+  { href: "/app/trips", key: "trips", icon: "✈️", cap: "trip.create" },
+  { href: "/app/messages", key: "messages", icon: "💬", cap: "chat.use" },
+  { href: "/app/wallet", key: "wallet", icon: "💶" },
+  { href: "/app/claims", key: "claims", icon: "🛟" },
+  { href: "/app/shop", key: "shop", icon: "🛒" },
+  { href: "/app/ops", key: "ops", icon: "🏭", cap: "ops.intake" },
+  { href: "/app/freight", key: "freight", icon: "🚢", cap: "ops.intake" },
+  { href: "/app/dispatch", key: "dispatch", icon: "🚚", cap: "ops.intake" },
+  { href: "/app/business", key: "business", icon: "🏢", cap: "control.view" },
+  { href: "/app/analytics", key: "analytics", icon: "📊", cap: "control.view" },
+  { href: "/app/control", key: "control", icon: "🛡️", cap: "control.view" },
+  { href: "/app/console", key: "console", icon: "🧪", cap: "control.view" },
 ];
 
 export function navFor(user: SessionUser): NavItem[] {

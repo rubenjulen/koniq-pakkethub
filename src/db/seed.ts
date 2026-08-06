@@ -211,21 +211,57 @@ export async function seedDatabase(db: DbAdapter) {
     ci++;
   }
 
-  // ---- Trust Center content ----
-  const content: [string, string, string, string, string, string][] = [
-    ["verificatie", "POLICY", "Verificatie & identiteit", "Waarom en hoe wij afzenders, reizigers en ontvangers verifiëren voordat waarde beweegt.", "PakketHub verifieert de identiteit van elke partij voordat een boeking of betaling plaatsvindt. Verificatie is verplicht voor waardebeweging en wordt periodiek herbeoordeeld.", "Compliance"],
-    ["goederenbeleid", "POLICY", "Goederenbeleid & positieve lijst", "Wat mag wel en niet via een reiziger, en wat naar professionele freight gaat.", "Alleen categorieën op de positieve lijst mogen via crowdshipping. Onbekende, gesloten of gevaarlijke pakketten worden geweigerd of naar freight gerouteerd.", "Operations"],
-    ["betalingen", "POLICY", "Betalingen & uitbetaling", "Beschermde betaling, houden van gelden en uitbetaling op basis van bewijs.", "Betalingen lopen via een gelicentieerde provider. Gelden worden vastgehouden en pas vrijgegeven na bewijs van levering (state-based payout release).", "Finance"],
-    ["customs", "POLICY", "Douane & aangifte", "Verplichte itemaangifte en handmatige douanebeoordeling in de pilot.", "Elke zending vereist een volledige itemlijst. In de pilot beoordeelt een medewerker douanerelevante gevallen handmatig. PakketHub bepaalt geen douanelegaliteit namens de afzender.", "Compliance"],
-    ["privacy", "POLICY", "Privacy", "Welke gegevens we verwerken en waarom.", "We verwerken alleen gegevens die nodig zijn voor verificatie, uitvoering en veiligheid van de zending, met bewaartermijnen en toegang op need-to-know-basis.", "DPO"],
-    ["claims", "FAQ", "Claims & incidenten", "Hoe je een probleem, schade of zorg meldt.", "Meld schade of zorgen via het Trust Center of je zending. Bewijs (foto's, verzegeling, custody-log) wordt bewaard voor onderzoek.", "Support"],
+  // ---- Trust Center content (5 talen) ----
+  type Tr = { title: string; summary: string; body: string };
+  type Doc = { slug: string; kind: string; owner: string; t: Record<string, Tr> };
+  const content: Doc[] = [
+    { slug: "verificatie", kind: "POLICY", owner: "Compliance", t: {
+      nl: { title: "Verificatie & identiteit", summary: "Waarom en hoe wij afzenders, reizigers en ontvangers verifiëren voordat waarde beweegt.", body: "PakketHub verifieert de identiteit van elke partij voordat een boeking of betaling plaatsvindt. Verificatie is verplicht voor waardebeweging en wordt periodiek herbeoordeeld." },
+      en: { title: "Verification & identity", summary: "Why and how we verify senders, travelers and recipients before value moves.", body: "PakketHub verifies the identity of every party before a booking or payment takes place. Verification is required for any value movement and is periodically re-reviewed." },
+      pt: { title: "Verificação e identidade", summary: "Por que e como verificamos remetentes, viajantes e destinatários antes de qualquer valor se mover.", body: "A PakketHub verifica a identidade de cada parte antes de uma reserva ou pagamento. A verificação é obrigatória para qualquer movimentação de valor e é reavaliada periodicamente." },
+      es: { title: "Verificación e identidad", summary: "Por qué y cómo verificamos a remitentes, viajeros y destinatarios antes de mover valor.", body: "PakketHub verifica la identidad de cada parte antes de una reserva o pago. La verificación es obligatoria para cualquier movimiento de valor y se revisa periódicamente." },
+      fr: { title: "Vérification et identité", summary: "Pourquoi et comment nous vérifions expéditeurs, voyageurs et destinataires avant tout mouvement de valeur.", body: "PakketHub vérifie l'identité de chaque partie avant toute réservation ou paiement. La vérification est obligatoire pour tout mouvement de valeur et est réévaluée périodiquement." } } },
+    { slug: "goederenbeleid", kind: "POLICY", owner: "Operations", t: {
+      nl: { title: "Goederenbeleid & positieve lijst", summary: "Wat mag wel en niet via een reiziger, en wat naar professionele freight gaat.", body: "Alleen categorieën op de positieve lijst mogen via crowdshipping. Onbekende, gesloten of gevaarlijke pakketten worden geweigerd of naar freight gerouteerd." },
+      en: { title: "Goods policy & positive list", summary: "What can and cannot travel with a traveler, and what goes to professional freight.", body: "Only categories on the positive list may travel via crowdshipping. Unknown, closed or dangerous packages are refused or routed to freight." },
+      pt: { title: "Política de mercadorias e lista positiva", summary: "O que pode e o que não pode viajar com um viajante, e o que vai para o frete profissional.", body: "Apenas as categorias da lista positiva podem viajar via crowdshipping. Pacotes desconhecidos, fechados ou perigosos são recusados ou encaminhados para o frete." },
+      es: { title: "Política de mercancías y lista positiva", summary: "Qué puede y qué no viajar con un viajero, y qué va a flete profesional.", body: "Solo las categorías de la lista positiva pueden viajar vía crowdshipping. Los paquetes desconocidos, cerrados o peligrosos se rechazan o se derivan a flete." },
+      fr: { title: "Politique des marchandises et liste positive", summary: "Ce qui peut ou non voyager avec un voyageur, et ce qui part en fret professionnel.", body: "Seules les catégories de la liste positive peuvent voyager via le crowdshipping. Les colis inconnus, fermés ou dangereux sont refusés ou orientés vers le fret." } } },
+    { slug: "betalingen", kind: "POLICY", owner: "Finance", t: {
+      nl: { title: "Betalingen & uitbetaling", summary: "Beschermde betaling, houden van gelden en uitbetaling op basis van bewijs.", body: "Betalingen lopen via een gelicentieerde provider. Gelden worden vastgehouden en pas vrijgegeven na bewijs van levering (state-based payout release)." },
+      en: { title: "Payments & payout", summary: "Protected payment, holding of funds and payout based on proof.", body: "Payments run through a licensed provider. Funds are held and only released after proof of delivery (state-based payout release)." },
+      pt: { title: "Pagamentos e repasse", summary: "Pagamento protegido, retenção de fundos e repasse mediante prova.", body: "Os pagamentos passam por um provedor licenciado. Os fundos ficam retidos e só são liberados após a prova de entrega." },
+      es: { title: "Pagos y liquidación", summary: "Pago protegido, retención de fondos y liquidación basada en pruebas.", body: "Los pagos pasan por un proveedor con licencia. Los fondos se retienen y solo se liberan tras la prueba de entrega." },
+      fr: { title: "Paiements et versement", summary: "Paiement protégé, blocage des fonds et versement sur preuve.", body: "Les paiements passent par un prestataire agréé. Les fonds sont bloqués et libérés uniquement après preuve de livraison." } } },
+    { slug: "customs", kind: "POLICY", owner: "Compliance", t: {
+      nl: { title: "Douane & aangifte", summary: "Verplichte itemaangifte en handmatige douanebeoordeling in de pilot.", body: "Elke zending vereist een volledige itemlijst. In de pilot beoordeelt een medewerker douanerelevante gevallen handmatig. PakketHub bepaalt geen douanelegaliteit namens de afzender." },
+      en: { title: "Customs & declaration", summary: "Mandatory item declaration and manual customs review during the pilot.", body: "Every shipment requires a complete item list. During the pilot, a staff member manually reviews customs-relevant cases. PakketHub does not determine customs legality on behalf of the sender." },
+      pt: { title: "Alfândega e declaração", summary: "Declaração obrigatória de itens e revisão aduaneira manual no piloto.", body: "Cada envio exige uma lista completa de itens. No piloto, um funcionário analisa manualmente os casos relevantes para a alfândega. A PakketHub não determina a legalidade aduaneira em nome do remetente." },
+      es: { title: "Aduana y declaración", summary: "Declaración de artículos obligatoria y revisión aduanera manual en el piloto.", body: "Cada envío requiere una lista completa de artículos. En el piloto, un empleado revisa manualmente los casos relevantes para aduanas. PakketHub no determina la legalidad aduanera en nombre del remitente." },
+      fr: { title: "Douane et déclaration", summary: "Déclaration d'articles obligatoire et examen douanier manuel pendant le pilote.", body: "Chaque envoi exige une liste complète des articles. Pendant le pilote, un agent examine manuellement les cas relevant de la douane. PakketHub ne détermine pas la légalité douanière au nom de l'expéditeur." } } },
+    { slug: "privacy", kind: "POLICY", owner: "DPO", t: {
+      nl: { title: "Privacy", summary: "Welke gegevens we verwerken en waarom.", body: "We verwerken alleen gegevens die nodig zijn voor verificatie, uitvoering en veiligheid van de zending, met bewaartermijnen en toegang op need-to-know-basis." },
+      en: { title: "Privacy", summary: "What data we process and why.", body: "We only process data needed for verification, execution and safety of the shipment, with retention periods and access on a need-to-know basis." },
+      pt: { title: "Privacidade", summary: "Quais dados processamos e por quê.", body: "Processamos apenas os dados necessários para verificação, execução e segurança do envio, com prazos de retenção e acesso restrito ao necessário." },
+      es: { title: "Privacidad", summary: "Qué datos procesamos y por qué.", body: "Solo procesamos los datos necesarios para la verificación, ejecución y seguridad del envío, con plazos de conservación y acceso según lo necesario." },
+      fr: { title: "Confidentialité", summary: "Quelles données nous traitons et pourquoi.", body: "Nous ne traitons que les données nécessaires à la vérification, à l'exécution et à la sécurité de l'envoi, avec des durées de conservation et un accès limité au strict nécessaire." } } },
+    { slug: "claims", kind: "FAQ", owner: "Support", t: {
+      nl: { title: "Claims & incidenten", summary: "Hoe je een probleem, schade of zorg meldt.", body: "Meld schade of zorgen via het Trust Center of je zending. Bewijs (foto's, verzegeling, custody-log) wordt bewaard voor onderzoek." },
+      en: { title: "Claims & incidents", summary: "How to report a problem, damage or concern.", body: "Report damage or concerns via the Trust Center or your shipment. Evidence (photos, seal, custody log) is retained for investigation." },
+      pt: { title: "Reclamações e incidentes", summary: "Como relatar um problema, dano ou preocupação.", body: "Relate danos ou preocupações pela Central de Confiança ou pelo seu envio. As provas (fotos, lacre, log de custódia) são guardadas para investigação." },
+      es: { title: "Reclamaciones e incidentes", summary: "Cómo informar de un problema, daño o inquietud.", body: "Informa de daños o inquietudes mediante el Centro de Confianza o tu envío. Las pruebas (fotos, precinto, log de custodia) se conservan para la investigación." },
+      fr: { title: "Réclamations et incidents", summary: "Comment signaler un problème, un dommage ou une inquiétude.", body: "Signalez les dommages ou inquiétudes via le Centre de Confiance ou votre envoi. Les preuves (photos, scellé, journal de traçabilité) sont conservées pour enquête." } } },
   ];
   let si = 10;
-  for (const [slug, kind, title, summary, body, owner] of content) {
+  for (const doc of content) {
+    const base = doc.t.nl;
+    const titleI18n: Record<string, string> = {}, sumI18n: Record<string, string> = {}, bodyI18n: Record<string, string> = {};
+    for (const [lc, tr] of Object.entries(doc.t)) { titleI18n[lc] = tr.title; sumI18n[lc] = tr.summary; bodyI18n[lc] = tr.body; }
     await q(db,
-      `INSERT INTO content_items (tenant_id, slug, kind, title, summary, body, owner, review_date, status, sort_order)
-       VALUES ($1,$2,$3,$4,$5,$6,$7, current_date + interval '180 days','PUBLISHED',$8)`,
-      [T, slug, kind, title, summary, body, owner, si]);
+      `INSERT INTO content_items (tenant_id, slug, kind, title, summary, body, title_i18n, summary_i18n, body_i18n, owner, review_date, status, sort_order)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, current_date + interval '180 days','PUBLISHED',$11)`,
+      [T, doc.slug, doc.kind, base.title, base.summary, base.body,
+       JSON.stringify(titleI18n), JSON.stringify(sumI18n), JSON.stringify(bodyI18n), doc.owner, si]);
     si += 10;
   }
 

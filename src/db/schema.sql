@@ -368,6 +368,11 @@ CREATE INDEX IF NOT EXISTS audit_entity_idx ON audit_log(entity_type, entity_id)
 -- simulatie-adapters (src/lib/adapters). Datamodel is provider-agnostisch.
 -- =============================================================================
 
+-- ---------- i18n: meertalige content (Trust Center) ------------------------
+ALTER TABLE content_items ADD COLUMN IF NOT EXISTS title_i18n   jsonb NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE content_items ADD COLUMN IF NOT EXISTS summary_i18n jsonb NOT NULL DEFAULT '{}'::jsonb;
+ALTER TABLE content_items ADD COLUMN IF NOT EXISTS body_i18n    jsonb NOT NULL DEFAULT '{}'::jsonb;
+
 -- ---------- Finance: payment intents, double-entry ledger, wallets ----------
 CREATE TABLE IF NOT EXISTS payment_intents (
   id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
