@@ -2,6 +2,7 @@ import { requireSession } from "@/lib/auth";
 import { query } from "@/db/client";
 import { EmptyState, Chip } from "@/components/ui";
 import { timeAgo } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Notificaties" };
 
@@ -9,6 +10,7 @@ const CH_ICON: Record<string, string> = { WHATSAPP: "🟢", EMAIL: "✉️", PUS
 
 export default async function NotificationsPage() {
   const user = await requireSession();
+  const t = (await getMessages()).notif;
   const rows = await query<any>(
     `SELECT channel, template, title, body, status, provider, created_at
        FROM notifications WHERE tenant_id=$1 AND (user_id=$2 OR user_id IS NULL)
@@ -19,12 +21,12 @@ export default async function NotificationsPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-4">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">🔔 Notificaties</h1>
-        <p className="text-sm text-slate-500">Verzonden berichten (simulatie-outbox: WhatsApp / e-mail / push)</p>
+        <h1 className="text-xl font-bold text-slate-900">{t.title}</h1>
+        <p className="text-sm text-slate-500">{t.sub}</p>
       </div>
 
       {rows.length === 0 ? (
-        <EmptyState icon="🔕" title="Nog geen notificaties" />
+        <EmptyState icon="🔕" title={t.empty} />
       ) : (
         <div className="ph-card divide-y divide-slate-100">
           {rows.map((n, i) => (
