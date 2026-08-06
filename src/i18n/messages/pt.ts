@@ -124,6 +124,16 @@ const pt: Messages = {
     report_title: "Relatar uma preocupação ou incidente?",
     report_body: "Relate pelo seu envio no app ou entre em contato. Guardamos provas (fotos, lacre, log de custódia) para investigação. Nunca responda a pedidos de pagamento fora da PakketHub.",
   },
+  status: {
+    DRAFT: "Rascunho", SCREENING: "Triagem", QUOTED: "Oferta recebida", BOOKED: "Reservado",
+    INTAKE: "Recebido no hub", SEALED: "Lacrado", IN_CUSTODY: "Sob custódia", IN_TRANSIT: "Em trânsito",
+    CUSTOMS: "Alfândega", READY: "Pronto para retirada", DELIVERED: "Entregue", RETURNED: "Devolvido", CLOSED: "Encerrado",
+  },
+  elig: {
+    ALLOW: "Permitido", STEP_UP: "Verificação necessária", REVIEW: "Análise manual",
+    HOLD: "Bloqueado (retido)", FREIGHT_ONLY: "Somente frete", REJECT: "Recusado",
+  },
+  kyc: { VERIFIED: "✓ Verificado", PENDING: "Verificação em andamento", UNVERIFIED: "Não verificado", REJECTED: "Rejeitado" },
   dash: {
     hello: "Olá", install_as_app: "Instalar como app",
     stat_shipments: "Envios", stat_delivered: "Entregues", stat_review: "Em análise",

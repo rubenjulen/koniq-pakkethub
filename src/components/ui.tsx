@@ -1,9 +1,10 @@
 import type { Decision } from "@/lib/eligibility";
 import { DECISION_LABEL, DECISION_TONE } from "@/lib/eligibility";
 import { SHIPMENT_STATUS_LABEL } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 const TONE_CLASS: Record<string, string> = {
-  ok: "bg-orange-50 text-orange-700 ring-1 ring-orange-200",
+  ok: "bg-teal-50 text-teal-700 ring-1 ring-teal-200",
   warn: "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
   bad: "bg-rose-50 text-rose-700 ring-1 ring-rose-200",
   neutral: "bg-slate-100 text-slate-600 ring-1 ring-slate-200",
@@ -13,16 +14,18 @@ export function Chip({ tone = "neutral", children }: { tone?: keyof typeof TONE_
   return <span className={`ph-chip ${TONE_CLASS[tone]}`}>{children}</span>;
 }
 
-export function EligibilityBadge({ decision }: { decision: Decision | string }) {
+export async function EligibilityBadge({ decision }: { decision: Decision | string }) {
   const d = decision as Decision;
+  const m = await getMessages();
   const tone = DECISION_TONE[d] ?? "neutral";
-  const label = DECISION_LABEL[d] ?? decision;
+  const label = (m.elig as Record<string, string>)[d] ?? DECISION_LABEL[d] ?? decision;
   const icon = tone === "ok" ? "✓" : tone === "bad" ? "✕" : "!";
   return <Chip tone={tone}>{icon} {label}</Chip>;
 }
 
-export function StatusBadge({ status }: { status: string }) {
-  const label = SHIPMENT_STATUS_LABEL[status] ?? status;
+export async function StatusBadge({ status }: { status: string }) {
+  const m = await getMessages();
+  const label = (m.status as Record<string, string>)[status] ?? SHIPMENT_STATUS_LABEL[status] ?? status;
   const tone: keyof typeof TONE_CLASS =
     status === "DELIVERED" || status === "CLOSED" ? "ok" :
     status === "RETURNED" ? "bad" :
@@ -30,15 +33,13 @@ export function StatusBadge({ status }: { status: string }) {
   return <Chip tone={tone}>{label}</Chip>;
 }
 
-export function KycBadge({ status }: { status: string }) {
-  const map: Record<string, [keyof typeof TONE_CLASS, string]> = {
-    VERIFIED: ["ok", "✓ Geverifieerd"],
-    PENDING: ["warn", "Verificatie loopt"],
-    UNVERIFIED: ["warn", "Niet geverifieerd"],
-    REJECTED: ["bad", "Afgewezen"],
+export async function KycBadge({ status }: { status: string }) {
+  const m = await getMessages();
+  const tone: Record<string, keyof typeof TONE_CLASS> = {
+    VERIFIED: "ok", PENDING: "warn", UNVERIFIED: "warn", REJECTED: "bad",
   };
-  const [tone, label] = map[status] ?? ["neutral", status];
-  return <Chip tone={tone}>{label}</Chip>;
+  const label = (m.kyc as Record<string, string>)[status] ?? status;
+  return <Chip tone={tone[status] ?? "neutral"}>{label}</Chip>;
 }
 
 export function StatCard({ label, value, hint }: { label: string; value: React.ReactNode; hint?: string }) {

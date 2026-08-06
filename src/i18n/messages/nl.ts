@@ -122,6 +122,16 @@ const nl = {
     report_title: "Een zorg of incident melden?",
     report_body: "Meld het via je zending in de app of neem contact op. We bewaren bewijs (foto's, verzegeling, custody-log) voor onderzoek. Reageer nooit op verzoeken om betalingen buiten PakketHub om.",
   },
+  status: {
+    DRAFT: "Concept", SCREENING: "Screening", QUOTED: "Aanbod ontvangen", BOOKED: "Geboekt",
+    INTAKE: "Intake bij hub", SEALED: "Verzegeld", IN_CUSTODY: "In beheer", IN_TRANSIT: "Onderweg",
+    CUSTOMS: "Douane", READY: "Klaar voor afhalen", DELIVERED: "Afgeleverd", RETURNED: "Retour", CLOSED: "Afgesloten",
+  },
+  elig: {
+    ALLOW: "Toegestaan", STEP_UP: "Verificatie vereist", REVIEW: "Handmatige beoordeling",
+    HOLD: "Geblokkeerd (hold)", FREIGHT_ONLY: "Alleen freight", REJECT: "Geweigerd",
+  },
+  kyc: { VERIFIED: "✓ Geverifieerd", PENDING: "Verificatie loopt", UNVERIFIED: "Niet geverifieerd", REJECTED: "Afgewezen" },
   dash: {
     hello: "Hallo", install_as_app: "Installeer als app",
     stat_shipments: "Zendingen", stat_delivered: "Afgeleverd", stat_review: "In beoordeling",

@@ -123,6 +123,16 @@ const en: Messages = {
     report_title: "Report a concern or incident?",
     report_body: "Report it via your shipment in the app or contact us. We keep evidence (photos, seal, custody log) for investigation. Never respond to requests to pay outside of PakketHub.",
   },
+  status: {
+    DRAFT: "Draft", SCREENING: "Screening", QUOTED: "Offer received", BOOKED: "Booked",
+    INTAKE: "Hub intake", SEALED: "Sealed", IN_CUSTODY: "In custody", IN_TRANSIT: "In transit",
+    CUSTOMS: "Customs", READY: "Ready for pickup", DELIVERED: "Delivered", RETURNED: "Returned", CLOSED: "Closed",
+  },
+  elig: {
+    ALLOW: "Allowed", STEP_UP: "Verification required", REVIEW: "Manual review",
+    HOLD: "Blocked (hold)", FREIGHT_ONLY: "Freight only", REJECT: "Refused",
+  },
+  kyc: { VERIFIED: "✓ Verified", PENDING: "Verification pending", UNVERIFIED: "Not verified", REJECTED: "Rejected" },
   dash: {
     hello: "Hi", install_as_app: "Install as app",
     stat_shipments: "Shipments", stat_delivered: "Delivered", stat_review: "In review",

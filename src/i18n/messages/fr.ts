@@ -124,6 +124,16 @@ const fr: Messages = {
     report_title: "Signaler une inquiétude ou un incident ?",
     report_body: "Signalez-le via votre envoi dans l'app ou contactez-nous. Nous conservons les preuves (photos, scellé, journal de traçabilité) pour enquête. Ne répondez jamais à des demandes de paiement en dehors de PakketHub.",
   },
+  status: {
+    DRAFT: "Brouillon", SCREENING: "Filtrage", QUOTED: "Offre reçue", BOOKED: "Réservé",
+    INTAKE: "Réception au hub", SEALED: "Scellé", IN_CUSTODY: "Sous garde", IN_TRANSIT: "En transit",
+    CUSTOMS: "Douane", READY: "Prêt à retirer", DELIVERED: "Livré", RETURNED: "Retourné", CLOSED: "Clôturé",
+  },
+  elig: {
+    ALLOW: "Autorisé", STEP_UP: "Vérification requise", REVIEW: "Examen manuel",
+    HOLD: "Bloqué (en attente)", FREIGHT_ONLY: "Fret uniquement", REJECT: "Refusé",
+  },
+  kyc: { VERIFIED: "✓ Vérifié", PENDING: "Vérification en cours", UNVERIFIED: "Non vérifié", REJECTED: "Rejeté" },
   dash: {
     hello: "Bonjour", install_as_app: "Installer comme app",
     stat_shipments: "Envois", stat_delivered: "Livrés", stat_review: "En examen",
