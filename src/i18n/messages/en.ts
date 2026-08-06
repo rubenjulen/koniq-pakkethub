@@ -177,6 +177,14 @@ const en: Messages = {
     title: "Messages", sub: "Coordinate and make arrangements with the other party",
     none: "No conversations yet", none_d: "Once you place or receive an offer, a chat opens here automatically.",
   },
+  mktd: {
+    to: "to", content: "Contents", deadline: "deadline",
+    offer_sub: "Your bid instantly opens a chat with the sender",
+    adjust_bid: "Adjust your bid", place_bid: "Bid on this shipment",
+    your_price: "Your price (€)", link_trip: "Link to a trip (optional)", none: "— none —",
+    msg_sender: "Message to sender", msg_ph: "E.g. I'm flying next week, I can pick it up at the hub.",
+    update_bid: "Update bid", place_chat: "Place bid & chat",
+  },
   wallet: {
     title: "💶 Wallet & payments", balance: "Wallet balance", balance_hint: "Paid-out earnings",
     escrow: "Held (escrow)", escrow_hint: "Platform-wide", fees: "Service fees", fees_hint: "Platform revenue",

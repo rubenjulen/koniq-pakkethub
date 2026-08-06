@@ -176,6 +176,14 @@ const nl = {
     title: "Berichten", sub: "Overleg en maak afspraken met de andere partij",
     none: "Nog geen gesprekken", none_d: "Zodra je een bod plaatst of ontvangt, opent hier automatisch een chat.",
   },
+  mktd: {
+    to: "naar", content: "Inhoud", deadline: "deadline",
+    offer_sub: "Je bod opent meteen een chat met de afzender",
+    adjust_bid: "Je bod aanpassen", place_bid: "Bied op deze zending",
+    your_price: "Jouw prijs (€)", link_trip: "Koppel aan rit (optioneel)", none: "— geen —",
+    msg_sender: "Bericht aan afzender", msg_ph: "Bijv. Ik vlieg volgende week, kan het bij de hub ophalen.",
+    update_bid: "Bod bijwerken", place_chat: "Bod plaatsen & chatten",
+  },
   wallet: {
     title: "💶 Wallet & betalingen", balance: "Wallet-saldo", balance_hint: "Uitbetaalde verdiensten",
     escrow: "In bewaring (escrow)", escrow_hint: "Platform-breed", fees: "Servicekosten", fees_hint: "Platform-omzet",

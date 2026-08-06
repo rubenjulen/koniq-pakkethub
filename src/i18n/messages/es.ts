@@ -178,6 +178,14 @@ const es: Messages = {
     title: "Mensajes", sub: "Coordina y acuerda todo con la otra parte",
     none: "Aún no hay conversaciones", none_d: "En cuanto hagas o recibas una oferta, aquí se abre un chat automáticamente.",
   },
+  mktd: {
+    to: "a", content: "Contenido", deadline: "fecha límite",
+    offer_sub: "Tu oferta abre al instante un chat con el remitente",
+    adjust_bid: "Ajustar tu oferta", place_bid: "Ofertar en este envío",
+    your_price: "Tu precio (€)", link_trip: "Vincular a un viaje (opcional)", none: "— ninguno —",
+    msg_sender: "Mensaje al remitente", msg_ph: "P. ej. viajo la próxima semana, puedo recogerlo en el hub.",
+    update_bid: "Actualizar oferta", place_chat: "Ofertar y chatear",
+  },
   wallet: {
     title: "💶 Cartera y pagos", balance: "Saldo de la cartera", balance_hint: "Ganancias cobradas",
     escrow: "Retenido (custodia)", escrow_hint: "Toda la plataforma", fees: "Comisiones de servicio", fees_hint: "Ingresos de la plataforma",
