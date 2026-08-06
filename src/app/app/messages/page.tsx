@@ -3,11 +3,13 @@ import { requireSession } from "@/lib/auth";
 import { query } from "@/db/client";
 import { EmptyState } from "@/components/ui";
 import { timeAgo, initials } from "@/lib/format";
+import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Berichten" };
 
 export default async function MessagesPage() {
   const user = await requireSession();
+  const mg = (await getMessages()).msg;
   const convos = await query<any>(
     `SELECT c.id, c.subject, c.status, c.last_message_at, s.reference,
             (SELECT body FROM chat_messages m WHERE m.conversation_id=c.id ORDER BY m.created_at DESC LIMIT 1) AS last_body,
@@ -27,14 +29,12 @@ export default async function MessagesPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-4">
       <div>
-        <h1 className="text-xl font-bold text-slate-900">Berichten</h1>
-        <p className="text-sm text-slate-500">Overleg en maak afspraken met de andere partij</p>
+        <h1 className="text-xl font-bold text-slate-900">{mg.title}</h1>
+        <p className="text-sm text-slate-500">{mg.sub}</p>
       </div>
 
       {convos.length === 0 ? (
-        <EmptyState icon="💬" title="Nog geen gesprekken">
-          Zodra je een bod plaatst of ontvangt, opent hier automatisch een chat.
-        </EmptyState>
+        <EmptyState icon="💬" title={mg.none}>{mg.none_d}</EmptyState>
       ) : (
         <div className="ph-card divide-y divide-slate-100">
           {convos.map((c) => (

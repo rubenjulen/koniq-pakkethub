@@ -122,6 +122,16 @@ const nl = {
     report_title: "Een zorg of incident melden?",
     report_body: "Meld het via je zending in de app of neem contact op. We bewaren bewijs (foto's, verzegeling, custody-log) voor onderzoek. Reageer nooit op verzoeken om betalingen buiten PakketHub om.",
   },
+  market: {
+    title: "Ritten & aanbod", sub: "Toegestane zendingen die je op je reis kunt meenemen",
+    my_trips: "✈️ Mijn ritten", none: "Geen open zendingen",
+    none_d: "Er zijn nu geen toegestane zendingen. Publiceer een rit zodat afzenders je kunnen vinden.",
+    bid_running: "Jouw bod loopt", allowed: "Toegestaan", items: "items", view_bid: "Bekijk & bied →", deadline: "deadline",
+  },
+  msg: {
+    title: "Berichten", sub: "Overleg en maak afspraken met de andere partij",
+    none: "Nog geen gesprekken", none_d: "Zodra je een bod plaatst of ontvangt, opent hier automatisch een chat.",
+  },
   wallet: {
     title: "💶 Wallet & betalingen", balance: "Wallet-saldo", balance_hint: "Uitbetaalde verdiensten",
     escrow: "In bewaring (escrow)", escrow_hint: "Platform-breed", fees: "Servicekosten", fees_hint: "Platform-omzet",

@@ -124,6 +124,16 @@ const es: Messages = {
     report_title: "¿Informar de una inquietud o incidente?",
     report_body: "Infórmalo mediante tu envío en la app o contáctanos. Conservamos pruebas (fotos, precinto, log de custodia) para la investigación. Nunca respondas a solicitudes de pago fuera de PakketHub.",
   },
+  market: {
+    title: "Viajes y ofertas", sub: "Envíos permitidos que puedes llevar en tu viaje",
+    my_trips: "✈️ Mis viajes", none: "Sin envíos abiertos",
+    none_d: "Ahora no hay envíos permitidos. Publica un viaje para que los remitentes te encuentren.",
+    bid_running: "Tu oferta está activa", allowed: "Permitido", items: "artículos", view_bid: "Ver y ofertar →", deadline: "fecha límite",
+  },
+  msg: {
+    title: "Mensajes", sub: "Coordina y acuerda todo con la otra parte",
+    none: "Aún no hay conversaciones", none_d: "En cuanto hagas o recibas una oferta, aquí se abre un chat automáticamente.",
+  },
   wallet: {
     title: "💶 Cartera y pagos", balance: "Saldo de la cartera", balance_hint: "Ganancias cobradas",
     escrow: "Retenido (custodia)", escrow_hint: "Toda la plataforma", fees: "Comisiones de servicio", fees_hint: "Ingresos de la plataforma",

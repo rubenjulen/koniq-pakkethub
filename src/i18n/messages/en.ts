@@ -123,6 +123,16 @@ const en: Messages = {
     report_title: "Report a concern or incident?",
     report_body: "Report it via your shipment in the app or contact us. We keep evidence (photos, seal, custody log) for investigation. Never respond to requests to pay outside of PakketHub.",
   },
+  market: {
+    title: "Trips & offers", sub: "Allowed shipments you can carry on your trip",
+    my_trips: "✈️ My trips", none: "No open shipments",
+    none_d: "There are no allowed shipments right now. Publish a trip so senders can find you.",
+    bid_running: "Your bid is active", allowed: "Allowed", items: "items", view_bid: "View & bid →", deadline: "deadline",
+  },
+  msg: {
+    title: "Messages", sub: "Coordinate and make arrangements with the other party",
+    none: "No conversations yet", none_d: "Once you place or receive an offer, a chat opens here automatically.",
+  },
   wallet: {
     title: "💶 Wallet & payments", balance: "Wallet balance", balance_hint: "Paid-out earnings",
     escrow: "Held (escrow)", escrow_hint: "Platform-wide", fees: "Service fees", fees_hint: "Platform revenue",

@@ -124,6 +124,16 @@ const fr: Messages = {
     report_title: "Signaler une inquiétude ou un incident ?",
     report_body: "Signalez-le via votre envoi dans l'app ou contactez-nous. Nous conservons les preuves (photos, scellé, journal de traçabilité) pour enquête. Ne répondez jamais à des demandes de paiement en dehors de PakketHub.",
   },
+  market: {
+    title: "Trajets et offres", sub: "Envois autorisés que vous pouvez transporter lors de votre voyage",
+    my_trips: "✈️ Mes trajets", none: "Aucun envoi ouvert",
+    none_d: "Aucun envoi autorisé pour le moment. Publiez un trajet pour que les expéditeurs vous trouvent.",
+    bid_running: "Votre offre est active", allowed: "Autorisé", items: "articles", view_bid: "Voir et proposer →", deadline: "échéance",
+  },
+  msg: {
+    title: "Messages", sub: "Concertez-vous et convenez avec l'autre partie",
+    none: "Aucune conversation", none_d: "Dès que vous faites ou recevez une offre, un chat s'ouvre ici automatiquement.",
+  },
   wallet: {
     title: "💶 Portefeuille et paiements", balance: "Solde du portefeuille", balance_hint: "Gains versés",
     escrow: "Bloqué (séquestre)", escrow_hint: "Toute la plateforme", fees: "Frais de service", fees_hint: "Revenus de la plateforme",
