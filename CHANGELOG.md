@@ -1,4 +1,22 @@
-# Changelog — PakketHub
+# Changelog — BugaWuga (PakketHub)
+
+## v0.5.0 — Rebrand naar BugaWuga + founder-concept (golf 1)
+
+- **Verenigd concept & requirements v2** (`docs/PakketHub-verenigd-concept-en-requirements-v2.md`):
+  founder-input (BugaWuga-kangoeroe, 18 features, schermen, business case, disclaimer-motto
+  "koop het zelf") is nu leidend; de bestaande bouw sluit aan als trust-&-safety-laag.
+- **Huisstijl terug naar BugaWuga**: fris lime-groen + warm bruin. De volledige Tailwind
+  `orange`-schaal is in `globals.css` omgehangen naar groen, zodat de hele app in één keer
+  meekleurt zonder per component te wijzigen.
+- **Logo herbouwd** als SVG: groen tegel-embleem met witte kangoeroe + woordmerk "Bugawuga"
+  (Buga groen, wuga bruin). Naam "PakketHub" → "BugaWuga" app-breed (domein `pakkethub.com` blijft).
+- **Home-hero omgebouwd** naar het founder-concept: `BoardingHero`-SVG (passagiers stappen bij
+  schemering in het vliegtuig op de tarmac) + dubbele CTA "versturen / meenemen" + **route-zoek**
+  (Van/Naar/vertrek/retour) + sociaal bewijs (aantal routes) + de kangoeroe-oorsprong. In 5 talen.
+- Volgende golven: route-matching marktplaats (listings + 1–4 sterren), social login, foto-uploads,
+  3 C's-betalen + punten/coins, Google Maps + bredere corridors, B2B-advertenties, Chinees (6e taal).
+
+
 
 ## v0.4.1 — App 100% meertalig (5 talen) + testgids
 
