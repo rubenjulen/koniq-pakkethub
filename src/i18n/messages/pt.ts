@@ -471,6 +471,12 @@ const pt: Messages = {
     willing_pay: "Disposto a pagar", service_price: "Preço do serviço", capacity: "Capacidade", depart: "Parte", deadline: "Prazo",
     see_profile: "Ver perfil", react: "Ver e ofertar", none_routes: "Nenhuma rota visível.", none_requests: "Nenhum pedido visível.",
     publish_route: "Publique sua rota", publish_request: "Torne seu pedido visível", free: "Grátis",
+    pub_route_title: "Deixe as pessoas verem sua rota", pub_route_sub: "Defina seu preço e info; sua rota aparecerá no mercado.",
+    pub_price_get: "Quanto quer receber? (€)", pub_price_pay: "Quanto quer pagar? (€)",
+    pub_short: "Info breve (máx 200 caracteres)", pub_long: "Info detalhada (opcional)",
+    pub_visible: "Visível para outros", pub_route_save: "Tornar rota visível",
+    pub_req_title: "Deixe as pessoas verem seu pedido", pub_req_info: "Info breve sobre seu pacote", pub_req_save: "Tornar pedido visível",
+    visible_on: "Visível", visible_off: "Oculto", edit_visibility: "Visibilidade", saved: "Salvo.",
   },
   prof: {
     member_since: "Membro desde", based_in: "Localização",

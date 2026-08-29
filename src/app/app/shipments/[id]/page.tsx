@@ -5,6 +5,7 @@ import { query, queryOne } from "@/db/client";
 import { EligibilityBadge, StatusBadge, Chip, SectionTitle } from "@/components/ui";
 import { eur, dateNL, dateTimeNL, timeAgo } from "@/lib/format";
 import { acceptOfferAction, advanceStatusAction, submitInspectionAction } from "../actions";
+import { publishRequestAction } from "../../marketplace/actions";
 import { openClaimAction, requestReturnAction } from "../../claims/actions";
 import { VOLUMETRIC_DIVISOR, volumetricKg as calcVol, chargeableKg as calcChargeable } from "@/lib/packaging";
 import { getShipmentLegs } from "@/lib/legs";
@@ -25,11 +26,12 @@ const NEXT_STATUS: Record<string, { to: string; event: string; key: NextKey; nee
   READY: [{ to: "DELIVERED", event: "DELIVERED", key: "n_delivered" }],
 };
 
-export default async function ShipmentDetail({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ error?: string }> }) {
+export default async function ShipmentDetail({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ error?: string; ok?: string }> }) {
   const user = await requireSession();
   const { id } = await params;
-  const { error } = await searchParams;
+  const { error, ok } = await searchParams;
   const m = await getMessages();
+  const pm = m.mkt2;
   const d = m.shipd;
 
   const s = await queryOne<any>(
@@ -82,6 +84,23 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
       </div>
 
       {error && <div className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">{error}</div>}
+      {ok && <div className="rounded-lg bg-orange-50 px-3 py-2 text-sm text-orange-700 ring-1 ring-orange-200">{pm.saved}</div>}
+
+      {isOwner && s.eligibility === "ALLOW" && (
+        <details className="ph-card p-4" open={!s.visible}>
+          <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
+            <span>🧳 {pm.pub_req_title}</span>
+            <span className={`ph-chip ${s.visible ? "bg-orange-50 text-orange-700" : "bg-slate-100 text-slate-600"}`}>{s.visible ? `👁 ${pm.visible_on}` : pm.visible_off}</span>
+          </summary>
+          <form action={publishRequestAction} className="mt-3 grid gap-2 sm:grid-cols-2">
+            <input type="hidden" name="shipment_id" value={s.id} />
+            <label className="block"><span className="text-xs text-slate-500">{pm.pub_price_pay}</span><input name="offered_price_eur" type="number" step="0.5" min="0" defaultValue={s.offered_price_eur ?? ""} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" /></label>
+            <label className="block sm:col-span-2"><span className="text-xs text-slate-500">{pm.pub_req_info}</span><input name="request_info" maxLength={200} defaultValue={s.request_info ?? ""} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" /></label>
+            <label className="flex items-center gap-2 text-sm sm:col-span-2"><input type="checkbox" name="visible" defaultChecked={s.visible} /> {pm.pub_visible}</label>
+            <div className="sm:col-span-2"><button className="ph-btn ph-btn-primary text-sm">{pm.pub_req_save}</button></div>
+          </form>
+        </details>
+      )}
 
       <div className="grid gap-5 md:grid-cols-3">
         <div className="space-y-5 md:col-span-2">

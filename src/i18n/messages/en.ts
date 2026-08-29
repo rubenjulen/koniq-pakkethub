@@ -470,6 +470,12 @@ const en: Messages = {
     willing_pay: "Willing to pay", service_price: "Service price", capacity: "Capacity", depart: "Departs", deadline: "Deadline",
     see_profile: "See profile", react: "View & bid", none_routes: "No visible routes.", none_requests: "No visible requests.",
     publish_route: "Publish your route", publish_request: "Make your request visible", free: "Free",
+    pub_route_title: "Let people see your route", pub_route_sub: "Set your price and info; your route then appears on the marketplace.",
+    pub_price_get: "What would you like to receive? (€)", pub_price_pay: "What would you like to pay? (€)",
+    pub_short: "Short info (max 200 chars)", pub_long: "Detailed info (optional)",
+    pub_visible: "Visible to others", pub_route_save: "Make route visible",
+    pub_req_title: "Let people see your request", pub_req_info: "Short info about your package", pub_req_save: "Make request visible",
+    visible_on: "Visible", visible_off: "Hidden", edit_visibility: "Visibility", saved: "Saved.",
   },
   prof: {
     member_since: "Member since", based_in: "Based in",

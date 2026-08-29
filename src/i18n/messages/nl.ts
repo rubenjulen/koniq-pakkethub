@@ -469,6 +469,12 @@ const nl = {
     willing_pay: "Wil betalen", service_price: "Vraagprijs", capacity: "Capaciteit", depart: "Vertrek", deadline: "Deadline",
     see_profile: "Bekijk profiel", react: "Bekijk & bied", none_routes: "Geen zichtbare routes.", none_requests: "Geen zichtbare verzoeken.",
     publish_route: "Publiceer je route", publish_request: "Maak je verzoek zichtbaar", free: "Gratis",
+    pub_route_title: "Laat mensen je route zien", pub_route_sub: "Kies je prijs en info; je route verschijnt dan op de marktplaats.",
+    pub_price_get: "Wat wil je ontvangen? (€)", pub_price_pay: "Wat wil je betalen? (€)",
+    pub_short: "Korte info (max 200 tekens)", pub_long: "Uitgebreide info (optioneel)",
+    pub_visible: "Zichtbaar voor anderen", pub_route_save: "Route zichtbaar maken",
+    pub_req_title: "Laat mensen je verzoek zien", pub_req_info: "Korte info over je pakket", pub_req_save: "Verzoek zichtbaar maken",
+    visible_on: "Zichtbaar", visible_off: "Verborgen", edit_visibility: "Zichtbaarheid", saved: "Opgeslagen.",
   },
   prof: {
     member_since: "Lid sinds", based_in: "Woonplaats",

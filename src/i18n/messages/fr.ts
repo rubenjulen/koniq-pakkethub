@@ -471,6 +471,12 @@ const fr: Messages = {
     willing_pay: "Prêt à payer", service_price: "Prix du service", capacity: "Capacité", depart: "Départ", deadline: "Échéance",
     see_profile: "Voir le profil", react: "Voir & enchérir", none_routes: "Aucun itinéraire visible.", none_requests: "Aucune demande visible.",
     publish_route: "Publiez votre itinéraire", publish_request: "Rendez votre demande visible", free: "Gratuit",
+    pub_route_title: "Laissez les gens voir votre itinéraire", pub_route_sub: "Définissez votre prix et vos infos ; votre itinéraire apparaîtra sur la place de marché.",
+    pub_price_get: "Combien voulez-vous recevoir ? (€)", pub_price_pay: "Combien voulez-vous payer ? (€)",
+    pub_short: "Info courte (max 200 caractères)", pub_long: "Info détaillée (facultatif)",
+    pub_visible: "Visible par les autres", pub_route_save: "Rendre l'itinéraire visible",
+    pub_req_title: "Laissez les gens voir votre demande", pub_req_info: "Info courte sur votre colis", pub_req_save: "Rendre la demande visible",
+    visible_on: "Visible", visible_off: "Masqué", edit_visibility: "Visibilité", saved: "Enregistré.",
   },
   prof: {
     member_since: "Membre depuis", based_in: "Situé à",

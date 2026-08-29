@@ -471,6 +471,12 @@ const es: Messages = {
     willing_pay: "Dispuesto a pagar", service_price: "Precio del servicio", capacity: "Capacidad", depart: "Sale", deadline: "Fecha límite",
     see_profile: "Ver perfil", react: "Ver y ofertar", none_routes: "No hay rutas visibles.", none_requests: "No hay solicitudes visibles.",
     publish_route: "Publica tu ruta", publish_request: "Haz visible tu solicitud", free: "Gratis",
+    pub_route_title: "Deja que la gente vea tu ruta", pub_route_sub: "Elige tu precio e info; tu ruta aparecerá en el mercado.",
+    pub_price_get: "¿Cuánto quieres recibir? (€)", pub_price_pay: "¿Cuánto quieres pagar? (€)",
+    pub_short: "Info breve (máx 200 caracteres)", pub_long: "Info detallada (opcional)",
+    pub_visible: "Visible para otros", pub_route_save: "Hacer visible la ruta",
+    pub_req_title: "Deja que la gente vea tu solicitud", pub_req_info: "Info breve sobre tu paquete", pub_req_save: "Hacer visible la solicitud",
+    visible_on: "Visible", visible_off: "Oculto", edit_visibility: "Visibilidad", saved: "Guardado.",
   },
   prof: {
     member_since: "Miembro desde", based_in: "Ubicación",
