@@ -1,4 +1,4 @@
-export const LOCALES = ["nl", "en", "pt", "es", "fr"] as const;
+export const LOCALES = ["nl", "en", "pt", "es", "fr", "zh"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "nl";
 
@@ -8,6 +8,7 @@ export const LOCALE_META: Record<Locale, { label: string; native: string; flag: 
   pt: { label: "Portuguese (BR)", native: "Português", flag: "🇧🇷" },
   es: { label: "Spanish", native: "Español", flag: "🇪🇸" },
   fr: { label: "French", native: "Français", flag: "🇫🇷" },
+  zh: { label: "Chinese", native: "中文", flag: "🇨🇳" },
 };
 
 export function isLocale(v: string | undefined | null): v is Locale {

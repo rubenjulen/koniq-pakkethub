@@ -7,8 +7,9 @@ import en from "./messages/en";
 import pt from "./messages/pt";
 import es from "./messages/es";
 import fr from "./messages/fr";
+import zh from "./messages/zh";
 
-const DICTS: Record<Locale, Messages> = { nl, en, pt, es, fr };
+const DICTS: Record<Locale, Messages> = { nl, en, pt, es, fr, zh };
 
 /** Huidige taal: cookie 'locale' → anders Accept-Language → anders default. */
 export async function getLocale(): Promise<Locale> {
