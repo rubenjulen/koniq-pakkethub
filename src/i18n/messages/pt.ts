@@ -304,6 +304,10 @@ const pt: Messages = {
     success: "✓ Pagamento aprovado",
     pay_btn: "Pagar {a} (simular sucesso)", fail_btn: "Simular pagamento com falha",
     provider_line: "Provedor: {n} · modo {m}",
+    choose_method: "Escolha sua forma de pagamento", m_cash: "Dinheiro / Western Union", m_card: "Cartão de crédito", m_crypto: "Cripto",
+    cash_hint: "Pague em dinheiro ou via Western Union num ponto de serviço. Informe seu MTCN/referência.", mtcn: "MTCN / referência",
+    card_hint: "Visa, Maestro ou American Express.", card_number: "Número do cartão", card_exp: "Validade", card_cvc: "CVC",
+    crypto_hint: "Pague em Bitcoin ou Ethereum no endereço abaixo.", crypto_coin: "Moeda", crypto_address: "Endereço da carteira",
   },
   label: {
     title: "Etiqueta de envio", back: "← Voltar", print_hint: "Ctrl/⌘+P para imprimir",

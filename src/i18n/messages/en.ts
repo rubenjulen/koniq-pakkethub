@@ -303,6 +303,10 @@ const en: Messages = {
     success: "✓ Payment successful",
     pay_btn: "Pay {a} (simulate success)", fail_btn: "Simulate a failed payment",
     provider_line: "Provider: {n} · mode {m}",
+    choose_method: "Choose your payment method", m_cash: "Cash / Western Union", m_card: "Credit card", m_crypto: "Crypto",
+    cash_hint: "Pay cash or via Western Union at a service point. Enter your MTCN/reference.", mtcn: "MTCN / reference",
+    card_hint: "Visa, Maestro or American Express.", card_number: "Card number", card_exp: "Expiry", card_cvc: "CVC",
+    crypto_hint: "Pay in Bitcoin or Ethereum to the address below.", crypto_coin: "Coin", crypto_address: "Wallet address",
   },
   label: {
     title: "Shipping label", back: "← Back", print_hint: "Ctrl/⌘+P to print",

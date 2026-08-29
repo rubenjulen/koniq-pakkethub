@@ -302,6 +302,10 @@ const nl = {
     success: "✓ Betaling geslaagd",
     pay_btn: "Betaal {a} (simuleer geslaagd)", fail_btn: "Simuleer mislukte betaling",
     provider_line: "Provider: {n} · modus {m}",
+    choose_method: "Kies je betaalmethode", m_cash: "Contant / Western Union", m_card: "Creditcard", m_crypto: "Crypto",
+    cash_hint: "Betaal contant of via Western Union bij een servicepunt. Voer je MTCN/referentie in.", mtcn: "MTCN / referentie",
+    card_hint: "Visa, Maestro of American Express.", card_number: "Kaartnummer", card_exp: "Vervaldatum", card_cvc: "CVC",
+    crypto_hint: "Betaal in Bitcoin of Ethereum naar het adres hieronder.", crypto_coin: "Munt", crypto_address: "Wallet-adres",
   },
   label: {
     title: "Verzendlabel", back: "← Terug", print_hint: "Ctrl/⌘+P om te printen",

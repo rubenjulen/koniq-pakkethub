@@ -11,11 +11,12 @@ import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Betalen" };
 
-export default async function PayPage({ params, searchParams }: { params: Promise<{ intentId: string }>; searchParams: Promise<{ failed?: string }> }) {
+export default async function PayPage({ params, searchParams }: { params: Promise<{ intentId: string }>; searchParams: Promise<{ failed?: string; method?: string }> }) {
   const user = await requireSession();
   const { intentId } = await params;
-  const { failed } = await searchParams;
+  const { failed, method: methodParam } = await searchParams;
   const t = (await getMessages()).pay;
+  const method = methodParam === "CARD" || methodParam === "CRYPTO" ? methodParam : "CASH_WU";
 
   const intent = await getIntent(intentId);
   if (!intent || intent.tenant_id !== user.tenantId) notFound();
@@ -66,17 +67,57 @@ export default async function PayPage({ params, searchParams }: { params: Promis
           {done ? (
             <div className="mt-4 rounded-lg bg-orange-50 px-3 py-2 text-center text-sm font-medium text-orange-700">{t.success}</div>
           ) : (
-            <div className="mt-4 grid gap-2">
-              <form action={confirmPaymentAction}>
-                <input type="hidden" name="intent_id" value={intentId} />
-                <input type="hidden" name="outcome" value="success" />
-                <button className="ph-btn ph-btn-primary w-full">{t.pay_btn.replace("{a}", eur(intent.amount_eur))}</button>
-              </form>
-              <form action={confirmPaymentAction}>
-                <input type="hidden" name="intent_id" value={intentId} />
-                <input type="hidden" name="outcome" value="fail" />
-                <button className="ph-btn ph-btn-ghost w-full text-slate-500">{t.fail_btn}</button>
-              </form>
+            <div className="mt-4">
+              {/* 3 C's — betaalmethode kiezen */}
+              <div className="mb-1 text-xs font-medium text-slate-600">{t.choose_method}</div>
+              <div className="mb-3 grid grid-cols-3 gap-1 rounded-lg bg-slate-100 p-1 text-xs font-semibold">
+                {([["CASH_WU", "💵", t.m_cash], ["CARD", "💳", t.m_card], ["CRYPTO", "₿", t.m_crypto]] as const).map(([k, ic, lbl]) => (
+                  <a key={k} href={`/app/pay/${intentId}?method=${k}`} className={`rounded-md px-2 py-1.5 text-center ${method === k ? "bg-white text-slate-900 shadow" : "text-slate-500"}`}>{ic} {lbl}</a>
+                ))}
+              </div>
+
+              {method === "CASH_WU" && (
+                <div className="mb-3 space-y-2 rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
+                  <p>{t.cash_hint}</p>
+                  <input placeholder={t.mtcn} className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm" />
+                </div>
+              )}
+              {method === "CARD" && (
+                <div className="mb-3 space-y-2 rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
+                  <p>{t.card_hint}</p>
+                  <input placeholder={t.card_number} className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm" />
+                  <div className="flex gap-2">
+                    <input placeholder={t.card_exp} className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm" />
+                    <input placeholder={t.card_cvc} className="w-24 rounded border border-slate-300 px-2 py-1.5 text-sm" />
+                  </div>
+                </div>
+              )}
+              {method === "CRYPTO" && (
+                <div className="mb-3 space-y-2 rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
+                  <p>{t.crypto_hint}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">{t.crypto_coin}:</span>
+                    <span className="rounded bg-white px-2 py-0.5 ring-1 ring-slate-200">₿ BTC</span>
+                    <span className="rounded bg-white px-2 py-0.5 ring-1 ring-slate-200">Ξ ETH</span>
+                  </div>
+                  <div><span className="font-medium">{t.crypto_address}:</span> <code className="break-all rounded bg-white px-1 font-mono text-[11px] ring-1 ring-slate-200">bc1qbugawuga0demo0sandbox0address0x0000</code></div>
+                </div>
+              )}
+
+              <div className="grid gap-2">
+                <form action={confirmPaymentAction}>
+                  <input type="hidden" name="intent_id" value={intentId} />
+                  <input type="hidden" name="outcome" value="success" />
+                  <input type="hidden" name="method" value={method} />
+                  <button className="ph-btn ph-btn-primary w-full">{t.pay_btn.replace("{a}", eur(intent.amount_eur))}</button>
+                </form>
+                <form action={confirmPaymentAction}>
+                  <input type="hidden" name="intent_id" value={intentId} />
+                  <input type="hidden" name="outcome" value="fail" />
+                  <input type="hidden" name="method" value={method} />
+                  <button className="ph-btn ph-btn-ghost w-full text-slate-500">{t.fail_btn}</button>
+                </form>
+              </div>
             </div>
           )}
         </div>

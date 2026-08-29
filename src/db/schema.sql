@@ -878,3 +878,10 @@ ALTER TABLE trips ADD COLUMN IF NOT EXISTS package_size text NOT NULL DEFAULT 'M
 ALTER TABLE shipments ADD COLUMN IF NOT EXISTS visible boolean NOT NULL DEFAULT false;
 ALTER TABLE shipments ADD COLUMN IF NOT EXISTS offered_price_eur numeric(18,2);
 ALTER TABLE shipments ADD COLUMN IF NOT EXISTS request_info text;
+
+-- Betaalmethode (3 C's): Cash/Western Union, Card, Crypto. Gekozen bij afrekenen.
+ALTER TABLE payment_intents ADD COLUMN IF NOT EXISTS method text; -- CASH_WU|CARD|CRYPTO
+
+-- Punten/coins-portemonnee (feature 9): interne valuta + uitbetaaldrempel.
+ALTER TABLE wallets ADD COLUMN IF NOT EXISTS points integer NOT NULL DEFAULT 0;
+ALTER TABLE wallets ADD COLUMN IF NOT EXISTS payout_threshold_eur numeric(18,2) NOT NULL DEFAULT 500;

@@ -36,8 +36,8 @@ export const PROVIDERS = {
   },
 } as const;
 
-export const PLATFORM_FEE_PCT = 0.12;      // servicekosten BugaWuga
-export const PLATFORM_FEE_MIN_EUR = 3.5;   // minimum servicebijdrage
+export const PLATFORM_FEE_PCT = 0.045;     // BugaWuga-commissie 4,5% (founder: 4–5% van totaal)
+export const PLATFORM_FEE_MIN_EUR = 2;     // minimum servicebijdrage
 export const BASE_CURRENCY = "EUR";
 export const FX_RATES: Record<string, number> = { EUR: 1, SRD: 38.5, USD: 1.08 };
 
