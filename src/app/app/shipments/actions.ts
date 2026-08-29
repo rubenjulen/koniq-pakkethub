@@ -113,7 +113,7 @@ export async function acceptOfferAction(formData: FormData) {
 
   const convId = await ensureConversation({ tenantId, shipmentId, reference: shipment.reference, senderId: user.id, travelerId: offer.traveler_id });
   await postMessage({ tenantId, conversationId: convId, senderId: null, kind: "SYSTEM",
-    body: `Bod geaccepteerd voor €${offer.price}. Rond de betaling af; PakketHub houdt het bedrag vast tot bewijs van levering.` });
+    body: `Bod geaccepteerd voor €${offer.price}. Rond de betaling af; BugaWuga houdt het bedrag vast tot bewijs van levering.` });
 
   await audit({ tenantId, userId: user.id, action: "OFFER_ACCEPT", entityType: "shipment", entityId: shipmentId,
     summary: `Bod geaccepteerd (€${offer.price})`, meta: { offerId } });

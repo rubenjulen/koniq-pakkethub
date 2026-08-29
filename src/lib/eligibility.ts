@@ -1,10 +1,10 @@
 /**
- * PakketHub deterministische eligibility-engine (rule_version v1).
+ * BugaWuga deterministische eligibility-engine (rule_version v1).
  *
  * Uitkomsten (van best naar meest beperkend):
  *   ALLOW        — mag via crowdshipping.
  *   STEP_UP      — extra verificatie (KYC) vereist voordat waarde beweegt.
- *   REVIEW       — handmatige beoordeling door PakketHub-medewerker.
+ *   REVIEW       — handmatige beoordeling door BugaWuga-medewerker.
  *   HOLD         — beschermende blokkade (reserve; hier niet automatisch getriggerd).
  *   FREIGHT_ONLY — niet via reiziger; alleen professionele freight.
  *   REJECT       — nooit toegestaan.

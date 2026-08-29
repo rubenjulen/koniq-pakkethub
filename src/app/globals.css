@@ -4,22 +4,37 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* =========================================================================
-   PakketHub design tokens. Corridor-platform look: trustworthy, operational.
+   BugaWuga design tokens. Corridor-platform look: trustworthy, operational.
    ========================================================================= */
 :root {
-  /* PakketHub officiële merkkleuren (uit logo/huisstijl) */
-  --ph-orange: #e9481c;       /* primair accent */
-  --ph-orange-dark: #c93c15;
-  --ph-charcoal: #2e2e2e;     /* donkere achtergrond huisstijl */
-  --ph-beige: #cdbfa7;        /* zacht secundair */
-  --ph-ink: #1a1a1a;          /* bijna-zwart */
-  --ph-slate: #2e2e2e;
+  /* BugaWuga merkkleuren: fris lime-groen + warm bruin (uit de originele huisstijl). */
+  --ph-orange: #6ea82c;       /* primair accent = BugaWuga-groen */
+  --ph-orange-dark: #57891f;
+  --ph-brown: #5a4a2e;        /* warm bruin (topbalk/footer) */
+  --ph-brown-dark: #453922;
+  --ph-charcoal: #4a3b26;     /* donkere warme achtergrond (scrims) */
+  --ph-beige: #e8e0cf;        /* zacht secundair (crème) */
+  --ph-ink: #23201a;          /* bijna-zwart, warme ondertoon */
+  --ph-slate: #4a3b26;
   --ph-amber: #f59e0b;
-  --ph-bg: #f6f5f3;           /* lichte tint met warme ondertoon */
-  --ph-line: #e5e1da;
-  /* Backwards-compat alias: 'teal' verwijst nu naar het merkoranje. */
+  --ph-bg: #f6f4ee;           /* lichte crème-tint */
+  --ph-line: #e6e1d6;
+  /* Backwards-compat alias: 'teal' verwijst nu naar het merkgroen. */
   --ph-teal: var(--ph-orange);
-  --ph-orange-dark: var(--ph-orange-dark);
+
+  /* --- Hele Tailwind 'orange'-schaal omgehangen naar BugaWuga-groen, zodat
+     alle bestaande orange-* utilities app-breed meekleuren zonder per component
+     te wijzigen. --- */
+  --color-orange-50:  #f3f8ea;
+  --color-orange-100: #e4f1cd;
+  --color-orange-200: #cce4a2;
+  --color-orange-300: #aed46d;
+  --color-orange-400: #93c246;
+  --color-orange-500: #7ab52a;
+  --color-orange-600: #6ea82c;
+  --color-orange-700: #547f1d;
+  --color-orange-800: #426218;
+  --color-orange-900: #375016;
 }
 
 @theme inline {
@@ -103,7 +118,7 @@ body {
 .dark input::placeholder, .dark textarea::placeholder { color: #64748b; }
 
 /* Zachte tinten leesbaar houden op donker */
-.dark .bg-orange-50 { background-color: rgba(233,72,28,.14); }
+.dark .bg-orange-50 { background-color: rgba(110,168,44,.16); }
 .dark .bg-amber-50 { background-color: rgba(245,158,11,.14); }
 .dark .bg-teal-50, .dark .bg-emerald-50 { background-color: rgba(13,148,136,.16); }
 .dark .bg-rose-50 { background-color: rgba(244,63,94,.14); }

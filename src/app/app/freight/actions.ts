@@ -21,7 +21,7 @@ export async function bookFreightAction(formData: FormData) {
   const user = await requireCapability("ops.intake");
   const tenantId = user.tenantId;
   const shipmentId = String(formData.get("shipment_id") ?? "") || null;
-  const carrier = String(formData.get("carrier_name") ?? "").trim() || "PakketHub Freight (sandbox)";
+  const carrier = String(formData.get("carrier_name") ?? "").trim() || "BugaWuga Freight (sandbox)";
   const mode = String(formData.get("mode") ?? "AIR");
   const n = await queryOne<{ n: number }>(`SELECT count(*)::int AS n FROM freight_orders WHERE tenant_id=$1`, [tenantId]);
   const ref = `FRT-${new Date().getFullYear()}-${String((n?.n ?? 0) + 1).padStart(4, "0")}`;

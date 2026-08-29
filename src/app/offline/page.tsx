@@ -6,7 +6,7 @@ export default function OfflinePage() {
       <div className="text-4xl">📦</div>
       <h1 className="text-xl font-bold">Je bent offline</h1>
       <p className="text-slate-600">
-        PakketHub kon de pagina niet laden. Zodra je weer verbinding hebt, kun je verder met je
+        BugaWuga kon de pagina niet laden. Zodra je weer verbinding hebt, kun je verder met je
         zendingen, aanbiedingen en berichten.
       </p>
       <a href="/" className="ph-btn ph-btn-primary">Opnieuw proberen</a>

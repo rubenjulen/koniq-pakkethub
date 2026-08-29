@@ -48,7 +48,7 @@ export async function seedDatabase(db: DbAdapter) {
   await q(db,
     `INSERT INTO tenants (id, name, slug, timezone, currency, brand)
      VALUES ($1,$2,$3,$4,$5,$6)`,
-    [T, "PakketHub", "pakkethub", "Europe/Amsterdam", "EUR",
+    [T, "BugaWuga", "pakkethub", "Europe/Amsterdam", "EUR",
      JSON.stringify({ tagline: "Gecontroleerde corridor-crowdshipping", color: "#0d9488" })]);
 
   // ---- Roles ----
@@ -122,11 +122,11 @@ export async function seedDatabase(db: DbAdapter) {
   // ---- Hubs ----
   await q(db,
     `INSERT INTO hubs (id, tenant_id, name, hub_type, country, city, address_text, services)
-     VALUES ($1,$2,'PakketHub Amsterdam Zuidoost','HUB','NL','Amsterdam','Bijlmerdreef 100', $3)`,
+     VALUES ($1,$2,'BugaWuga Amsterdam Zuidoost','HUB','NL','Amsterdam','Bijlmerdreef 100', $3)`,
     [HUB.AMS, T, ["INTAKE", "INSPECTION", "PACKING", "PICKUP", "CONSOLIDATION"]]);
   await q(db,
     `INSERT INTO hubs (id, tenant_id, name, hub_type, country, city, address_text, services)
-     VALUES ($1,$2,'PakketHub Paramaribo Centrum','SERVICE_POINT','SR','Paramaribo','Domineestraat 12', $3)`,
+     VALUES ($1,$2,'BugaWuga Paramaribo Centrum','SERVICE_POINT','SR','Paramaribo','Domineestraat 12', $3)`,
     [HUB.PBM, T, ["PICKUP", "RETURNS"]]);
 
   // ---- Trip (traveler capacity) ----
@@ -196,7 +196,7 @@ export async function seedDatabase(db: DbAdapter) {
     [CONV, USER.TRAVELER]);
 
   const chat: [string | null, string, string][] = [
-    [null, "SYSTEM", "Gesprek gestart voor zending PH-2026-000101. Maak hier je afspraken over ophalen, tijd en prijs. PakketHub houdt betaling vast tot bewijs van levering."],
+    [null, "SYSTEM", "Gesprek gestart voor zending PH-2026-000101. Maak hier je afspraken over ophalen, tijd en prijs. BugaWuga houdt betaling vast tot bewijs van levering."],
     [USER.TRAVELER, "TEXT", "Hoi Sandra! Ik zag je zending. Ik vlieg volgende week woensdag. Zal ik het bij hub Amsterdam ophalen?"],
     [USER.SENDER, "TEXT", "Hi Winston, top! Ja, ik lever het dinsdag in bij de hub. Lukt €18 zoals je bod?"],
     [USER.TRAVELER, "TEXT", "Prima. Ik bevestig het bod. Kun je een verzegeld, open pakket aanleveren zodat de hub het kan inspecteren?"],
@@ -216,11 +216,11 @@ export async function seedDatabase(db: DbAdapter) {
   type Doc = { slug: string; kind: string; owner: string; t: Record<string, Tr> };
   const content: Doc[] = [
     { slug: "verificatie", kind: "POLICY", owner: "Compliance", t: {
-      nl: { title: "Verificatie & identiteit", summary: "Waarom en hoe wij afzenders, reizigers en ontvangers verifiëren voordat waarde beweegt.", body: "PakketHub verifieert de identiteit van elke partij voordat een boeking of betaling plaatsvindt. Verificatie is verplicht voor waardebeweging en wordt periodiek herbeoordeeld." },
-      en: { title: "Verification & identity", summary: "Why and how we verify senders, travelers and recipients before value moves.", body: "PakketHub verifies the identity of every party before a booking or payment takes place. Verification is required for any value movement and is periodically re-reviewed." },
-      pt: { title: "Verificação e identidade", summary: "Por que e como verificamos remetentes, viajantes e destinatários antes de qualquer valor se mover.", body: "A PakketHub verifica a identidade de cada parte antes de uma reserva ou pagamento. A verificação é obrigatória para qualquer movimentação de valor e é reavaliada periodicamente." },
-      es: { title: "Verificación e identidad", summary: "Por qué y cómo verificamos a remitentes, viajeros y destinatarios antes de mover valor.", body: "PakketHub verifica la identidad de cada parte antes de una reserva o pago. La verificación es obligatoria para cualquier movimiento de valor y se revisa periódicamente." },
-      fr: { title: "Vérification et identité", summary: "Pourquoi et comment nous vérifions expéditeurs, voyageurs et destinataires avant tout mouvement de valeur.", body: "PakketHub vérifie l'identité de chaque partie avant toute réservation ou paiement. La vérification est obligatoire pour tout mouvement de valeur et est réévaluée périodiquement." } } },
+      nl: { title: "Verificatie & identiteit", summary: "Waarom en hoe wij afzenders, reizigers en ontvangers verifiëren voordat waarde beweegt.", body: "BugaWuga verifieert de identiteit van elke partij voordat een boeking of betaling plaatsvindt. Verificatie is verplicht voor waardebeweging en wordt periodiek herbeoordeeld." },
+      en: { title: "Verification & identity", summary: "Why and how we verify senders, travelers and recipients before value moves.", body: "BugaWuga verifies the identity of every party before a booking or payment takes place. Verification is required for any value movement and is periodically re-reviewed." },
+      pt: { title: "Verificação e identidade", summary: "Por que e como verificamos remetentes, viajantes e destinatários antes de qualquer valor se mover.", body: "A BugaWuga verifica a identidade de cada parte antes de uma reserva ou pagamento. A verificação é obrigatória para qualquer movimentação de valor e é reavaliada periodicamente." },
+      es: { title: "Verificación e identidad", summary: "Por qué y cómo verificamos a remitentes, viajeros y destinatarios antes de mover valor.", body: "BugaWuga verifica la identidad de cada parte antes de una reserva o pago. La verificación es obligatoria para cualquier movimiento de valor y se revisa periódicamente." },
+      fr: { title: "Vérification et identité", summary: "Pourquoi et comment nous vérifions expéditeurs, voyageurs et destinataires avant tout mouvement de valeur.", body: "BugaWuga vérifie l'identité de chaque partie avant toute réservation ou paiement. La vérification est obligatoire pour tout mouvement de valeur et est réévaluée périodiquement." } } },
     { slug: "goederenbeleid", kind: "POLICY", owner: "Operations", t: {
       nl: { title: "Goederenbeleid & positieve lijst", summary: "Wat mag wel en niet via een reiziger, en wat naar professionele freight gaat.", body: "Alleen categorieën op de positieve lijst mogen via crowdshipping. Onbekende, gesloten of gevaarlijke pakketten worden geweigerd of naar freight gerouteerd." },
       en: { title: "Goods policy & positive list", summary: "What can and cannot travel with a traveler, and what goes to professional freight.", body: "Only categories on the positive list may travel via crowdshipping. Unknown, closed or dangerous packages are refused or routed to freight." },
@@ -234,11 +234,11 @@ export async function seedDatabase(db: DbAdapter) {
       es: { title: "Pagos y liquidación", summary: "Pago protegido, retención de fondos y liquidación basada en pruebas.", body: "Los pagos pasan por un proveedor con licencia. Los fondos se retienen y solo se liberan tras la prueba de entrega." },
       fr: { title: "Paiements et versement", summary: "Paiement protégé, blocage des fonds et versement sur preuve.", body: "Les paiements passent par un prestataire agréé. Les fonds sont bloqués et libérés uniquement après preuve de livraison." } } },
     { slug: "customs", kind: "POLICY", owner: "Compliance", t: {
-      nl: { title: "Douane & aangifte", summary: "Verplichte itemaangifte en handmatige douanebeoordeling in de pilot.", body: "Elke zending vereist een volledige itemlijst. In de pilot beoordeelt een medewerker douanerelevante gevallen handmatig. PakketHub bepaalt geen douanelegaliteit namens de afzender." },
-      en: { title: "Customs & declaration", summary: "Mandatory item declaration and manual customs review during the pilot.", body: "Every shipment requires a complete item list. During the pilot, a staff member manually reviews customs-relevant cases. PakketHub does not determine customs legality on behalf of the sender." },
-      pt: { title: "Alfândega e declaração", summary: "Declaração obrigatória de itens e revisão aduaneira manual no piloto.", body: "Cada envio exige uma lista completa de itens. No piloto, um funcionário analisa manualmente os casos relevantes para a alfândega. A PakketHub não determina a legalidade aduaneira em nome do remetente." },
-      es: { title: "Aduana y declaración", summary: "Declaración de artículos obligatoria y revisión aduanera manual en el piloto.", body: "Cada envío requiere una lista completa de artículos. En el piloto, un empleado revisa manualmente los casos relevantes para aduanas. PakketHub no determina la legalidad aduanera en nombre del remitente." },
-      fr: { title: "Douane et déclaration", summary: "Déclaration d'articles obligatoire et examen douanier manuel pendant le pilote.", body: "Chaque envoi exige une liste complète des articles. Pendant le pilote, un agent examine manuellement les cas relevant de la douane. PakketHub ne détermine pas la légalité douanière au nom de l'expéditeur." } } },
+      nl: { title: "Douane & aangifte", summary: "Verplichte itemaangifte en handmatige douanebeoordeling in de pilot.", body: "Elke zending vereist een volledige itemlijst. In de pilot beoordeelt een medewerker douanerelevante gevallen handmatig. BugaWuga bepaalt geen douanelegaliteit namens de afzender." },
+      en: { title: "Customs & declaration", summary: "Mandatory item declaration and manual customs review during the pilot.", body: "Every shipment requires a complete item list. During the pilot, a staff member manually reviews customs-relevant cases. BugaWuga does not determine customs legality on behalf of the sender." },
+      pt: { title: "Alfândega e declaração", summary: "Declaração obrigatória de itens e revisão aduaneira manual no piloto.", body: "Cada envio exige uma lista completa de itens. No piloto, um funcionário analisa manualmente os casos relevantes para a alfândega. A BugaWuga não determina a legalidade aduaneira em nome do remetente." },
+      es: { title: "Aduana y declaración", summary: "Declaración de artículos obligatoria y revisión aduanera manual en el piloto.", body: "Cada envío requiere una lista completa de artículos. En el piloto, un empleado revisa manualmente los casos relevantes para aduanas. BugaWuga no determina la legalidad aduanera en nombre del remitente." },
+      fr: { title: "Douane et déclaration", summary: "Déclaration d'articles obligatoire et examen douanier manuel pendant le pilote.", body: "Chaque envoi exige une liste complète des articles. Pendant le pilote, un agent examine manuellement les cas relevant de la douane. BugaWuga ne détermine pas la légalité douanière au nom de l'expéditeur." } } },
     { slug: "privacy", kind: "POLICY", owner: "DPO", t: {
       nl: { title: "Privacy", summary: "Welke gegevens we verwerken en waarom.", body: "We verwerken alleen gegevens die nodig zijn voor verificatie, uitvoering en veiligheid van de zending, met bewaartermijnen en toegang op need-to-know-basis." },
       en: { title: "Privacy", summary: "What data we process and why.", body: "We only process data needed for verification, execution and safety of the shipment, with retention periods and access on a need-to-know basis." },
@@ -268,11 +268,11 @@ export async function seedDatabase(db: DbAdapter) {
   // ---- Video-content (CMS): YouTube-id in body, meertalige titel ----
   const videos: [string, string, Record<string, string>][] = [
     ["video-1", "O_RucR2okRY", {
-      nl: "PakketHub — zo werkt gecontroleerde corridor-crowdshipping",
-      en: "PakketHub — how controlled corridor crowdshipping works",
-      pt: "PakketHub — como funciona o crowdshipping de corredor controlado",
-      es: "PakketHub — cómo funciona el crowdshipping de corredor controlado",
-      fr: "PakketHub — comment fonctionne le crowdshipping de corridor contrôlé" }],
+      nl: "BugaWuga — zo werkt gecontroleerde corridor-crowdshipping",
+      en: "BugaWuga — how controlled corridor crowdshipping works",
+      pt: "BugaWuga — como funciona o crowdshipping de corredor controlado",
+      es: "BugaWuga — cómo funciona el crowdshipping de corredor controlado",
+      fr: "BugaWuga — comment fonctionne le crowdshipping de corridor contrôlé" }],
     ["video-2", "z2wXH9ZCQSM", {
       nl: "Van aangifte tot levering: de reis van je pakket",
       en: "From declaration to delivery: your package's journey",
@@ -297,12 +297,12 @@ export async function seedDatabase(db: DbAdapter) {
   // ---- Notifications (demo-outbox) ----
   const notifs: [string, string, string][] = [
     ["Nieuw bod ontvangen", "Winston biedt €18 op je zending PH-2026-000101.", "OFFER_NEW"],
-    ["Welkom bij PakketHub", "Je account is geverifieerd. Je kunt nu zendingen aanmaken en boeken.", "WELCOME"],
+    ["Welkom bij BugaWuga", "Je account is geverifieerd. Je kunt nu zendingen aanmaken en boeken.", "WELCOME"],
   ];
   for (const [title, body, tpl] of notifs) {
     await q(db,
       `INSERT INTO notifications (tenant_id, user_id, channel, template, title, body, status, provider)
-       VALUES ($1,$2,'WHATSAPP',$3,$4,$5,'SENT','PakketHub Notify (sandbox)')`,
+       VALUES ($1,$2,'WHATSAPP',$3,$4,$5,'SENT','BugaWuga Notify (sandbox)')`,
       [T, USER.SENDER, tpl, title, body]);
   }
 
@@ -373,7 +373,7 @@ export async function seedDatabase(db: DbAdapter) {
   const LOCKER = "1a000000-0000-0000-0000-000000000d01";
   await q(db,
     `INSERT INTO lockers (id, tenant_id, hub_id, code, name, address, city, country, status)
-     VALUES ($1,$2,$3,'LK-PBM-01','PakketHub Locker Centrum','Domineestraat 12','Paramaribo','SR','ACTIVE')`,
+     VALUES ($1,$2,$3,'LK-PBM-01','BugaWuga Locker Centrum','Domineestraat 12','Paramaribo','SR','ACTIVE')`,
     [LOCKER, T, HUB.PBM]);
   const comps: [string, string, string][] = [
     ["A1", "S", "FREE"], ["A2", "S", "FREE"], ["B1", "M", "OCCUPIED"],
@@ -414,6 +414,6 @@ export async function seedDatabase(db: DbAdapter) {
 
   await q(db,
     `INSERT INTO audit_log (tenant_id, user_id, action, entity_type, summary)
-     VALUES ($1,$2,'SEED','system','PakketHub NL–SR pilot geseed (demo v0.3.0: legs/manifests, lockers, slots, boeken).')`,
+     VALUES ($1,$2,'SEED','system','BugaWuga NL–SR pilot geseed (demo v0.3.0: legs/manifests, lockers, slots, boeken).')`,
     [T, USER.ADMIN]);
 }

@@ -63,7 +63,7 @@ export default async function LabelPage({ params }: { params: Promise<{ id: stri
       <div className="rounded-xl border-2 border-slate-900 p-4">
         <div className="flex items-start justify-between border-b-2 border-slate-900 pb-2">
           <div>
-            <div className="text-lg font-extrabold">Pakket<span className="text-orange-600">Hub</span></div>
+            <div className="text-lg font-extrabold">Buga<span className="text-orange-600">wuga</span></div>
             <div className="text-xs text-slate-500">{t.controlled_corridor}</div>
           </div>
           <div className="text-right">

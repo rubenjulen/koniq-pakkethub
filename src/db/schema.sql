@@ -1,5 +1,5 @@
 -- =============================================================================
--- PakketHub.com — controlled corridor crowdshipping platform
+-- BugaWuga.com — controlled corridor crowdshipping platform
 -- Schema baseline (PGlite / PostgreSQL 16). Public schema, UUID keys,
 -- tenant_id on every business record. Money = numeric, ts = timestamptz (UTC).
 --

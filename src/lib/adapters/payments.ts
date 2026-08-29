@@ -3,7 +3,7 @@ import { query, queryOne } from "@/db/client";
 import { PROVIDERS, FX_RATES, BASE_CURRENCY } from "./config";
 
 /**
- * Betaal-adapter. SIMULATED = 'PakketHub Pay (sandbox)': maakt een payment intent aan die
+ * Betaal-adapter. SIMULATED = 'BugaWuga Pay (sandbox)': maakt een payment intent aan die
  * in de status REQUIRES_ACTION staat tot een tester 'm bevestigt (via de demo-checkout of de
  * Test Console). Zo simuleer je een echte betaalflow, inclusief mislukken en terugboeken.
  *

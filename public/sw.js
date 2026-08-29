@@ -1,4 +1,4 @@
-/* PakketHub service worker — installable PWA + offline app-shell.
+/* BugaWuga service worker — installable PWA + offline app-shell.
  * Strategy:
  *  - Navigations: network-first, fall back to cached shell (/offline) when offline.
  *  - Static assets (icons, manifest): cache-first.

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { InstallAppButton } from "@/components/InstallAppButton";
-import { AirportHero } from "@/components/AirportHero";
-import { HeroVideo } from "@/components/HeroVideo";
+import { BoardingHero } from "@/components/BoardingHero";
+import { RouteSearch } from "@/components/RouteSearch";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { getMessages, getLocale } from "@/i18n";
 import { getTenantId } from "@/lib/tenant";
-import { query } from "@/db/client";
+import { query, queryOne } from "@/db/client";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +16,13 @@ export default async function HomePage() {
 
   // Video's uit de content-CMS (content_items kind=VIDEO); fallback op vaste id's.
   const tenantId = await getTenantId();
+  // Sociaal bewijs: aantal beschikbare routes (open ritten) + open verzendverzoeken.
+  const rc = await queryOne<{ n: number }>(
+    `SELECT ((SELECT count(*) FROM trips WHERE tenant_id=$1 AND status='OPEN')
+           + (SELECT count(*) FROM shipments WHERE tenant_id=$1 AND status IN ('QUOTED','SCREENING')))::int AS n`,
+    [tenantId]
+  );
+  const routeCount = Math.max(rc?.n ?? 0, 1);
   const vrows = await query<any>(
     `SELECT body AS yt, title, title_i18n FROM content_items
       WHERE tenant_id=$1 AND kind='VIDEO' AND status='PUBLISHED' ORDER BY sort_order`, [tenantId]
@@ -34,43 +41,27 @@ export default async function HomePage() {
     [h.spine1_t, h.spine1_d], [h.spine2_t, h.spine2_d], [h.spine3_t, h.spine3_d],
     [h.spine4_t, h.spine4_d], [h.spine5_t, h.spine5_d], [h.spine6_t, h.spine6_d],
   ];
-  const STEPS = [h.step1, h.step2, h.step3, h.step4, h.step5];
 
   return (
     <>
-      {/* Hero met full-bleed achtergrondvideo (luchthaven-illustratie als fallback eronder) */}
-      <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden bg-[#2e2e2e] text-white">
-        <AirportHero className="absolute inset-0 h-full w-full" />
-        <HeroVideo src="/media/hero.mp4" poster="/media/hero-poster.jpg" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/85 to-[#141414]/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/80 via-transparent to-[#141414]/40" />
+      {/* Hero: passagiers stappen bij schemering in het vliegtuig + route-zoek */}
+      <section className="relative flex min-h-[92vh] w-full items-center overflow-hidden bg-[#2b2416] text-white">
+        <BoardingHero className="absolute inset-0 h-full w-full" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1c160e]/95 via-[#1c160e]/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1c160e]/70 via-transparent to-transparent" />
         <div className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 py-20 lg:grid-cols-2 lg:items-center">
           <div className="[text-shadow:0_1px_16px_rgba(0,0,0,0.6)]">
             <span className="ph-chip bg-orange-600 text-white shadow-lg [text-shadow:none]">{h.pilot_badge}</span>
             <h1 className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
-              {h.hero_a} <span className="text-orange-400">{h.hero_highlight}</span> {h.hero_b}
+              {h.h2_title}
             </h1>
-            <p className="mt-4 max-w-lg text-lg font-medium text-slate-100">{h.hero_sub}</p>
-            <div className="mt-6 flex flex-wrap gap-3 [text-shadow:none]">
-              <Link href="/verzenden" className="ph-btn ph-btn-primary shadow-lg">{m.common.send_package}</Link>
-              <Link href="/hoe-het-werkt" className="ph-btn bg-white/15 text-white ring-1 ring-white/25 backdrop-blur hover:bg-white/25">{m.common.how_it_works}</Link>
-            </div>
+            <p className="mt-3 text-lg font-semibold text-orange-300">{h.h2_sub.replace("{n}", String(routeCount))}</p>
+            <p className="mt-3 max-w-lg text-base text-slate-200">{h.origin_line}</p>
             <div className="mt-6 [text-shadow:none]"><InstallAppButton label={h.install_app} /></div>
           </div>
-          <div className="hidden lg:block">
-            <div className="rounded-2xl border border-white/10 bg-[#1c1c1c]/85 p-6 text-sm text-slate-100 shadow-2xl backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 font-semibold text-white">
-                <span className="h-2 w-2 rounded-full bg-orange-500" /> {h.how_shipment_works}
-              </div>
-              <ol className="space-y-3">
-                {STEPS.map((t, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">{i + 1}</span>
-                    <span className="leading-relaxed">{t}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+          <div className="[text-shadow:none]">
+            <RouteSearch t={h} />
+            <p className="mt-3 text-center text-xs text-slate-300">{h.hero_sub}</p>
           </div>
         </div>
       </section>

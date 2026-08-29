@@ -60,7 +60,7 @@ export default async function ClaimDetail({ params }: { params: Promise<{ id: st
           {messages.length === 0 && <p className="text-sm text-slate-400">{cl.no_msg}</p>}
           {messages.map((m, i) => (
             <div key={i} className="rounded-lg bg-slate-50 p-2 text-sm">
-              <div className="text-xs font-semibold text-slate-600">{m.sender ?? "PakketHub"}</div>
+              <div className="text-xs font-semibold text-slate-600">{m.sender ?? "BugaWuga"}</div>
               <div className="text-slate-700">{m.body}</div>
             </div>
           ))}

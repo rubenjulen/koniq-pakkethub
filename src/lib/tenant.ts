@@ -2,7 +2,7 @@ import "server-only";
 import { query, queryOne } from "@/db/client";
 import type { CategoryRule, CorridorLimits } from "./eligibility";
 
-/** In deze single-tenant pilot is er één PakketHub-tenant. */
+/** In deze single-tenant pilot is er één BugaWuga-tenant. */
 export async function getTenantId(): Promise<string> {
   const row = await queryOne<{ id: string }>(`SELECT id FROM tenants WHERE slug = 'pakkethub' LIMIT 1`);
   return row?.id ?? "10000000-0000-0000-0000-000000000001";

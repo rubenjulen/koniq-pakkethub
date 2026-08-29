@@ -61,7 +61,7 @@ export default async function AppHome() {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold text-slate-900">{d.hello} {user.firstName} 👋</h1>
-          <p className="text-sm text-slate-500">{user.roleName} · PakketHub NL–SR pilot</p>
+          <p className="text-sm text-slate-500">{user.roleName} · BugaWuga NL–SR pilot</p>
         </div>
         <InstallAppButton label={d.install_as_app} />
       </div>

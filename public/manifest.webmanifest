@@ -1,7 +1,7 @@
 {
-  "name": "PakketHub — Corridor Crowdshipping",
-  "short_name": "PakketHub",
-  "description": "Verstuur en vervoer gecontroleerde crowd-pakketten over de PakketHub-corridor. Aangifte, inspectie, verzegeling en veilige overdracht — met chat tussen afzender en reiziger.",
+  "name": "BugaWuga — Corridor Crowdshipping",
+  "short_name": "BugaWuga",
+  "description": "Verstuur en vervoer gecontroleerde crowd-pakketten over de BugaWuga-corridor. Aangifte, inspectie, verzegeling en veilige overdracht — met chat tussen afzender en reiziger.",
   "id": "/",
   "start_url": "/?source=pwa",
   "scope": "/",

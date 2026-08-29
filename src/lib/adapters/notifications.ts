@@ -3,7 +3,7 @@ import { query } from "@/db/client";
 import { PROVIDERS } from "./config";
 
 /**
- * Notificatie-adapter. SIMULATED = 'PakketHub Notify (sandbox)': schrijft berichten naar een
+ * Notificatie-adapter. SIMULATED = 'BugaWuga Notify (sandbox)': schrijft berichten naar een
  * outbox (tabel notifications) met status 'SENT', zodat je in testen precies ziet welke
  * WhatsApp/e-mail/push zou uitgaan. Echte livegang koppelt Twilio/WhatsApp Business/Resend
  * achter dezelfde send()-interface.

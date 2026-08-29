@@ -15,28 +15,28 @@ function mode(envKey: string): ProviderMode {
 export const PROVIDERS = {
   payments: {
     mode: mode("PAYMENTS_MODE"),
-    name: process.env.PAYMENTS_PROVIDER ?? "PakketHub Pay (sandbox)",
+    name: process.env.PAYMENTS_PROVIDER ?? "BugaWuga Pay (sandbox)",
     // Echte provider zou hier zijn: Mollie / Stripe / gelicentieerde escrow-partij.
   },
   kyc: {
     mode: mode("KYC_MODE"),
-    name: process.env.KYC_PROVIDER ?? "PakketHub Verify (sandbox)",
+    name: process.env.KYC_PROVIDER ?? "BugaWuga Verify (sandbox)",
   },
   notifications: {
     mode: mode("NOTIFY_MODE"),
-    name: process.env.NOTIFY_PROVIDER ?? "PakketHub Notify (sandbox)",
+    name: process.env.NOTIFY_PROVIDER ?? "BugaWuga Notify (sandbox)",
   },
   routing: {
     mode: mode("ROUTING_MODE"),
-    name: process.env.ROUTING_PROVIDER ?? "PakketHub Routing (sandbox)",
+    name: process.env.ROUTING_PROVIDER ?? "BugaWuga Routing (sandbox)",
   },
   ai: {
     mode: mode("AI_MODE"),
-    name: process.env.AI_PROVIDER ?? "PakketHub Assist (sandbox)",
+    name: process.env.AI_PROVIDER ?? "BugaWuga Assist (sandbox)",
   },
 } as const;
 
-export const PLATFORM_FEE_PCT = 0.12;      // servicekosten PakketHub
+export const PLATFORM_FEE_PCT = 0.12;      // servicekosten BugaWuga
 export const PLATFORM_FEE_MIN_EUR = 3.5;   // minimum servicebijdrage
 export const BASE_CURRENCY = "EUR";
 export const FX_RATES: Record<string, number> = { EUR: 1, SRD: 38.5, USD: 1.08 };

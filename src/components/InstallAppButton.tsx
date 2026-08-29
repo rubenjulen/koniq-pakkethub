@@ -5,7 +5,7 @@ type BIPEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ out
 
 /**
  * "Installeer de app"-knop. Vangt het beforeinstallprompt-event (Chrome/Edge/Android)
- * en toont anders een iOS-instructie. Zo is PakketHub op elk toestel te "downloaden".
+ * en toont anders een iOS-instructie. Zo is BugaWuga op elk toestel te "downloaden".
  * `compact` = klein icoon-knopje voor in de header.
  */
 export function InstallAppButton({ className = "", label = "Installeer de app", compact = false }: { className?: string; label?: string; compact?: boolean }) {

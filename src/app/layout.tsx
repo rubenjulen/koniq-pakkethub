@@ -6,14 +6,14 @@ import { getLocale } from "@/i18n";
 
 export const metadata: Metadata = {
   title: {
-    default: "PakketHub — gecontroleerde corridor-crowdshipping",
-    template: "%s · PakketHub",
+    default: "BugaWuga — gecontroleerde corridor-crowdshipping",
+    template: "%s · BugaWuga",
   },
   description:
-    "PakketHub verbindt afzenders, reizigers, hubs en logistieke partners via één gecontroleerde corridor. Aangifte, inspectie, verzegeling en veilige overdracht — met chat tussen de partijen.",
-  applicationName: "PakketHub",
+    "BugaWuga verbindt afzenders, reizigers, hubs en logistieke partners via één gecontroleerde corridor. Aangifte, inspectie, verzegeling en veilige overdracht — met chat tussen de partijen.",
+  applicationName: "BugaWuga",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "PakketHub" },
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "BugaWuga" },
   formatDetection: { telephone: false },
   metadataBase: new URL("https://pakkethub.com"),
   robots: { index: false, follow: false }, // domein nog niet geactiveerd

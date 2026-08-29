@@ -3,7 +3,7 @@ import { query, queryOne } from "@/db/client";
 import { PROVIDERS } from "./config";
 
 /**
- * KYC/identiteit-adapter. SIMULATED = 'PakketHub Verify (sandbox)': start een verificatie
+ * KYC/identiteit-adapter. SIMULATED = 'BugaWuga Verify (sandbox)': start een verificatie
  * die op PENDING staat tot een beoordelaar/tester een besluit neemt (Test Console of
  * ops-review). Echte livegang koppelt een IDV-provider (bijv. Onfido/Veriff/iDIN) achter
  * dezelfde start/decide-interface.

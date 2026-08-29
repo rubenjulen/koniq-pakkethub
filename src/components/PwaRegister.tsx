@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-/** Registreert de service worker zodat PakketHub installeerbaar is als app. */
+/** Registreert de service worker zodat BugaWuga installeerbaar is als app. */
 export function PwaRegister() {
   useEffect(() => {
     if (typeof window === "undefined") return;

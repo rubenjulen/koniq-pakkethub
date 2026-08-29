@@ -118,7 +118,7 @@ export async function ensureConversation(opts: {
       `INSERT INTO chat_messages (tenant_id, conversation_id, sender_id, kind, body)
        VALUES ($1,$2,null,'SYSTEM',$3)`,
       [opts.tenantId, conv!.id,
-       `Gesprek gestart voor zending ${opts.reference}. Maak hier afspraken over ophalen, tijd en prijs. PakketHub houdt betaling vast tot bewijs van levering.`]
+       `Gesprek gestart voor zending ${opts.reference}. Maak hier afspraken over ophalen, tijd en prijs. BugaWuga houdt betaling vast tot bewijs van levering.`]
     );
   }
   await query(
