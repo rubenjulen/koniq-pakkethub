@@ -499,6 +499,12 @@ const fr: Messages = {
     pro: "Badges Pro", pro_sub: "Peu courants, mais accessibles avec un peu d'effort.",
     standard: "Badges standard", standard_sub: "Pour les jalons en cours de route.", earned: "Obtenu le",
   },
+  ads: {
+    label: "Sponsorisé", title: "Publicités", sub: "B2B — les entreprises achètent de l'espace et de la visibilité",
+    new: "Nouvelle publicité", advertiser: "Annonceur", ad_title: "Titre", body: "Texte", link: "Lien (URL)", icon: "Icône (emoji)",
+    placement: "Emplacement", pm_marketplace: "Place de marché", pm_home: "Accueil", pm_sidebar: "Barre latérale", add: "+ Publicité",
+    list: "Publicités", active: "Actif", inactive: "Inactif", activate: "Activer", deactivate: "Désactiver", del: "Supprimer", impressions: "impressions",
+  },
   members: {
     title: "Membres", sub: "Invitez des membres, gérez l'accès et envoyez un e-mail groupé",
     invite: "Inviter un membre", invite_sub: "Crée un compte et envoie une invitation",
@@ -529,6 +535,7 @@ const fr: Messages = {
     console: "Console de Test",
     content: "Contenu & vidéos",
     members: "Membres",
+    ads: "Publicités",
     account: "Compte",
     notifications: "🔔 Notifications",
   },

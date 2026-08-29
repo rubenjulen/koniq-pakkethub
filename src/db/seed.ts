@@ -507,6 +507,17 @@ export async function seedDatabase(db: DbAdapter) {
      ON CONFLICT (tenant_id, user_id) DO UPDATE SET balance_eur=175, points=120, payout_threshold_eur=500`,
     [T, USER.TRAVELER]);
 
+  // B2B-advertenties (feature 18): voorbeeld-adverteerders.
+  const ADS: [string, string, string, string, string, string][] = [
+    ["Surinam Airways", "Vlieg NL ⇄ SR", "Boek je vlucht Amsterdam–Paramaribo met extra bagage.", "https://www.flyslm.com", "✈️", "MARKETPLACE"],
+    ["Torarica Hotel", "Verblijf in Paramaribo", "Comfortabel logeren in het hart van de stad.", "https://www.torarica.com", "🏨", "SIDEBAR"],
+    ["Roopram Roti", "Lekker eten onderweg", "De bekendste roti van Paramaribo — ook to-go.", "#", "🍽️", "HOME"],
+  ];
+  for (const [adv, title, body, link, icon, placement] of ADS) {
+    await q(db, `INSERT INTO ads (tenant_id, advertiser, title, body, link_url, icon, placement, active)
+                 VALUES ($1,$2,$3,$4,$5,$6,$7,true)`, [T, adv, title, body, link, icon, placement]);
+  }
+
   // Afzender volgt de reiziger (zie wanneer een vriend reist).
   await q(db, `INSERT INTO follows (follower_id, followee_id) VALUES ($1,$2) ON CONFLICT DO NOTHING`,
     [USER.SENDER, USER.TRAVELER]);

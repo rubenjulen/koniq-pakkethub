@@ -885,3 +885,31 @@ ALTER TABLE payment_intents ADD COLUMN IF NOT EXISTS method text; -- CASH_WU|CAR
 -- Punten/coins-portemonnee (feature 9): interne valuta + uitbetaaldrempel.
 ALTER TABLE wallets ADD COLUMN IF NOT EXISTS points integer NOT NULL DEFAULT 0;
 ALTER TABLE wallets ADD COLUMN IF NOT EXISTS payout_threshold_eur numeric(18,2) NOT NULL DEFAULT 500;
+
+-- B2B-advertenties (feature 18): bedrijven kopen ruimte/prominentie.
+CREATE TABLE IF NOT EXISTS ads (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id    uuid NOT NULL REFERENCES tenants(id),
+  advertiser   text NOT NULL,
+  title        text NOT NULL,
+  body         text,
+  link_url     text,
+  icon         text,                              -- emoji/glyph (foto-upload = later)
+  placement    text NOT NULL DEFAULT 'MARKETPLACE', -- MARKETPLACE|HOME|SIDEBAR
+  active       boolean NOT NULL DEFAULT true,
+  impressions  integer NOT NULL DEFAULT 0,
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ads_placement_idx ON ads(tenant_id, placement, active);
+
+-- Virtuele cadeaus (feature 18 / in-app purchase): coins → cadeau naar een ander lid.
+CREATE TABLE IF NOT EXISTS gifts (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id    uuid NOT NULL REFERENCES tenants(id),
+  from_id      uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  to_id        uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  kind         text NOT NULL,                     -- FLOWER|COFFEE|TROPHY|HEART
+  coins        integer NOT NULL DEFAULT 0,
+  message      text,
+  created_at   timestamptz NOT NULL DEFAULT now()
+);

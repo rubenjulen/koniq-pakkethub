@@ -497,6 +497,12 @@ const nl = {
     pro: "Pro-badges", pro_sub: "Ongewoon, maar met wat inzet haalbaar.",
     standard: "Standaard-badges", standard_sub: "Voor mijlpalen onderweg.", earned: "Behaald op",
   },
+  ads: {
+    label: "Gesponsord", title: "Advertenties", sub: "B2B — bedrijven kopen ruimte en prominentie",
+    new: "Nieuwe advertentie", advertiser: "Adverteerder", ad_title: "Titel", body: "Tekst", link: "Link (URL)", icon: "Icoon (emoji)",
+    placement: "Plaatsing", pm_marketplace: "Marktplaats", pm_home: "Home", pm_sidebar: "Zijbalk", add: "+ Advertentie",
+    list: "Advertenties", active: "Actief", inactive: "Inactief", activate: "Activeren", deactivate: "Deactiveren", del: "Verwijderen", impressions: "weergaven",
+  },
   members: {
     title: "Leden", sub: "Nodig leden uit, beheer toegang en stuur een groepsmail",
     invite: "Lid uitnodigen", invite_sub: "Maakt een account aan en stuurt een uitnodiging",
@@ -527,6 +533,7 @@ const nl = {
     console: "Test Console",
     content: "Content & video's",
     members: "Leden",
+    ads: "Advertenties",
     account: "Account",
     notifications: "🔔 Meldingen",
   },

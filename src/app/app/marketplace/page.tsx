@@ -4,6 +4,7 @@ import { getMessages } from "@/i18n";
 import { EmptyState, Chip } from "@/components/ui";
 import { eur, dateNL } from "@/lib/format";
 import { Stars } from "@/components/Stars";
+import { AdSlot } from "@/components/AdSlot";
 import { getRoutes, getRequests } from "@/lib/market";
 
 export const dynamic = "force-dynamic";
@@ -82,6 +83,7 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
 
         {/* Resultaten */}
         <div className="space-y-3">
+          <AdSlot tenantId={user.tenantId} placement="MARKETPLACE" label={m.ads.label} />
           {mode === "routes" ? (
             routes.length === 0 ? <EmptyState icon="🧳" title={t.none_routes} /> :
             routes.map((r) => (

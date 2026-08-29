@@ -499,6 +499,12 @@ const es: Messages = {
     pro: "Insignias Pro", pro_sub: "Poco comunes, pero alcanzables con algo de esfuerzo.",
     standard: "Insignias estándar", standard_sub: "Por hitos en el camino.", earned: "Conseguida el",
   },
+  ads: {
+    label: "Patrocinado", title: "Anuncios", sub: "B2B — las empresas compran espacio y prominencia",
+    new: "Nuevo anuncio", advertiser: "Anunciante", ad_title: "Título", body: "Texto", link: "Enlace (URL)", icon: "Icono (emoji)",
+    placement: "Ubicación", pm_marketplace: "Mercado", pm_home: "Inicio", pm_sidebar: "Barra lateral", add: "+ Anuncio",
+    list: "Anuncios", active: "Activo", inactive: "Inactivo", activate: "Activar", deactivate: "Desactivar", del: "Eliminar", impressions: "impresiones",
+  },
   members: {
     title: "Miembros", sub: "Invita miembros, gestiona el acceso y envía un correo grupal",
     invite: "Invitar a un miembro", invite_sub: "Crea una cuenta y envía una invitación",
@@ -529,6 +535,7 @@ const es: Messages = {
     console: "Consola de Prueba",
     content: "Contenido y videos",
     members: "Miembros",
+    ads: "Anuncios",
     account: "Cuenta",
     notifications: "🔔 Notificaciones",
   },

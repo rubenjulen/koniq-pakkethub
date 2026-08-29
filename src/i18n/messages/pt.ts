@@ -499,6 +499,12 @@ const pt: Messages = {
     pro: "Selos Pro", pro_sub: "Incomuns, mas alcançáveis com algum esforço.",
     standard: "Selos padrão", standard_sub: "Por marcos ao longo do caminho.", earned: "Obtido em",
   },
+  ads: {
+    label: "Patrocinado", title: "Anúncios", sub: "B2B — empresas compram espaço e destaque",
+    new: "Novo anúncio", advertiser: "Anunciante", ad_title: "Título", body: "Texto", link: "Link (URL)", icon: "Ícone (emoji)",
+    placement: "Posicionamento", pm_marketplace: "Mercado", pm_home: "Início", pm_sidebar: "Barra lateral", add: "+ Anúncio",
+    list: "Anúncios", active: "Ativo", inactive: "Inativo", activate: "Ativar", deactivate: "Desativar", del: "Excluir", impressions: "impressões",
+  },
   members: {
     title: "Membros", sub: "Convide membros, gerencie acesso e envie um e-mail em grupo",
     invite: "Convidar um membro", invite_sub: "Cria uma conta e envia um convite",
@@ -529,6 +535,7 @@ const pt: Messages = {
     console: "Console de Teste",
     content: "Conteúdo e vídeos",
     members: "Membros",
+    ads: "Anúncios",
     account: "Conta",
     notifications: "🔔 Notificações",
   },

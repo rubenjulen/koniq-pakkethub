@@ -498,6 +498,12 @@ const en: Messages = {
     pro: "Pro badges", pro_sub: "Uncommon, but attainable with some effort.",
     standard: "Standard badges", standard_sub: "For milestones along the way.", earned: "Earned on",
   },
+  ads: {
+    label: "Sponsored", title: "Advertisements", sub: "B2B — companies buy space and prominence",
+    new: "New advertisement", advertiser: "Advertiser", ad_title: "Title", body: "Text", link: "Link (URL)", icon: "Icon (emoji)",
+    placement: "Placement", pm_marketplace: "Marketplace", pm_home: "Home", pm_sidebar: "Sidebar", add: "+ Ad",
+    list: "Advertisements", active: "Active", inactive: "Inactive", activate: "Activate", deactivate: "Deactivate", del: "Delete", impressions: "impressions",
+  },
   members: {
     title: "Members", sub: "Invite members, manage access and send a group email",
     invite: "Invite a member", invite_sub: "Creates an account and sends an invitation",
@@ -528,6 +534,7 @@ const en: Messages = {
     console: "Test Console",
     content: "Content & videos",
     members: "Members",
+    ads: "Advertisements",
     account: "Account",
     notifications: "🔔 Notifications",
   },
