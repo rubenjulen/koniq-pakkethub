@@ -3,7 +3,10 @@ import { redirect } from "next/navigation";
 import { getSession, login } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { RouteCardsMini } from "@/components/RouteCardsMini";
+import { FacebookButton } from "@/components/FacebookButton";
 import { getLocale, getMessages } from "@/i18n";
+import { getTenantId } from "@/lib/tenant";
 
 export const metadata = { title: "Inloggen" };
 
@@ -19,7 +22,7 @@ async function doLogin(formData: FormData) {
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   if (await getSession()) redirect("/app");
   const { error } = await searchParams;
-  const [m, locale] = await Promise.all([getMessages(), getLocale()]);
+  const [m, locale, tenantId] = await Promise.all([getMessages(), getLocale(), getTenantId()]);
   const L = m.login;
 
   const DEMO: [string, string][] = [
@@ -31,18 +34,14 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      <div className="hidden flex-col justify-between bg-slate-900 p-10 text-white lg:flex">
+      <div className="hidden flex-col justify-between bg-gradient-to-b from-[#4a3b26] to-[#2b2416] p-10 text-white lg:flex">
         <Logo light />
-        <div>
-          <h1 className="max-w-md text-3xl font-bold leading-tight">{L.hero_title}</h1>
-          <p className="mt-4 max-w-md text-slate-300">{L.hero_sub}</p>
-          <div className="mt-6 flex flex-wrap gap-2 text-xs">
-            {[m.home.spine1_t, m.home.spine2_t, m.home.spine3_t, m.home.spine4_t, m.home.spine5_t].map((t) => (
-              <span key={t} className="rounded-full bg-white/10 px-3 py-1">{t}</span>
-            ))}
-          </div>
+        <div className="w-full max-w-md">
+          <h1 className="text-2xl font-bold leading-tight">{L.routes_found} ✈️</h1>
+          <p className="mt-1 text-sm text-white/70">{L.routes_found_sub}</p>
+          <div className="mt-5"><RouteCardsMini tenantId={tenantId} departsLabel={m.mkt2.depart} /></div>
         </div>
-        <p className="text-xs text-slate-400">{L.domain_note}</p>
+        <p className="text-xs text-white/50">{L.domain_note}</p>
       </div>
 
       <div className="flex flex-col p-6">
@@ -57,7 +56,12 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
               <div className="mt-4 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">{error}</div>
             )}
 
-            <form action={doLogin} className="mt-5 space-y-3">
+            <div className="mt-5"><FacebookButton label={m.common.fb_login} note={L.fb_note} /></div>
+            <div className="my-4 flex items-center gap-3 text-xs text-slate-400">
+              <span className="h-px flex-1 bg-slate-200" />{m.common.or}<span className="h-px flex-1 bg-slate-200" />
+            </div>
+
+            <form action={doLogin} className="space-y-3">
               <div>
                 <label className="text-sm font-medium text-slate-700">{L.email}</label>
                 <input name="email" type="email" required defaultValue="sender@pakkethub.com"

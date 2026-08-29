@@ -9,6 +9,7 @@ const nl = {
     learn_more: "Meer",
     back_to_site: "← Terug naar de website",
     get_started: "Aan de slag",
+    fb_login: "Doorgaan met Facebook", fb_signup: "Aanmelden met Facebook", or: "of",
   },
   banner: {
     staging: "🚧 Preview — pakkethub.com wordt op een later moment geactiveerd. Dit is de werkende voorvertoning van website + app.",
@@ -87,6 +88,8 @@ const nl = {
     demo_accounts: "Demo-accounts (wachtwoord: demo12345)",
     role_sender: "Afzender", role_traveler: "Reiziger", role_hub: "Hub / operatie", role_admin: "Platformbeheer",
     domain_note: "BugaWuga.com — pilot Nederland → Suriname. Domein nog niet geactiveerd.",
+    routes_found: "We vonden veel routes", routes_found_sub: "Reizigers met vrije ruimte, klaar om iets mee te nemen.",
+    fb_note: "Gesimuleerd — echte Facebook-koppeling volgt bij livegang.",
   },
   register: {
     title: "Account aanmaken",

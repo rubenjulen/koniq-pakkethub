@@ -11,6 +11,7 @@ const fr: Messages = {
     learn_more: "En savoir plus",
     back_to_site: "← Retour au site",
     get_started: "Commencer",
+    fb_login: "Continuer avec Facebook", fb_signup: "S'inscrire avec Facebook", or: "ou",
   },
   banner: {
     staging: "🚧 Aperçu — pakkethub.com sera activé plus tard. Ceci est l'aperçu fonctionnel du site + de l'app.",
@@ -89,6 +90,8 @@ const fr: Messages = {
     demo_accounts: "Comptes de démo (mot de passe : demo12345)",
     role_sender: "Expéditeur", role_traveler: "Voyageur", role_hub: "Hub / opérations", role_admin: "Administration",
     domain_note: "BugaWuga.com — pilote Pays-Bas → Suriname. Domaine pas encore activé.",
+    routes_found: "Nous avons trouvé beaucoup d'itinéraires", routes_found_sub: "Des voyageurs avec de la place, prêts à transporter quelque chose.",
+    fb_note: "Simulé — la vraie connexion Facebook arrivera au lancement.",
   },
   register: {
     title: "Créer un compte",
