@@ -460,6 +460,17 @@ const nl = {
     title_ph: "Titel", yt_ph: "YouTube-URL of -ID", order: "Volgorde", add_btn: "+ Video toevoegen",
     list: "Video's", empty: "Nog geen video's", save: "Opslaan", publish: "Publiceren", depublish: "Depubliceren", del: "Verwijderen",
   },
+  prof: {
+    member_since: "Lid sinds", based_in: "Woonplaats",
+    rating_carrier: "Beoordeling als reiziger", rating_client: "Beoordeling als afzender",
+    trips_n: "Ritten", shipments_n: "Zendingen",
+    tab_carrier: "Als reiziger", tab_client: "Als afzender", tab_badges: "Badges",
+    no_ratings: "Nog geen beoordelingen.", no_badges: "Nog geen badges.",
+    verified: "Geverifieerd lid", follow: "Volgen", following: "Je volgt", chat: "Chat", back: "← Terug",
+    elite: "Elite-badges", elite_sub: "Zeer moeilijk te behalen — alleen de meest toegewijde leden.",
+    pro: "Pro-badges", pro_sub: "Ongewoon, maar met wat inzet haalbaar.",
+    standard: "Standaard-badges", standard_sub: "Voor mijlpalen onderweg.", earned: "Behaald op",
+  },
   appnav: {
     overview: "Overzicht",
     shipments: "Mijn zendingen",

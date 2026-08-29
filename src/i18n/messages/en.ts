@@ -461,6 +461,17 @@ const en: Messages = {
     title_ph: "Title", yt_ph: "YouTube URL or ID", order: "Order", add_btn: "+ Add video",
     list: "Videos", empty: "No videos yet", save: "Save", publish: "Publish", depublish: "Unpublish", del: "Delete",
   },
+  prof: {
+    member_since: "Member since", based_in: "Based in",
+    rating_carrier: "Rating as carrier", rating_client: "Rating as client",
+    trips_n: "Trips", shipments_n: "Shipments",
+    tab_carrier: "As carrier", tab_client: "As client", tab_badges: "Badges",
+    no_ratings: "No ratings yet.", no_badges: "No badges yet.",
+    verified: "Verified member", follow: "Follow", following: "Following", chat: "Chat", back: "← Back",
+    elite: "Elite badges", elite_sub: "Very hard to earn — only our most dedicated members.",
+    pro: "Pro badges", pro_sub: "Uncommon, but attainable with some effort.",
+    standard: "Standard badges", standard_sub: "For milestones along the way.", earned: "Earned on",
+  },
   appnav: {
     overview: "Overview",
     shipments: "My shipments",

@@ -462,6 +462,17 @@ const es: Messages = {
     title_ph: "Título", yt_ph: "URL o ID de YouTube", order: "Orden", add_btn: "+ Añadir video",
     list: "Videos", empty: "Aún no hay videos", save: "Guardar", publish: "Publicar", depublish: "Despublicar", del: "Eliminar",
   },
+  prof: {
+    member_since: "Miembro desde", based_in: "Ubicación",
+    rating_carrier: "Valoración como transportista", rating_client: "Valoración como cliente",
+    trips_n: "Viajes", shipments_n: "Envíos",
+    tab_carrier: "Como transportista", tab_client: "Como cliente", tab_badges: "Insignias",
+    no_ratings: "Aún no hay valoraciones.", no_badges: "Aún no hay insignias.",
+    verified: "Miembro verificado", follow: "Seguir", following: "Siguiendo", chat: "Chat", back: "← Volver",
+    elite: "Insignias Elite", elite_sub: "Muy difíciles de conseguir — solo los miembros más dedicados.",
+    pro: "Insignias Pro", pro_sub: "Poco comunes, pero alcanzables con algo de esfuerzo.",
+    standard: "Insignias estándar", standard_sub: "Por hitos en el camino.", earned: "Conseguida el",
+  },
   appnav: {
     overview: "Resumen",
     shipments: "Mis envíos",

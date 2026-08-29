@@ -462,6 +462,17 @@ const fr: Messages = {
     title_ph: "Titre", yt_ph: "URL ou ID YouTube", order: "Ordre", add_btn: "+ Ajouter la vidéo",
     list: "Vidéos", empty: "Aucune vidéo pour le moment", save: "Enregistrer", publish: "Publier", depublish: "Dépublier", del: "Supprimer",
   },
+  prof: {
+    member_since: "Membre depuis", based_in: "Situé à",
+    rating_carrier: "Note en tant que transporteur", rating_client: "Note en tant que client",
+    trips_n: "Trajets", shipments_n: "Envois",
+    tab_carrier: "Transporteur", tab_client: "Client", tab_badges: "Badges",
+    no_ratings: "Aucune note pour le moment.", no_badges: "Aucun badge pour le moment.",
+    verified: "Membre vérifié", follow: "Suivre", following: "Abonné", chat: "Chat", back: "← Retour",
+    elite: "Badges Elite", elite_sub: "Très difficiles à obtenir — seulement nos membres les plus dévoués.",
+    pro: "Badges Pro", pro_sub: "Peu courants, mais accessibles avec un peu d'effort.",
+    standard: "Badges standard", standard_sub: "Pour les jalons en cours de route.", earned: "Obtenu le",
+  },
   appnav: {
     overview: "Aperçu",
     shipments: "Mes envois",

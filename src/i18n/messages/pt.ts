@@ -462,6 +462,17 @@ const pt: Messages = {
     title_ph: "Título", yt_ph: "URL ou ID do YouTube", order: "Ordem", add_btn: "+ Adicionar vídeo",
     list: "Vídeos", empty: "Ainda não há vídeos", save: "Salvar", publish: "Publicar", depublish: "Despublicar", del: "Excluir",
   },
+  prof: {
+    member_since: "Membro desde", based_in: "Localização",
+    rating_carrier: "Avaliação como transportador", rating_client: "Avaliação como cliente",
+    trips_n: "Viagens", shipments_n: "Envios",
+    tab_carrier: "Como transportador", tab_client: "Como cliente", tab_badges: "Selos",
+    no_ratings: "Ainda não há avaliações.", no_badges: "Ainda não há selos.",
+    verified: "Membro verificado", follow: "Seguir", following: "Seguindo", chat: "Chat", back: "← Voltar",
+    elite: "Selos Elite", elite_sub: "Muito difíceis de obter — apenas os membros mais dedicados.",
+    pro: "Selos Pro", pro_sub: "Incomuns, mas alcançáveis com algum esforço.",
+    standard: "Selos padrão", standard_sub: "Por marcos ao longo do caminho.", earned: "Obtido em",
+  },
   appnav: {
     overview: "Visão geral",
     shipments: "Meus envios",

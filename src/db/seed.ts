@@ -412,8 +412,71 @@ export async function seedDatabase(db: DbAdapter) {
             ($1,$2,'Vitaminen (verzegeld)','HEALTH',15,0.3,'2106')`,
     [T, USER.SENDER]);
 
+  // =========================================================================
+  //  v0.5 (BugaWuga sociaal): profielen, ratings (1–4), badges, volgen
+  // =========================================================================
+  // Reiziger een profiel + zichtbare route geven.
+  await q(db, `UPDATE users SET bio=$2, city='Paramaribo', country='SR' WHERE id=$1`,
+    [USER.TRAVELER, "Reis regelmatig NL ⇄ SR en neem graag kleine pakketten mee. Betrouwbaar en op tijd."]);
+  await q(db, `UPDATE trips SET visible=true, short_info=$2, long_info=$3, package_size='LARGE', price_indication_eur=15
+                WHERE traveler_id=$1`,
+    [USER.TRAVELER, "Ruimte voor een klein pakket tot 3 kg.",
+     "Ik vlieg met handbagage + ruimbagage. Kan een pakket tot 3 kg meenemen, graag open en aangegeven."]);
+
+  // Badge-catalogus (Elite + Pro + Standard).
+  const BADGES: [string, string, string, string, string, number][] = [
+    // code, name, description, tier, icon, sort
+    ["MOVER_SHAKER", "Mover & Shaker", "50 succesvolle leveringen voltooid.", "ELITE", "🚀", 1],
+    ["COLLECTOR", "The Collector", "Een saldo van 5.000 punten bereikt.", "ELITE", "💰", 2],
+    ["GLOBETROTTER", "Globetrotter", "Op 10 verschillende corridors gereisd.", "ELITE", "🌍", 3],
+    ["PERFECTIONIST", "Perfectionist", "90% 4-sterren-beoordelingen (min. 10 ritten).", "PRO", "⭐", 10],
+    ["TRUSTED", "Trusted Carrier", "Geverifieerd en 25+ leveringen.", "PRO", "🛡️", 11],
+    ["EARLY_BIRD", "Early Bird", "Bij de eerste 100 leden.", "STANDARD", "🐣", 20],
+    ["FIRST_TRIP", "First Trip", "Je eerste rit gepubliceerd.", "STANDARD", "🧳", 21],
+  ];
+  const badgeId: Record<string, string> = {};
+  for (const [code, name, desc, tier, icon, sort] of BADGES) {
+    const row = await q(db,
+      `INSERT INTO badges (tenant_id, code, name, description, tier, icon, sort_order)
+       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`, [T, code, name, desc, tier, icon, sort]);
+    badgeId[code] = (row as any).rows?.[0]?.id ?? (row as any)[0]?.id;
+  }
+  // Reiziger verdient een paar badges.
+  for (const code of ["TRUSTED", "PERFECTIONIST", "EARLY_BIRD", "FIRST_TRIP"]) {
+    if (badgeId[code]) await q(db,
+      `INSERT INTO user_badges (tenant_id, user_id, badge_id) VALUES ($1,$2,$3) ON CONFLICT DO NOTHING`,
+      [T, USER.TRAVELER, badgeId[code]]);
+  }
+
+  // Ratings voor de reiziger (als carrier) en de afzender (als client).
+  const carrierRatings: [string, number, string][] = [
+    [USER.SENDER, 4, "Werken met Winston was geweldig. Snel, netjes en altijd bereikbaar."],
+    [USER.ADMIN, 4, "Pakket veilig en op tijd afgeleverd. Top!"],
+    [USER.OPS, 3, "Prima ervaring, kleine vertraging bij de douane."],
+  ];
+  for (const [rater, stars, comment] of carrierRatings) {
+    await q(db, `INSERT INTO ratings (tenant_id, rater_id, ratee_id, role, stars, comment)
+                 VALUES ($1,$2,$3,'CARRIER',$4,$5)`, [T, rater, USER.TRAVELER, stars, comment]);
+  }
+  const clientRatings: [string, number, string][] = [
+    [USER.TRAVELER, 4, "Duidelijke aangifte en vlotte overdracht. Graag weer."],
+    [USER.OPS, 4, "Nette afzender, alles klopte."],
+  ];
+  for (const [rater, stars, comment] of clientRatings) {
+    await q(db, `INSERT INTO ratings (tenant_id, rater_id, ratee_id, role, stars, comment)
+                 VALUES ($1,$2,$3,'CLIENT',$4,$5)`, [T, rater, USER.SENDER, stars, comment]);
+  }
+  // Geaggregeerde reputatiescore bijwerken (0–5-veld, hier gemiddelde van 1–4).
+  await q(db, `UPDATE users u SET rating = sub.avg FROM
+                 (SELECT ratee_id, round(avg(stars)::numeric,2) AS avg FROM ratings GROUP BY ratee_id) sub
+               WHERE u.id = sub.ratee_id`);
+
+  // Afzender volgt de reiziger (zie wanneer een vriend reist).
+  await q(db, `INSERT INTO follows (follower_id, followee_id) VALUES ($1,$2) ON CONFLICT DO NOTHING`,
+    [USER.SENDER, USER.TRAVELER]);
+
   await q(db,
     `INSERT INTO audit_log (tenant_id, user_id, action, entity_type, summary)
-     VALUES ($1,$2,'SEED','system','BugaWuga NL–SR pilot geseed (demo v0.3.0: legs/manifests, lockers, slots, boeken).')`,
+     VALUES ($1,$2,'SEED','system','BugaWuga NL–SR pilot geseed (demo v0.5: ratings, badges, volgen, zichtbare route).')`,
     [T, USER.ADMIN]);
 }

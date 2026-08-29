@@ -812,3 +812,69 @@ CREATE TABLE IF NOT EXISTS bulk_upload_items (
   status         text NOT NULL DEFAULT 'OK',       -- OK|ERROR|CREATED
   error          text
 );
+
+-- ===========================================================================
+--  v0.5 ADDENDUM (BugaWuga sociaal) — profielen, ratings (1–4 sterren, carrier
+--  vs client), badges, volgen, en route/verzoek-zichtbaarheid voor de
+--  route-matching marktplaats.
+-- ===========================================================================
+
+-- Profiel-uitbreiding op users (foto, bio, plaats/land staan al deels).
+ALTER TABLE users ADD COLUMN IF NOT EXISTS bio text;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS auth_provider text NOT NULL DEFAULT 'PASSWORD'; -- PASSWORD|FACEBOOK|GOOGLE
+ALTER TABLE users ADD COLUMN IF NOT EXISTS registered boolean NOT NULL DEFAULT true;        -- geregistreerd vs WU-zonder-ID
+
+-- Wederzijdse beoordelingen. Rol = hoe de beoordeelde optrad in deze transactie.
+CREATE TABLE IF NOT EXISTS ratings (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id    uuid NOT NULL REFERENCES tenants(id),
+  rater_id     uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  ratee_id     uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  role         text NOT NULL DEFAULT 'CARRIER',   -- CARRIER (reiziger) | CLIENT (afzender/ontvanger)
+  stars        integer NOT NULL CHECK (stars BETWEEN 1 AND 4),
+  comment      text,
+  shipment_id  uuid REFERENCES shipments(id) ON DELETE SET NULL,
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ratings_ratee_idx ON ratings(ratee_id, role);
+
+-- Badge-catalogus + verdiende badges.
+CREATE TABLE IF NOT EXISTS badges (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id    uuid NOT NULL REFERENCES tenants(id),
+  code         text NOT NULL,
+  name         text NOT NULL,
+  description  text,
+  tier         text NOT NULL DEFAULT 'STANDARD',  -- ELITE|PRO|STANDARD
+  icon         text,                              -- emoji/short glyph
+  sort_order   integer NOT NULL DEFAULT 100
+);
+CREATE UNIQUE INDEX IF NOT EXISTS badges_code_idx ON badges(tenant_id, code);
+
+CREATE TABLE IF NOT EXISTS user_badges (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id    uuid NOT NULL REFERENCES tenants(id),
+  user_id      uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  badge_id     uuid NOT NULL REFERENCES badges(id) ON DELETE CASCADE,
+  earned_at    timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (user_id, badge_id)
+);
+
+-- Volgen: zie wanneer een vriend reist (feature 5).
+CREATE TABLE IF NOT EXISTS follows (
+  follower_id  uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  followee_id  uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (follower_id, followee_id)
+);
+
+-- Route-matching: reiziger maakt route zichtbaar met prijs + info.
+ALTER TABLE trips ADD COLUMN IF NOT EXISTS visible boolean NOT NULL DEFAULT false;
+ALTER TABLE trips ADD COLUMN IF NOT EXISTS short_info text;
+ALTER TABLE trips ADD COLUMN IF NOT EXISTS long_info text;
+ALTER TABLE trips ADD COLUMN IF NOT EXISTS package_size text NOT NULL DEFAULT 'MEDIUM'; -- SMALL|MEDIUM|LARGE|XLARGE
+
+-- Route-matching: afzender maakt verzoek zichtbaar met te-betalen prijs + info.
+ALTER TABLE shipments ADD COLUMN IF NOT EXISTS visible boolean NOT NULL DEFAULT false;
+ALTER TABLE shipments ADD COLUMN IF NOT EXISTS offered_price_eur numeric(18,2);
+ALTER TABLE shipments ADD COLUMN IF NOT EXISTS request_info text;
