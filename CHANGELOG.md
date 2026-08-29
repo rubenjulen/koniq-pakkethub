@@ -1,5 +1,23 @@
 # Changelog — BugaWuga (PakketHub)
 
+## v0.6.0 — Founder-blauwdruk (11 schermen) + betalingen + punten
+
+- **11-scherm-blauwdruk compleet** (uit `pakketHub website basics.pdf`, modern uitgevoerd):
+  1 home ✅ · 2/3 register/login met **Facebook-login (sim)** + live **route-cards** ✅ ·
+  **4–7 route-matching marktplaats** (routes ⇄ verzoeken + filters + profielkaarten) + "maak
+  route/verzoek zichtbaar" ✅ · 8 Mijn ritten (+publiceren) ✅ · 9 chat (bestaand) ✅ ·
+  **10/11 publiek profiel + 1–4 sterren (carrier/client) + badges (Elite/Pro/Standaard)** ✅.
+- **Betalingen (feature 8)**: commissie **4,5%** (was 12%) + de **3 C's** — Cash/Western Union,
+  Creditcard (Visa/Maestro/Amex), Crypto (BTC/ETH) — met methode-specifieke gesimuleerde checkout.
+- **Punten/coins (feature 9)**: BugaWuga-punten + **uitbetaaldrempel** met voortgangsbalk.
+- Onderliggend: schema v0.5/v0.6 (ratings, badges, follows, trip/shipment-zichtbaarheid,
+  payment method, wallet points/threshold), `lib/profile.ts` + `lib/market.ts`, componenten
+  Stars/RouteSearch/RouteCardsMini/FacebookButton/BoardingHero. Alles in 5 talen, visueel geverifieerd.
+- **Nog open (golf 2/3, deels founder-beslissing/integratiegrens):** foto-uploads (opslag),
+  Google Maps (API-sleutel), echte crypto/Western-Union-providers, B2B-advertenties, admin
+  uitnodigen/verbannen + groepsmail, "vrienden reizen"-feed, en Chinees als 6e taal.
+
+
 ## v0.5.0 — Rebrand naar BugaWuga + founder-concept (golf 1)
 
 - **Verenigd concept & requirements v2** (`docs/PakketHub-verenigd-concept-en-requirements-v2.md`):
