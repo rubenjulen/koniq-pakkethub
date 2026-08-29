@@ -371,6 +371,7 @@ const fr: Messages = {
   },
   dash: {
     hello: "Bonjour", install_as_app: "Installer comme app",
+    friends_title: "Des amis voyagent bientôt", friends_sub: "Des personnes que vous suivez avec un itinéraire visible",
     stat_shipments: "Envois", stat_delivered: "Livrés", stat_review: "En examen",
     stat_corridor: "Corridor", pilot_active: "Pilote actif",
     my_shipments: "Mes envois", my_shipments_sub: "Vos derniers envois créés",
@@ -498,6 +499,14 @@ const fr: Messages = {
     pro: "Badges Pro", pro_sub: "Peu courants, mais accessibles avec un peu d'effort.",
     standard: "Badges standard", standard_sub: "Pour les jalons en cours de route.", earned: "Obtenu le",
   },
+  members: {
+    title: "Membres", sub: "Invitez des membres, gérez l'accès et envoyez un e-mail groupé",
+    invite: "Inviter un membre", invite_sub: "Crée un compte et envoie une invitation",
+    first_name: "Prénom", email: "E-mail", role: "Rôle", role_sender: "Expéditeur", role_traveler: "Voyageur", role_ops: "Hub / opérations", invite_btn: "Inviter",
+    list: "Membres", status: "Statut", active: "Actif", banned: "Banni", ban: "Bannir", reactivate: "Réactiver", verified: "Vérifié",
+    email_title: "E-mail groupé", email_sub: "Envoyez un message à tous les membres actifs (simulation de boîte d'envoi)", subject: "Objet", body: "Message", send_email: "Envoyer à tous les membres",
+    ok_invited: "Membre invité.", ok_banned: "Membre banni.", ok_reactivated: "Membre réactivé.", ok_emailed: "E-mail groupé envoyé.", err_fields: "Remplissez les champs obligatoires.", err_exists: "Un membre avec cet e-mail existe déjà.",
+  },
   appnav: {
     overview: "Aperçu",
     shipments: "Mes envois",
@@ -519,6 +528,7 @@ const fr: Messages = {
     control: "Centre de Contrôle",
     console: "Console de Test",
     content: "Contenu & vidéos",
+    members: "Membres",
     account: "Compte",
     notifications: "🔔 Notifications",
   },

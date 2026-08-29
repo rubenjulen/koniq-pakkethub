@@ -371,6 +371,7 @@ const pt: Messages = {
   },
   dash: {
     hello: "Olá", install_as_app: "Instalar como app",
+    friends_title: "Amigos viajando em breve", friends_sub: "Pessoas que você segue com uma rota visível",
     stat_shipments: "Envios", stat_delivered: "Entregues", stat_review: "Em análise",
     stat_corridor: "Corredor", pilot_active: "Piloto ativo",
     my_shipments: "Meus envios", my_shipments_sub: "Seus envios criados mais recentes",
@@ -498,6 +499,14 @@ const pt: Messages = {
     pro: "Selos Pro", pro_sub: "Incomuns, mas alcançáveis com algum esforço.",
     standard: "Selos padrão", standard_sub: "Por marcos ao longo do caminho.", earned: "Obtido em",
   },
+  members: {
+    title: "Membros", sub: "Convide membros, gerencie acesso e envie um e-mail em grupo",
+    invite: "Convidar um membro", invite_sub: "Cria uma conta e envia um convite",
+    first_name: "Nome", email: "E-mail", role: "Papel", role_sender: "Remetente", role_traveler: "Viajante", role_ops: "Hub / operações", invite_btn: "Convidar",
+    list: "Membros", status: "Estado", active: "Ativo", banned: "Banido", ban: "Banir", reactivate: "Reativar", verified: "Verificado",
+    email_title: "E-mail em grupo", email_sub: "Envie uma mensagem a todos os membros ativos (simulação de caixa)", subject: "Assunto", body: "Mensagem", send_email: "Enviar a todos os membros",
+    ok_invited: "Membro convidado.", ok_banned: "Membro banido.", ok_reactivated: "Membro reativado.", ok_emailed: "E-mail em grupo enviado.", err_fields: "Preencha os campos obrigatórios.", err_exists: "Já existe um membro com este e-mail.",
+  },
   appnav: {
     overview: "Visão geral",
     shipments: "Meus envios",
@@ -519,6 +528,7 @@ const pt: Messages = {
     control: "Central de Controle",
     console: "Console de Teste",
     content: "Conteúdo e vídeos",
+    members: "Membros",
     account: "Conta",
     notifications: "🔔 Notificações",
   },

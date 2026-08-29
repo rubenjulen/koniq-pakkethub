@@ -370,6 +370,7 @@ const en: Messages = {
   },
   dash: {
     hello: "Hi", install_as_app: "Install as app",
+    friends_title: "Friends traveling soon", friends_sub: "People you follow with a visible route",
     stat_shipments: "Shipments", stat_delivered: "Delivered", stat_review: "In review",
     stat_corridor: "Corridor", pilot_active: "Pilot active",
     my_shipments: "My shipments", my_shipments_sub: "Your latest created shipments",
@@ -497,6 +498,14 @@ const en: Messages = {
     pro: "Pro badges", pro_sub: "Uncommon, but attainable with some effort.",
     standard: "Standard badges", standard_sub: "For milestones along the way.", earned: "Earned on",
   },
+  members: {
+    title: "Members", sub: "Invite members, manage access and send a group email",
+    invite: "Invite a member", invite_sub: "Creates an account and sends an invitation",
+    first_name: "First name", email: "Email", role: "Role", role_sender: "Sender", role_traveler: "Traveler", role_ops: "Hub / operations", invite_btn: "Invite",
+    list: "Members", status: "Status", active: "Active", banned: "Banned", ban: "Ban", reactivate: "Reactivate", verified: "Verified",
+    email_title: "Group email", email_sub: "Send a message to all active members (outbox simulation)", subject: "Subject", body: "Message", send_email: "Send to all members",
+    ok_invited: "Member invited.", ok_banned: "Member banned.", ok_reactivated: "Member reactivated.", ok_emailed: "Group email sent.", err_fields: "Fill in the required fields.", err_exists: "A member with this email already exists.",
+  },
   appnav: {
     overview: "Overview",
     shipments: "My shipments",
@@ -518,6 +527,7 @@ const en: Messages = {
     control: "Control Center",
     console: "Test Console",
     content: "Content & videos",
+    members: "Members",
     account: "Account",
     notifications: "🔔 Notifications",
   },

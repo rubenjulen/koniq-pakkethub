@@ -369,6 +369,7 @@ const nl = {
   },
   dash: {
     hello: "Hallo", install_as_app: "Installeer als app",
+    friends_title: "Vrienden reizen binnenkort", friends_sub: "Mensen die je volgt met een zichtbare route",
     stat_shipments: "Zendingen", stat_delivered: "Afgeleverd", stat_review: "In beoordeling",
     stat_corridor: "Corridor", pilot_active: "Pilot actief",
     my_shipments: "Mijn zendingen", my_shipments_sub: "Je laatste aangemaakte zendingen",
@@ -496,6 +497,14 @@ const nl = {
     pro: "Pro-badges", pro_sub: "Ongewoon, maar met wat inzet haalbaar.",
     standard: "Standaard-badges", standard_sub: "Voor mijlpalen onderweg.", earned: "Behaald op",
   },
+  members: {
+    title: "Leden", sub: "Nodig leden uit, beheer toegang en stuur een groepsmail",
+    invite: "Lid uitnodigen", invite_sub: "Maakt een account aan en stuurt een uitnodiging",
+    first_name: "Voornaam", email: "E-mail", role: "Rol", role_sender: "Afzender", role_traveler: "Reiziger", role_ops: "Hub / operatie", invite_btn: "Uitnodigen",
+    list: "Leden", status: "Status", active: "Actief", banned: "Verbannen", ban: "Verbannen", reactivate: "Heractiveren", verified: "Geverifieerd",
+    email_title: "Groepsmail", email_sub: "Stuur een bericht naar alle actieve leden (outbox-simulatie)", subject: "Onderwerp", body: "Bericht", send_email: "Verstuur naar alle leden",
+    ok_invited: "Lid uitgenodigd.", ok_banned: "Lid verbannen.", ok_reactivated: "Lid geheractiveerd.", ok_emailed: "Groepsmail verstuurd.", err_fields: "Vul de verplichte velden in.", err_exists: "Er bestaat al een lid met dit e-mailadres.",
+  },
   appnav: {
     overview: "Overzicht",
     shipments: "Mijn zendingen",
@@ -517,6 +526,7 @@ const nl = {
     control: "Control Center",
     console: "Test Console",
     content: "Content & video's",
+    members: "Leden",
     account: "Account",
     notifications: "🔔 Meldingen",
   },

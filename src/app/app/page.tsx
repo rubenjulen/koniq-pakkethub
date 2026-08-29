@@ -56,6 +56,17 @@ export default async function AppHome() {
   );
   const c = Object.fromEntries(counts.map((r) => [r.k, r.n]));
 
+  // "Zie wanneer een vriend reist": gevolgde leden met een zichtbare komende route.
+  const friendsTraveling = await query<any>(
+    `SELECT t.id, t.depart_date, t.short_info, t.package_size, u.id AS user_id, u.name, u.avatar_url, c.name AS corridor
+       FROM follows f
+       JOIN trips t ON t.traveler_id = f.followee_id AND t.visible=true AND t.status='OPEN' AND t.depart_date >= current_date
+       JOIN users u ON u.id = f.followee_id
+       JOIN corridors c ON c.id = t.corridor_id
+      WHERE f.follower_id = $1 ORDER BY t.depart_date LIMIT 6`,
+    [user.id]
+  );
+
   return (
     <div className="mx-auto max-w-5xl space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -72,6 +83,25 @@ export default async function AppHome() {
         <StatCard label={d.stat_review} value={c.review ?? 0} />
         <StatCard label={d.stat_corridor} value="NL→SR" hint={d.pilot_active} />
       </div>
+
+      {friendsTraveling.length > 0 && (
+        <section className="ph-card p-4">
+          <SectionTitle sub={d.friends_sub}>✈️ {d.friends_title}</SectionTitle>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            {friendsTraveling.map((f) => (
+              <Link key={f.id} href={`/app/u/${f.user_id}`} className="flex items-center gap-3 rounded-xl border border-slate-200 p-2.5 hover:border-orange-300">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-xs font-bold text-orange-700">
+                  {(f.name || "?").split(/\s+/).slice(0, 2).map((s: string) => s[0]).join("").toUpperCase()}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-semibold text-slate-800">{f.name}</div>
+                  <div className="truncate text-xs text-slate-500">{f.corridor} · {dateNL(f.depart_date)}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {isSender && (
         <section>

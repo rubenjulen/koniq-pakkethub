@@ -371,6 +371,7 @@ const es: Messages = {
   },
   dash: {
     hello: "Hola", install_as_app: "Instalar como app",
+    friends_title: "Amigos que viajan pronto", friends_sub: "Personas que sigues con una ruta visible",
     stat_shipments: "Envíos", stat_delivered: "Entregados", stat_review: "En revisión",
     stat_corridor: "Corredor", pilot_active: "Piloto activo",
     my_shipments: "Mis envíos", my_shipments_sub: "Tus últimos envíos creados",
@@ -498,6 +499,14 @@ const es: Messages = {
     pro: "Insignias Pro", pro_sub: "Poco comunes, pero alcanzables con algo de esfuerzo.",
     standard: "Insignias estándar", standard_sub: "Por hitos en el camino.", earned: "Conseguida el",
   },
+  members: {
+    title: "Miembros", sub: "Invita miembros, gestiona el acceso y envía un correo grupal",
+    invite: "Invitar a un miembro", invite_sub: "Crea una cuenta y envía una invitación",
+    first_name: "Nombre", email: "Correo", role: "Rol", role_sender: "Remitente", role_traveler: "Viajero", role_ops: "Hub / operaciones", invite_btn: "Invitar",
+    list: "Miembros", status: "Estado", active: "Activo", banned: "Bloqueado", ban: "Bloquear", reactivate: "Reactivar", verified: "Verificado",
+    email_title: "Correo grupal", email_sub: "Envía un mensaje a todos los miembros activos (simulación de bandeja)", subject: "Asunto", body: "Mensaje", send_email: "Enviar a todos los miembros",
+    ok_invited: "Miembro invitado.", ok_banned: "Miembro bloqueado.", ok_reactivated: "Miembro reactivado.", ok_emailed: "Correo grupal enviado.", err_fields: "Completa los campos obligatorios.", err_exists: "Ya existe un miembro con este correo.",
+  },
   appnav: {
     overview: "Resumen",
     shipments: "Mis envíos",
@@ -519,6 +528,7 @@ const es: Messages = {
     control: "Centro de Control",
     console: "Consola de Prueba",
     content: "Contenido y videos",
+    members: "Miembros",
     account: "Cuenta",
     notifications: "🔔 Notificaciones",
   },
