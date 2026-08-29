@@ -1,5 +1,18 @@
 # Changelog — BugaWuga (PakketHub)
 
+## v0.7.0 — Sociaal, admin, advertenties & Chinees (golf 2/3)
+
+- **Vrienden-reizen-feed (#5)**: dashboard toont gevolgde leden met een zichtbare komende route.
+- **Ledenbeheer (#4/#15)**: `/app/members` (admin) — leden uitnodigen (account + uitnodiging via
+  outbox), verbannen/heractiveren, en **groepsmail** naar alle actieve leden.
+- **B2B-advertentiemodule (#18)**: `/app/ads` beheer + `AdSlot` ('Gesponsord') op de marktplaats;
+  demo-adverteerders (Surinam Airways, Torarica, Roopram). `gifts`-schema voor virtuele cadeaus (UI later).
+- **Chinees als 6e taal (#11)**: 中文/🇨🇳 toegevoegd; de hele consumentenreis vertaald, diepe
+  ops-secties vallen type-safe terug op Engels.
+- **Nog open (integratiegrens / founder-beslissing):** foto-uploads (opslag), Google Maps (API-sleutel),
+  échte crypto/Western-Union-providers, en de virtuele-cadeaus-UI.
+
+
 ## v0.6.0 — Founder-blauwdruk (11 schermen) + betalingen + punten
 
 - **11-scherm-blauwdruk compleet** (uit `pakketHub website basics.pdf`, modern uitgevoerd):
