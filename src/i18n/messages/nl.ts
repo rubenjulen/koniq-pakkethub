@@ -273,6 +273,8 @@ const nl = {
     charge: "Betaling", payout: "Uitbetaling", refund: "Terugboeking",
     history: "Wallet-historie", history_sub: "Grootboekmutaties op je wallet",
     note: "Betalingen lopen via een simulatie-adapter. Bij livegang koppelt BugaWuga een gelicentieerde betaal-/escrow-partij.",
+    points: "BugaWuga-punten", points_sub: "Interne munten — verdiensten komen hier binnen (fiat of crypto)",
+    threshold: "Uitbetaaldrempel", to_payout: "Nog {x} tot uitbetaling", payout_ready: "✓ Uitbetaling mogelijk", coins: "munten",
   },
   trips: {
     title: "Mijn ritten", new_trip: "Nieuwe rit", new_trip_sub: "Publiceer je capaciteit zodat afzenders je kunnen vinden",

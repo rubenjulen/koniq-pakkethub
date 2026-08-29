@@ -274,6 +274,8 @@ const en: Messages = {
     charge: "Payment", payout: "Payout", refund: "Refund",
     history: "Wallet history", history_sub: "Ledger entries on your wallet",
     note: "Payments run through a simulation adapter. At go-live BugaWuga connects a licensed payment/escrow provider.",
+    points: "BugaWuga points", points_sub: "Internal coins — earnings come in here (fiat or crypto)",
+    threshold: "Payout threshold", to_payout: "{x} more until payout", payout_ready: "✓ Payout available", coins: "coins",
   },
   trips: {
     title: "My trips", new_trip: "New trip", new_trip_sub: "Publish your capacity so senders can find you",

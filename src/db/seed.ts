@@ -500,6 +500,13 @@ export async function seedDatabase(db: DbAdapter) {
                  (SELECT ratee_id, round(avg(stars)::numeric,2) AS avg FROM ratings GROUP BY ratee_id) sub
                WHERE u.id = sub.ratee_id`);
 
+  // Punten/coins-portemonnee voor de reiziger (onder de uitbetaaldrempel).
+  await q(db,
+    `INSERT INTO wallets (tenant_id, user_id, balance_eur, points, payout_threshold_eur)
+     VALUES ($1,$2,175,120,500)
+     ON CONFLICT (tenant_id, user_id) DO UPDATE SET balance_eur=175, points=120, payout_threshold_eur=500`,
+    [T, USER.TRAVELER]);
+
   // Afzender volgt de reiziger (zie wanneer een vriend reist).
   await q(db, `INSERT INTO follows (follower_id, followee_id) VALUES ($1,$2) ON CONFLICT DO NOTHING`,
     [USER.SENDER, USER.TRAVELER]);

@@ -275,6 +275,8 @@ const fr: Messages = {
     charge: "Paiement", payout: "Versement", refund: "Remboursement",
     history: "Historique du portefeuille", history_sub: "Écritures comptables sur votre portefeuille",
     note: "Les paiements passent par un adaptateur de simulation. Au lancement, BugaWuga intègre un prestataire de paiement/séquestre agréé.",
+    points: "Points BugaWuga", points_sub: "Jetons internes — les gains arrivent ici (fiat ou crypto)",
+    threshold: "Seuil de versement", to_payout: "Encore {x} avant le versement", payout_ready: "✓ Versement disponible", coins: "jetons",
   },
   trips: {
     title: "Mes trajets", new_trip: "Nouveau trajet", new_trip_sub: "Publiez votre capacité pour que les expéditeurs vous trouvent",

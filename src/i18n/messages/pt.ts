@@ -275,6 +275,8 @@ const pt: Messages = {
     charge: "Pagamento", payout: "Repasse", refund: "Reembolso",
     history: "Histórico da carteira", history_sub: "Lançamentos contábeis na sua carteira",
     note: "Os pagamentos passam por um adaptador de simulação. No lançamento, a BugaWuga integra um provedor de pagamento/custódia licenciado.",
+    points: "Pontos BugaWuga", points_sub: "Moedas internas — os ganhos entram aqui (fiat ou cripto)",
+    threshold: "Limite de saque", to_payout: "Faltam {x} para o saque", payout_ready: "✓ Saque disponível", coins: "moedas",
   },
   trips: {
     title: "Minhas viagens", new_trip: "Nova viagem", new_trip_sub: "Publique sua capacidade para que os remetentes o encontrem",

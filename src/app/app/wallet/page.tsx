@@ -1,5 +1,5 @@
 import { requireSession, hasCapability } from "@/lib/auth";
-import { query } from "@/db/client";
+import { query, queryOne } from "@/db/client";
 import { walletBalance, accountBalance } from "@/lib/finance";
 import { StatCard, EmptyState, SectionTitle, Chip } from "@/components/ui";
 import { eur, dateTimeNL } from "@/lib/format";
@@ -35,9 +35,26 @@ export default async function WalletPage() {
   const escrow = isAdmin ? await accountBalance(t, "ESCROW") : 0;
   const fees = isAdmin ? await accountBalance(t, "PLATFORM_FEE") : 0;
 
+  const wp = await queryOne<any>(`SELECT points, payout_threshold_eur::float8 AS threshold FROM wallets WHERE tenant_id=$1 AND user_id=$2`, [t, user.id]);
+  const points = wp?.points ?? 0;
+  const threshold = wp?.threshold ?? 500;
+  const progress = Math.min(100, threshold > 0 ? Math.max(0, (balance / threshold) * 100) : 0);
+  const remaining = Math.max(0, threshold - balance);
+
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <h1 className="text-xl font-bold text-slate-900">{w.title}</h1>
+
+      {/* Punten/coins + uitbetaaldrempel (feature 9) */}
+      <section className="ph-card p-5">
+        <SectionTitle sub={w.points_sub}>🪙 {w.points}</SectionTitle>
+        <div className="flex items-end justify-between">
+          <div className="text-3xl font-bold text-slate-900">{points} <span className="text-base font-medium text-slate-400">{w.coins}</span></div>
+          <div className="text-right text-sm"><div className="text-slate-400">{w.threshold}</div><div className="font-semibold text-slate-800">{eur(threshold)}</div></div>
+        </div>
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-orange-500" style={{ width: `${progress}%` }} /></div>
+        <div className="mt-1 text-xs font-medium text-slate-500">{balance >= threshold ? w.payout_ready : w.to_payout.replace("{x}", eur(remaining))}</div>
+      </section>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         <StatCard label={w.balance} value={eur(balance)} hint={w.balance_hint} />
