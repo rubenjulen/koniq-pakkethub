@@ -462,6 +462,16 @@ const pt: Messages = {
     title_ph: "Título", yt_ph: "URL ou ID do YouTube", order: "Ordem", add_btn: "+ Adicionar vídeo",
     list: "Vídeos", empty: "Ainda não há vídeos", save: "Salvar", publish: "Publicar", depublish: "Despublicar", del: "Excluir",
   },
+  mkt2: {
+    title: "Mercado", tab_routes: "Rotas (viajantes)", tab_requests: "Pedidos (remetentes)",
+    sub_routes: "Viajantes com espaço livre — escolha uma rota", sub_requests: "Remetentes que querem enviar algo",
+    filters: "Filtrar", f_from: "De", f_to: "Para", f_verified: "Apenas verificados",
+    f_price_max: "Preço máx €", f_size: "Tamanho do pacote", f_weight_max: "Peso máx (kg)", f_apply: "Aplicar", f_clear: "Limpar", any: "Todos",
+    size_SMALL: "Pequeno", size_MEDIUM: "Médio", size_LARGE: "Grande", size_XLARGE: "Extra grande",
+    willing_pay: "Disposto a pagar", service_price: "Preço do serviço", capacity: "Capacidade", depart: "Parte", deadline: "Prazo",
+    see_profile: "Ver perfil", react: "Ver e ofertar", none_routes: "Nenhuma rota visível.", none_requests: "Nenhum pedido visível.",
+    publish_route: "Publique sua rota", publish_request: "Torne seu pedido visível", free: "Grátis",
+  },
   prof: {
     member_since: "Membro desde", based_in: "Localização",
     rating_carrier: "Avaliação como transportador", rating_client: "Avaliação como cliente",

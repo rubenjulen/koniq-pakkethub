@@ -462,6 +462,16 @@ const es: Messages = {
     title_ph: "Título", yt_ph: "URL o ID de YouTube", order: "Orden", add_btn: "+ Añadir video",
     list: "Videos", empty: "Aún no hay videos", save: "Guardar", publish: "Publicar", depublish: "Despublicar", del: "Eliminar",
   },
+  mkt2: {
+    title: "Mercado", tab_routes: "Rutas (viajeros)", tab_requests: "Solicitudes (remitentes)",
+    sub_routes: "Viajeros con espacio libre — elige una ruta", sub_requests: "Remitentes que quieren enviar algo",
+    filters: "Filtrar", f_from: "Desde", f_to: "Hacia", f_verified: "Solo verificados",
+    f_price_max: "Precio máx €", f_size: "Tamaño del paquete", f_weight_max: "Peso máx (kg)", f_apply: "Aplicar", f_clear: "Limpiar", any: "Todos",
+    size_SMALL: "Pequeño", size_MEDIUM: "Mediano", size_LARGE: "Grande", size_XLARGE: "Extra grande",
+    willing_pay: "Dispuesto a pagar", service_price: "Precio del servicio", capacity: "Capacidad", depart: "Sale", deadline: "Fecha límite",
+    see_profile: "Ver perfil", react: "Ver y ofertar", none_routes: "No hay rutas visibles.", none_requests: "No hay solicitudes visibles.",
+    publish_route: "Publica tu ruta", publish_request: "Haz visible tu solicitud", free: "Gratis",
+  },
   prof: {
     member_since: "Miembro desde", based_in: "Ubicación",
     rating_carrier: "Valoración como transportista", rating_client: "Valoración como cliente",

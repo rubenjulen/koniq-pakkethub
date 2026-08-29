@@ -461,6 +461,16 @@ const en: Messages = {
     title_ph: "Title", yt_ph: "YouTube URL or ID", order: "Order", add_btn: "+ Add video",
     list: "Videos", empty: "No videos yet", save: "Save", publish: "Publish", depublish: "Unpublish", del: "Delete",
   },
+  mkt2: {
+    title: "Marketplace", tab_routes: "Routes (travelers)", tab_requests: "Requests (senders)",
+    sub_routes: "Travelers with free space — pick a route", sub_requests: "Senders who want to send something",
+    filters: "Filter", f_from: "From", f_to: "To", f_verified: "Verified only",
+    f_price_max: "Max price €", f_size: "Package size", f_weight_max: "Max weight (kg)", f_apply: "Apply", f_clear: "Clear", any: "Any",
+    size_SMALL: "Small", size_MEDIUM: "Medium", size_LARGE: "Large", size_XLARGE: "Extra large",
+    willing_pay: "Willing to pay", service_price: "Service price", capacity: "Capacity", depart: "Departs", deadline: "Deadline",
+    see_profile: "See profile", react: "View & bid", none_routes: "No visible routes.", none_requests: "No visible requests.",
+    publish_route: "Publish your route", publish_request: "Make your request visible", free: "Free",
+  },
   prof: {
     member_since: "Member since", based_in: "Based in",
     rating_carrier: "Rating as carrier", rating_client: "Rating as client",

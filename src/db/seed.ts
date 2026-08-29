@@ -466,6 +466,35 @@ export async function seedDatabase(db: DbAdapter) {
     await q(db, `INSERT INTO ratings (tenant_id, rater_id, ratee_id, role, stars, comment)
                  VALUES ($1,$2,$3,'CLIENT',$4,$5)`, [T, rater, USER.SENDER, stars, comment]);
   }
+  // Demo-verzoek zichtbaar maken op de marktplaats (afzender-kant).
+  await q(db, `UPDATE shipments SET visible=true, offered_price_eur=25,
+                 request_info=$2 WHERE id=$1`,
+    [SHIPMENT, "Klein pakket kinderkleding + koffie, ca. 3,5 kg. Graag open en aangegeven."]);
+
+  // Extra zichtbare routes (reizigers) van andere leden, met korte info + prijs.
+  const extraTrips: [string, string, string, number, string, string][] = [
+    // traveler_id, depart, package_size, price, short_info, arrive
+    [USER.ADMIN, "+8 days", "MEDIUM", 20, "Ruimte voor een middelgroot pakket, vlieg met KLM.", "+8 days"],
+    [USER.OPS, "+15 days", "SMALL", 0, "Neem gratis een klein pakketje mee voor familie/vrienden.", "+16 days"],
+  ];
+  for (const [tid, dep, size, price, info] of extraTrips) {
+    await q(db,
+      `INSERT INTO trips (tenant_id, traveler_id, corridor_id, depart_date, arrive_date, capacity_kg,
+                          price_indication_eur, package_size, visible, status, short_info)
+       VALUES ($1,$2,$3, (current_date + ($4)::interval)::date, (current_date + ($4)::interval + interval '10 days')::date,
+               5, $5, $6, true, 'OPEN', $7)`,
+      [T, tid, CORRIDOR, dep, price, size, info]);
+  }
+  // Een paar carrier-ratings voor admin & ops zodat hun sterren zichtbaar zijn.
+  for (const [rater, ratee, stars, comment] of [
+    [USER.SENDER, USER.ADMIN, 4, "Vlotte communicatie, netjes bezorgd."],
+    [USER.TRAVELER, USER.ADMIN, 3, "Prima, iets later dan afgesproken."],
+    [USER.SENDER, USER.OPS, 4, "Superbehulpzaam en betrouwbaar."],
+  ] as [string, string, number, string][]) {
+    await q(db, `INSERT INTO ratings (tenant_id, rater_id, ratee_id, role, stars, comment)
+                 VALUES ($1,$2,$3,'CARRIER',$4,$5)`, [T, rater, ratee, stars, comment]);
+  }
+
   // Geaggregeerde reputatiescore bijwerken (0–5-veld, hier gemiddelde van 1–4).
   await q(db, `UPDATE users u SET rating = sub.avg FROM
                  (SELECT ratee_id, round(avg(stars)::numeric,2) AS avg FROM ratings GROUP BY ratee_id) sub

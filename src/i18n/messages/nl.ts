@@ -460,6 +460,16 @@ const nl = {
     title_ph: "Titel", yt_ph: "YouTube-URL of -ID", order: "Volgorde", add_btn: "+ Video toevoegen",
     list: "Video's", empty: "Nog geen video's", save: "Opslaan", publish: "Publiceren", depublish: "Depubliceren", del: "Verwijderen",
   },
+  mkt2: {
+    title: "Marktplaats", tab_routes: "Routes (reizigers)", tab_requests: "Verzoeken (afzenders)",
+    sub_routes: "Reizigers met vrije ruimte — kies een route", sub_requests: "Afzenders die iets willen versturen",
+    filters: "Filter", f_from: "Van", f_to: "Naar", f_verified: "Alleen geverifieerd",
+    f_price_max: "Max prijs €", f_size: "Pakketmaat", f_weight_max: "Max gewicht (kg)", f_apply: "Toepassen", f_clear: "Wissen", any: "Alle",
+    size_SMALL: "Klein", size_MEDIUM: "Middel", size_LARGE: "Groot", size_XLARGE: "Extra groot",
+    willing_pay: "Wil betalen", service_price: "Vraagprijs", capacity: "Capaciteit", depart: "Vertrek", deadline: "Deadline",
+    see_profile: "Bekijk profiel", react: "Bekijk & bied", none_routes: "Geen zichtbare routes.", none_requests: "Geen zichtbare verzoeken.",
+    publish_route: "Publiceer je route", publish_request: "Maak je verzoek zichtbaar", free: "Gratis",
+  },
   prof: {
     member_since: "Lid sinds", based_in: "Woonplaats",
     rating_carrier: "Beoordeling als reiziger", rating_client: "Beoordeling als afzender",

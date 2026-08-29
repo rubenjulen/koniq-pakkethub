@@ -8,7 +8,7 @@ export type NavItem = { href: string; key: NavKey; icon: string; cap?: string };
 const ALL: NavItem[] = [
   { href: "/app", key: "overview", icon: "🏠" },
   { href: "/app/shipments", key: "shipments", icon: "📦", cap: "shipment.create" },
-  { href: "/app/marketplace", key: "marketplace", icon: "🧳", cap: "offer.create" },
+  { href: "/app/marketplace", key: "marketplace", icon: "🧳" },
   { href: "/app/trips", key: "trips", icon: "✈️", cap: "trip.create" },
   { href: "/app/messages", key: "messages", icon: "💬", cap: "chat.use" },
   { href: "/app/wallet", key: "wallet", icon: "💶" },

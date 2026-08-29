@@ -462,6 +462,16 @@ const fr: Messages = {
     title_ph: "Titre", yt_ph: "URL ou ID YouTube", order: "Ordre", add_btn: "+ Ajouter la vidéo",
     list: "Vidéos", empty: "Aucune vidéo pour le moment", save: "Enregistrer", publish: "Publier", depublish: "Dépublier", del: "Supprimer",
   },
+  mkt2: {
+    title: "Place de marché", tab_routes: "Itinéraires (voyageurs)", tab_requests: "Demandes (expéditeurs)",
+    sub_routes: "Voyageurs avec de la place — choisissez un itinéraire", sub_requests: "Expéditeurs qui veulent envoyer quelque chose",
+    filters: "Filtrer", f_from: "De", f_to: "Vers", f_verified: "Vérifiés uniquement",
+    f_price_max: "Prix max €", f_size: "Taille du colis", f_weight_max: "Poids max (kg)", f_apply: "Appliquer", f_clear: "Effacer", any: "Tous",
+    size_SMALL: "Petit", size_MEDIUM: "Moyen", size_LARGE: "Grand", size_XLARGE: "Très grand",
+    willing_pay: "Prêt à payer", service_price: "Prix du service", capacity: "Capacité", depart: "Départ", deadline: "Échéance",
+    see_profile: "Voir le profil", react: "Voir & enchérir", none_routes: "Aucun itinéraire visible.", none_requests: "Aucune demande visible.",
+    publish_route: "Publiez votre itinéraire", publish_request: "Rendez votre demande visible", free: "Gratuit",
+  },
   prof: {
     member_since: "Membre depuis", based_in: "Situé à",
     rating_carrier: "Note en tant que transporteur", rating_client: "Note en tant que client",
