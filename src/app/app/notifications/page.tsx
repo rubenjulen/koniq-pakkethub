@@ -12,11 +12,13 @@ export default async function NotificationsPage() {
   const user = await requireSession();
   const t = (await getMessages()).notif;
   const rows = await query<any>(
-    `SELECT channel, template, title, body, status, provider, created_at
+    `SELECT channel, template, title, body, status, provider, created_at, read_at
        FROM notifications WHERE tenant_id=$1 AND (user_id=$2 OR user_id IS NULL)
       ORDER BY created_at DESC LIMIT 50`,
     [user.tenantId, user.id]
   );
+  // Bij openen als gelezen markeren (ongelezen-badge verdwijnt daarna).
+  await query(`UPDATE notifications SET read_at=now() WHERE user_id=$1 AND read_at IS NULL`, [user.id]);
 
   return (
     <div className="mx-auto max-w-2xl space-y-4">

@@ -376,6 +376,7 @@ const en: Messages = {
     kills: "Kill switches", kills_sub: "Protective block per corridor",
     blocked: "🔴 Blocked — reopen", block: "Block",
     audit: "Audit", audit_sub: "Latest events",
+    reports: "Reports", reports_sub: "Reported members — review and resolve", no_reports: "No open reports.", report_reviewed: "Reviewed", report_dismiss: "Dismiss", reported_by: "reported by",
   },
   dash: {
     hello: "Hi", install_as_app: "Install as app",
@@ -520,6 +521,16 @@ const en: Messages = {
     list: "Members", status: "Status", active: "Active", banned: "Banned", ban: "Ban", reactivate: "Reactivate", verified: "Verified",
     email_title: "Group email", email_sub: "Send a message to all active members (outbox simulation)", subject: "Subject", body: "Message", send_email: "Send to all members",
     ok_invited: "Member invited.", ok_banned: "Member banned.", ok_reactivated: "Member reactivated.", ok_emailed: "Group email sent.", err_fields: "Fill in the required fields.", err_exists: "A member with this email already exists.",
+  },
+  review: {
+    title_carrier: "Rate the traveler", title_client: "Rate the sender",
+    sub: "Your shipment was delivered — share your experience (1–4 stars).",
+    stars_label: "Stars", comment: "Comment (optional)", submit: "Submit rating", done: "Thanks for your rating.",
+  },
+  report: {
+    action: "Report", title: "Report this member", sub: "Reports go to the BugaWuga team.",
+    reason: "Reason", r_spam: "Spam", r_fraud: "Fraud", r_unsafe: "Unsafe", r_offensive: "Offensive", r_other: "Other",
+    note: "Note (optional)", submit: "Submit report", done: "Thanks, we'll review your report.",
   },
   appnav: {
     overview: "Overview",

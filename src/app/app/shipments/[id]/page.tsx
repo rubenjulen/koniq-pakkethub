@@ -4,7 +4,7 @@ import { requireSession, hasCapability } from "@/lib/auth";
 import { query, queryOne } from "@/db/client";
 import { EligibilityBadge, StatusBadge, Chip, SectionTitle } from "@/components/ui";
 import { eur, dateNL, dateTimeNL, timeAgo } from "@/lib/format";
-import { acceptOfferAction, advanceStatusAction, submitInspectionAction } from "../actions";
+import { acceptOfferAction, advanceStatusAction, submitInspectionAction, submitRatingAction } from "../actions";
 import { publishRequestAction } from "../../marketplace/actions";
 import { openClaimAction, requestReturnAction } from "../../claims/actions";
 import { VOLUMETRIC_DIVISOR, volumetricKg as calcVol, chargeableKg as calcChargeable } from "@/lib/packaging";
@@ -64,7 +64,14 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
   );
   const legs = await getShipmentLegs(id);
   const conv = await queryOne<{ id: string }>(`SELECT id FROM conversations WHERE shipment_id=$1 LIMIT 1`, [id]);
-  const booking = await queryOne<any>(`SELECT agreed_price_eur::float8 AS price, payout_status FROM bookings WHERE shipment_id=$1`, [id]);
+  const booking = await queryOne<any>(`SELECT agreed_price_eur::float8 AS price, payout_status, traveler_id FROM bookings WHERE shipment_id=$1`, [id]);
+  // Beoordeling ná levering: bepaal tegenpartij + rol voor deze kijker.
+  const isTraveler = booking?.traveler_id === user.id;
+  const rateeId = isOwner ? booking?.traveler_id : isTraveler ? s.sender_id : null;
+  const rateRole = isOwner ? "CARRIER" : "CLIENT"; // je beoordeelt de reiziger (carrier) of de afzender (client)
+  const alreadyRated = rateeId
+    ? await queryOne<{ id: string }>(`SELECT id FROM ratings WHERE rater_id=$1 AND ratee_id=$2 AND shipment_id=$3 AND role=$4`, [user.id, rateeId, id, rateRole])
+    : { id: "x" };
   const reasons: string[] = decision?.reasons ?? [];
   const nexts = NEXT_STATUS[s.status] ?? [];
   const volumetricKg = calcVol(s.length_cm, s.width_cm, s.height_cm);
@@ -245,6 +252,24 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
                   </form>
                 ))}
               </div>
+            </section>
+          )}
+
+          {s.status === "DELIVERED" && rateeId && !alreadyRated && (
+            <section className="ph-card p-4">
+              <SectionTitle sub={m.review.sub}>⭐ {isOwner ? m.review.title_carrier : m.review.title_client}</SectionTitle>
+              <form action={submitRatingAction} className="space-y-2">
+                <input type="hidden" name="shipment_id" value={s.id} />
+                <input type="hidden" name="ratee_id" value={rateeId} />
+                <input type="hidden" name="role" value={rateRole} />
+                <label className="block text-sm">{m.review.stars_label}
+                  <select name="stars" defaultValue="4" className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+                    <option value="4">★★★★ (4)</option><option value="3">★★★☆ (3)</option><option value="2">★★☆☆ (2)</option><option value="1">★☆☆☆ (1)</option>
+                  </select>
+                </label>
+                <textarea name="comment" rows={2} placeholder={m.review.comment} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                <button className="ph-btn ph-btn-primary w-full text-sm">{m.review.submit}</button>
+              </form>
             </section>
           )}
 

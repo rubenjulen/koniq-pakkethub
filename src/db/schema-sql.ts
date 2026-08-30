@@ -919,4 +919,21 @@ CREATE TABLE IF NOT EXISTS gifts (
 
 -- Directe gesprekken (reiziger ⇄ afzender) los van een zending, evt. over een route.
 ALTER TABLE conversations ADD COLUMN IF NOT EXISTS trip_id uuid REFERENCES trips(id) ON DELETE SET NULL;
+
+-- Gelezen-status voor notificaties (ongelezen-badge), los van de bezorgstatus.
+ALTER TABLE notifications ADD COLUMN IF NOT EXISTS read_at timestamptz;
+
+-- Melden/rapporteren (safety): een lid meldt een gebruiker/listing → naar Control Center.
+CREATE TABLE IF NOT EXISTS reports (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id     uuid NOT NULL REFERENCES tenants(id),
+  reporter_id   uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  target_type   text NOT NULL,                    -- USER|SHIPMENT|TRIP
+  target_id     uuid NOT NULL,
+  reason        text NOT NULL,                    -- SPAM|FRAUD|UNSAFE|OFFENSIVE|OTHER
+  note          text,
+  status        text NOT NULL DEFAULT 'OPEN',     -- OPEN|REVIEWED|DISMISSED
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS reports_status_idx ON reports(tenant_id, status);
 `;

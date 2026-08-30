@@ -377,6 +377,7 @@ const fr: Messages = {
     kills: "Kill switches", kills_sub: "Blocage protecteur par corridor",
     blocked: "🔴 Bloqué — rouvrir", block: "Bloquer",
     audit: "Audit", audit_sub: "Derniers événements",
+    reports: "Signalements", reports_sub: "Membres signalés — examinez et résolvez", no_reports: "Aucun signalement ouvert.", report_reviewed: "Examiné", report_dismiss: "Rejeter", reported_by: "signalé par",
   },
   dash: {
     hello: "Bonjour", install_as_app: "Installer comme app",
@@ -521,6 +522,16 @@ const fr: Messages = {
     list: "Membres", status: "Statut", active: "Actif", banned: "Banni", ban: "Bannir", reactivate: "Réactiver", verified: "Vérifié",
     email_title: "E-mail groupé", email_sub: "Envoyez un message à tous les membres actifs (simulation de boîte d'envoi)", subject: "Objet", body: "Message", send_email: "Envoyer à tous les membres",
     ok_invited: "Membre invité.", ok_banned: "Membre banni.", ok_reactivated: "Membre réactivé.", ok_emailed: "E-mail groupé envoyé.", err_fields: "Remplissez les champs obligatoires.", err_exists: "Un membre avec cet e-mail existe déjà.",
+  },
+  review: {
+    title_carrier: "Évaluez le voyageur", title_client: "Évaluez l'expéditeur",
+    sub: "Votre envoi a été livré — partagez votre expérience (1–4 étoiles).",
+    stars_label: "Étoiles", comment: "Commentaire (facultatif)", submit: "Envoyer l'évaluation", done: "Merci pour votre évaluation.",
+  },
+  report: {
+    action: "Signaler", title: "Signaler ce membre", sub: "Les signalements vont à l'équipe BugaWuga.",
+    reason: "Motif", r_spam: "Spam", r_fraud: "Fraude", r_unsafe: "Dangereux", r_offensive: "Offensant", r_other: "Autre",
+    note: "Note (facultatif)", submit: "Envoyer le signalement", done: "Merci, nous examinerons votre signalement.",
   },
   appnav: {
     overview: "Aperçu",

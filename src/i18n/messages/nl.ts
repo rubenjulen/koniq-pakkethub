@@ -375,6 +375,7 @@ const nl = {
     kills: "Kill switches", kills_sub: "Beschermende blokkade per corridor",
     blocked: "🔴 Geblokkeerd — heropen", block: "Blokkeer",
     audit: "Audit", audit_sub: "Laatste gebeurtenissen",
+    reports: "Meldingen", reports_sub: "Gerapporteerde leden — beoordeel en handel af", no_reports: "Geen open meldingen.", report_reviewed: "Behandeld", report_dismiss: "Afwijzen", reported_by: "gemeld door",
   },
   dash: {
     hello: "Hallo", install_as_app: "Installeer als app",
@@ -519,6 +520,16 @@ const nl = {
     list: "Leden", status: "Status", active: "Actief", banned: "Verbannen", ban: "Verbannen", reactivate: "Heractiveren", verified: "Geverifieerd",
     email_title: "Groepsmail", email_sub: "Stuur een bericht naar alle actieve leden (outbox-simulatie)", subject: "Onderwerp", body: "Bericht", send_email: "Verstuur naar alle leden",
     ok_invited: "Lid uitgenodigd.", ok_banned: "Lid verbannen.", ok_reactivated: "Lid geheractiveerd.", ok_emailed: "Groepsmail verstuurd.", err_fields: "Vul de verplichte velden in.", err_exists: "Er bestaat al een lid met dit e-mailadres.",
+  },
+  review: {
+    title_carrier: "Beoordeel de reiziger", title_client: "Beoordeel de afzender",
+    sub: "Je zending is afgeleverd — deel je ervaring (1–4 sterren).",
+    stars_label: "Sterren", comment: "Toelichting (optioneel)", submit: "Beoordeling versturen", done: "Bedankt voor je beoordeling.",
+  },
+  report: {
+    action: "Melden", title: "Dit lid melden", sub: "Meldingen gaan naar het BugaWuga-team.",
+    reason: "Reden", r_spam: "Spam", r_fraud: "Oplichting", r_unsafe: "Onveilig", r_offensive: "Ongepast", r_other: "Anders",
+    note: "Toelichting (optioneel)", submit: "Melding versturen", done: "Bedankt, we bekijken je melding.",
   },
   appnav: {
     overview: "Overzicht",

@@ -33,6 +33,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   );
   const unread = unreadRow[0]?.n ?? 0;
 
+  const notifRow = await query<{ n: number }>(
+    `SELECT count(*)::int AS n FROM notifications WHERE user_id = $1 AND read_at IS NULL`,
+    [user.id]
+  );
+  const unreadNotif = notifRow[0]?.n ?? 0;
+
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr]">
       {/* Sidebar (desktop) */}
@@ -65,7 +71,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <div className="mt-1 px-2"><KycBadge status={user.kycStatus} /></div>
           <div className="mt-2 flex items-center justify-between gap-1">
             <Link href="/app/account" className="rounded-lg px-2 py-1.5 text-xs text-slate-500 hover:bg-slate-50">{A.account}</Link>
-            <Link href="/app/notifications" className="rounded-lg px-2 py-1.5 text-xs text-slate-500 hover:bg-slate-50">{A.notifications}</Link>
+            <Link href="/app/notifications" className="flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs text-slate-500 hover:bg-slate-50">
+              {A.notifications}
+              {unreadNotif > 0 && <span className="ph-chip bg-orange-500 px-1.5 text-white">{unreadNotif}</span>}
+            </Link>
           </div>
           <div className="mt-1 flex justify-center"><ThemeToggle /></div>
           <form action={doLogout} className="mt-1">

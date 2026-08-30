@@ -3,7 +3,7 @@ import { requireCapability } from "@/lib/auth";
 import { query } from "@/db/client";
 import { StatCard, EligibilityBadge, EmptyState, SectionTitle, Chip } from "@/components/ui";
 import { timeAgo } from "@/lib/format";
-import { toggleKillSwitchAction } from "./actions";
+import { toggleKillSwitchAction, resolveReportAction } from "./actions";
 import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Control Center" };
@@ -35,6 +35,14 @@ export default async function ControlCenter() {
   );
   const auditRows = await query<any>(
     `SELECT action, summary, created_at, entity_type FROM audit_log WHERE tenant_id=$1 ORDER BY id DESC LIMIT 12`, [t]
+  );
+  const reports = await query<any>(
+    `SELECT r.id, r.reason, r.note, r.created_at, r.target_id,
+            ru.name AS reporter_name, tu.name AS target_name
+       FROM reports r
+       JOIN users ru ON ru.id = r.reporter_id
+       LEFT JOIN users tu ON tu.id = r.target_id
+      WHERE r.tenant_id=$1 AND r.status='OPEN' ORDER BY r.created_at DESC LIMIT 20`, [t]
   );
 
   return (
@@ -91,6 +99,30 @@ export default async function ControlCenter() {
                 </div>
               ))}
             </div>
+          </section>
+
+          <section>
+            <SectionTitle sub={C.reports_sub}>🚩 {C.reports}{reports.length > 0 ? ` (${reports.length})` : ""}</SectionTitle>
+            {reports.length === 0 ? (
+              <p className="text-sm text-slate-400">{C.no_reports}</p>
+            ) : (
+              <div className="ph-card divide-y divide-slate-100 text-sm">
+                {reports.map((r) => (
+                  <div key={r.id} className="p-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <Link href={`/app/u/${r.target_id}`} className="font-medium text-orange-700 hover:underline">{r.target_name ?? r.target_id}</Link>
+                      <Chip tone="bad">{r.reason}</Chip>
+                    </div>
+                    <div className="text-xs text-slate-500">{C.reported_by} {r.reporter_name} · {timeAgo(r.created_at)}</div>
+                    {r.note && <div className="mt-1 text-xs text-slate-600">{r.note}</div>}
+                    <div className="mt-2 flex gap-2">
+                      <form action={resolveReportAction}><input type="hidden" name="report_id" value={r.id} /><input type="hidden" name="to" value="REVIEWED" /><button className="ph-btn ph-btn-ghost text-xs">{C.report_reviewed}</button></form>
+                      <form action={resolveReportAction}><input type="hidden" name="report_id" value={r.id} /><input type="hidden" name="to" value="DISMISSED" /><button className="text-xs text-slate-400 hover:underline">{C.report_dismiss}</button></form>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
           <section>

@@ -522,6 +522,13 @@ export async function seedDatabase(db: DbAdapter) {
   await q(db, `INSERT INTO follows (follower_id, followee_id) VALUES ($1,$2) ON CONFLICT DO NOTHING`,
     [USER.SENDER, USER.TRAVELER]);
 
+  // Demo-notificaties (ongelezen) zodat de meldingen-badge zichtbaar is.
+  await q(db,
+    `INSERT INTO notifications (tenant_id, user_id, channel, template, title, body, status) VALUES
+       ($1,$2,'EMAIL','welcome','Welkom bij BugaWuga','Je account is klaar. Vul je profiel aan en verifieer je identiteit.','SENT'),
+       ($1,$3,'WHATSAPP','offer','Nieuw bod op je verzoek','Een reiziger wil je pakket meenemen — open de chat om plaats, tijd en prijs af te spreken.','SENT')`,
+    [T, USER.TRAVELER, USER.SENDER]);
+
   await q(db,
     `INSERT INTO audit_log (tenant_id, user_id, action, entity_type, summary)
      VALUES ($1,$2,'SEED','system','BugaWuga NL–SR pilot geseed (demo v0.5: ratings, badges, volgen, zichtbare route).')`,

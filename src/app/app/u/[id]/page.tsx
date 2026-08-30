@@ -7,7 +7,7 @@ import { getMessages } from "@/i18n";
 import { Stars } from "@/components/Stars";
 import { Chip } from "@/components/ui";
 import { dateNL } from "@/lib/format";
-import { followAction, unfollowAction } from "./actions";
+import { followAction, unfollowAction, reportUserAction } from "./actions";
 import { startChatAction } from "../../messages/actions";
 
 export const dynamic = "force-dynamic";
@@ -75,12 +75,14 @@ function Badges({ badges, t, empty }: { badges: ProfileBadge[]; t: Awaited<Retur
 }
 
 export default async function ProfilePage({ params, searchParams }: {
-  params: Promise<{ id: string }>; searchParams: Promise<{ tab?: string }>;
+  params: Promise<{ id: string }>; searchParams: Promise<{ tab?: string; ok?: string }>;
 }) {
   const viewer = await requireSession();
   const { id } = await params;
-  const { tab = "carrier" } = await searchParams;
-  const t = (await getMessages()).prof;
+  const { tab = "carrier", ok } = await searchParams;
+  const mm = await getMessages();
+  const t = mm.prof;
+  const rep = mm.report;
   const p = await getPublicProfile(viewer.tenantId, id);
   if (!p) notFound();
 
@@ -94,6 +96,7 @@ export default async function ProfilePage({ params, searchParams }: {
   return (
     <div className="mx-auto max-w-3xl space-y-5">
       <Link href="/app/marketplace" className="text-sm text-orange-600 hover:underline">{t.back}</Link>
+      {ok === "reported" && <div className="rounded-lg bg-orange-50 px-3 py-2 text-sm text-orange-700 ring-1 ring-orange-200">{rep.done}</div>}
 
       {/* Kop */}
       <section className="ph-card p-5">
@@ -122,6 +125,18 @@ export default async function ProfilePage({ params, searchParams }: {
               ) : (
                 <form action={followAction}><input type="hidden" name="user_id" value={id} /><button className="ph-btn ph-btn-ghost w-full text-sm">+ {t.follow}</button></form>
               )}
+              <details className="text-xs">
+                <summary className="cursor-pointer text-right text-slate-400 hover:text-rose-500">⚠ {rep.action}</summary>
+                <form action={reportUserAction} className="mt-2 space-y-1 rounded-lg border border-slate-200 p-2">
+                  <input type="hidden" name="target_id" value={id} />
+                  <select name="reason" className="w-full rounded border border-slate-300 px-2 py-1 text-xs">
+                    <option value="FRAUD">{rep.r_fraud}</option><option value="UNSAFE">{rep.r_unsafe}</option>
+                    <option value="OFFENSIVE">{rep.r_offensive}</option><option value="SPAM">{rep.r_spam}</option><option value="OTHER">{rep.r_other}</option>
+                  </select>
+                  <input name="note" placeholder={rep.note} className="w-full rounded border border-slate-300 px-2 py-1 text-xs" />
+                  <button className="w-full rounded bg-rose-500 px-2 py-1 text-xs font-medium text-white hover:bg-rose-600">{rep.submit}</button>
+                </form>
+              </details>
             </div>
           )}
         </div>

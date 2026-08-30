@@ -57,3 +57,13 @@ export async function toggleKillSwitchAction(formData: FormData) {
   revalidatePath("/app/control");
   redirect("/app/control");
 }
+
+/** Melding afhandelen in het Control Center. */
+export async function resolveReportAction(formData: FormData) {
+  const user = await requireCapability("control.view");
+  const id = String(formData.get("report_id") ?? "");
+  const to = String(formData.get("to") ?? "REVIEWED") === "DISMISSED" ? "DISMISSED" : "REVIEWED";
+  await query(`UPDATE reports SET status=$1 WHERE id=$2 AND tenant_id=$3`, [to, id, user.tenantId]);
+  await audit({ tenantId: user.tenantId, userId: user.id, action: "REPORT_RESOLVE", entityType: "report", entityId: id, summary: to });
+  redirect("/app/control");
+}

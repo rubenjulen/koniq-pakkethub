@@ -181,3 +181,31 @@ export async function submitInspectionAction(formData: FormData) {
   await audit({ tenantId, userId: user.id, action: "INSPECTION", entityType: "shipment", entityId: shipmentId, summary: result });
   redirect(`/app/shipments/${shipmentId}`);
 }
+
+/** Beoordeling ná levering: partijen beoordelen elkaar (1–4 sterren). */
+export async function submitRatingAction(formData: FormData) {
+  const user = await requireSession();
+  const tenantId = user.tenantId;
+  const shipmentId = String(formData.get("shipment_id") ?? "");
+  const rateeId = String(formData.get("ratee_id") ?? "");
+  const role = String(formData.get("role")) === "CLIENT" ? "CLIENT" : "CARRIER";
+  const stars = Math.min(4, Math.max(1, parseInt(String(formData.get("stars") ?? "4"), 10) || 4));
+  const comment = String(formData.get("comment") ?? "").trim() || null;
+  if (!rateeId || rateeId === user.id) redirect(`/app/shipments/${shipmentId}`);
+
+  const existing = await queryOne<{ id: string }>(
+    `SELECT id FROM ratings WHERE rater_id=$1 AND ratee_id=$2 AND shipment_id=$3 AND role=$4`,
+    [user.id, rateeId, shipmentId, role]);
+  if (!existing) {
+    await query(
+      `INSERT INTO ratings (tenant_id, rater_id, ratee_id, role, stars, comment, shipment_id)
+       VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+      [tenantId, user.id, rateeId, role, stars, comment, shipmentId]);
+    await query(
+      `UPDATE users u SET rating = sub.avg
+         FROM (SELECT round(avg(stars)::numeric,2) AS avg FROM ratings WHERE ratee_id=$1) sub
+        WHERE u.id=$1`, [rateeId]);
+    await audit({ tenantId, userId: user.id, action: "RATING_SUBMIT", entityType: "user", entityId: rateeId, summary: `${stars}★ (${role})` });
+  }
+  redirect(`/app/shipments/${shipmentId}?ok=rated`);
+}

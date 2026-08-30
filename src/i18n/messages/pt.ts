@@ -377,6 +377,7 @@ const pt: Messages = {
     kills: "Kill switches", kills_sub: "Bloqueio protetor por corredor",
     blocked: "🔴 Bloqueado — reabrir", block: "Bloquear",
     audit: "Auditoria", audit_sub: "Últimos eventos",
+    reports: "Denúncias", reports_sub: "Membros denunciados — analise e resolva", no_reports: "Nenhuma denúncia aberta.", report_reviewed: "Analisado", report_dismiss: "Descartar", reported_by: "denunciado por",
   },
   dash: {
     hello: "Olá", install_as_app: "Instalar como app",
@@ -521,6 +522,16 @@ const pt: Messages = {
     list: "Membros", status: "Estado", active: "Ativo", banned: "Banido", ban: "Banir", reactivate: "Reativar", verified: "Verificado",
     email_title: "E-mail em grupo", email_sub: "Envie uma mensagem a todos os membros ativos (simulação de caixa)", subject: "Assunto", body: "Mensagem", send_email: "Enviar a todos os membros",
     ok_invited: "Membro convidado.", ok_banned: "Membro banido.", ok_reactivated: "Membro reativado.", ok_emailed: "E-mail em grupo enviado.", err_fields: "Preencha os campos obrigatórios.", err_exists: "Já existe um membro com este e-mail.",
+  },
+  review: {
+    title_carrier: "Avalie o viajante", title_client: "Avalie o remetente",
+    sub: "Seu envio foi entregue — compartilhe sua experiência (1–4 estrelas).",
+    stars_label: "Estrelas", comment: "Comentário (opcional)", submit: "Enviar avaliação", done: "Obrigado pela sua avaliação.",
+  },
+  report: {
+    action: "Denunciar", title: "Denunciar este membro", sub: "As denúncias vão para a equipe da BugaWuga.",
+    reason: "Motivo", r_spam: "Spam", r_fraud: "Fraude", r_unsafe: "Inseguro", r_offensive: "Ofensivo", r_other: "Outro",
+    note: "Nota (opcional)", submit: "Enviar denúncia", done: "Obrigado, vamos analisar sua denúncia.",
   },
   appnav: {
     overview: "Visão geral",
