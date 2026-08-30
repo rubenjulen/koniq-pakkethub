@@ -127,7 +127,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="ph-card flex flex-col items-center gap-4 bg-gradient-to-br from-orange-600 to-slate-800 p-10 text-center text-white">
           <h2 className="text-2xl font-bold">{h.cta_title}</h2>
-          <p className="max-w-lg text-orange-50">{h.cta_sub}</p>
+          <p className="max-w-lg text-white/90">{h.cta_sub}</p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/verzenden" className="ph-btn bg-white text-slate-900 hover:bg-slate-100">{h.cta_check}</Link>
             <Link href="/partner" className="ph-btn bg-white/15 text-white hover:bg-white/25">{h.cta_partner}</Link>
