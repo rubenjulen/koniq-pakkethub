@@ -157,7 +157,10 @@ export default async function HomePage() {
 
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-4 py-16">
-        <div className="ph-card flex flex-col items-center gap-4 bg-gradient-to-br from-orange-600 to-slate-800 p-10 text-center text-white">
+        <div
+          className="flex flex-col items-center gap-4 rounded-2xl p-10 text-center text-white shadow-sm"
+          style={{ background: "linear-gradient(135deg, #6ea82c 0%, #2b2416 100%)" }}
+        >
           <h2 className="text-2xl font-bold">{h.cta_title}</h2>
           <p className="max-w-lg text-white/90">{h.cta_sub}</p>
           <div className="flex flex-wrap justify-center gap-3">
