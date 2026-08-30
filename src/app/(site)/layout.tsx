@@ -13,7 +13,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <StagedBanner m={m} />
       <SiteHeader m={m} locale={locale} discoverCount={discoverCount} />
       <div className="flex-1">{children}</div>
-      <SiteFooter m={m} />
+      <SiteFooter m={m} discoverCount={discoverCount} />
     </div>
   );
 }

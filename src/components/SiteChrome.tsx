@@ -50,13 +50,19 @@ export function SiteHeader({ m, locale, discoverCount = 0 }: { m: Messages; loca
   );
 }
 
-export function SiteFooter({ m }: { m: Messages }) {
+export function SiteFooter({ m, discoverCount = 0 }: { m: Messages; discoverCount?: number }) {
   return (
     <footer className="mt-20 border-t border-slate-200 bg-slate-900 text-slate-300">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo light />
           <p className="mt-3 text-sm text-slate-400">{m.footer.tagline}</p>
+          {discoverCount > 0 && (
+            <Link href="/ontdek" className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white ring-1 ring-white/15 hover:bg-white/20">
+              <span className="h-2 w-2 rounded-full bg-orange-400" />
+              {discoverCount} {m.home.live_open}
+            </Link>
+          )}
         </div>
         <div>
           <h4 className="mb-2 text-sm font-semibold text-white">{m.footer.services}</h4>

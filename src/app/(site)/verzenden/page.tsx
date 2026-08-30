@@ -1,5 +1,6 @@
 import { getTenantId, getCorridors, getCategoriesList } from "@/lib/tenant";
 import { QuoteCalculator } from "@/components/QuoteCalculator";
+import { AvailabilityStrip } from "@/components/AvailabilityStrip";
 import { getMessages } from "@/i18n";
 
 export const dynamic = "force-dynamic";
@@ -29,6 +30,8 @@ export default async function VerzendenPage() {
       <div className="mt-6">
         <QuoteCalculator categories={categories} corridor={{ ...pilot, name: pilot.name }} t={S} eligLabels={m.elig} />
       </div>
+
+      <div className="mt-6"><AvailabilityStrip tenantId={tenantId} m={m} /></div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         {FEATURES.map(([i, t, dd]) => (

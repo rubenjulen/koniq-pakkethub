@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { getMessages } from "@/i18n";
+import { getTenantId } from "@/lib/tenant";
+import { AvailabilityStrip } from "@/components/AvailabilityStrip";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Hoe het werkt" };
 
 export default async function HowItWorks() {
   const m = await getMessages();
+  const tenantId = await getTenantId();
   const h = m.hiw;
 
   const PERSONAS: [string, string, string[], string, string][] = [
@@ -22,6 +25,8 @@ export default async function HowItWorks() {
     <div className="mx-auto max-w-6xl px-4 py-12">
       <h1 className="text-3xl font-bold text-slate-900">{h.title}</h1>
       <p className="mt-2 max-w-2xl text-slate-600">{h.intro}</p>
+
+      <div className="mt-6"><AvailabilityStrip tenantId={tenantId} m={m} /></div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {PERSONAS.map(([icon, title, points, href, cta]) => (
