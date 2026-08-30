@@ -16,14 +16,14 @@ import type { Messages } from "@/i18n/messages/nl";
 export const metadata = { title: "Zending" };
 
 type NextKey = keyof Messages["shipd"];
-const NEXT_STATUS: Record<string, { to: string; event: string; key: NextKey; needsSeal?: boolean }[]> = {
+const NEXT_STATUS: Record<string, { to: string; event: string; key: NextKey; needsSeal?: boolean; needsReceipt?: boolean }[]> = {
   BOOKED: [{ to: "INTAKE", event: "INTAKE", key: "n_intake" }],
   INTAKE: [{ to: "SEALED", event: "SEALED", key: "n_seal", needsSeal: true }],
   SEALED: [{ to: "IN_CUSTODY", event: "HANDOVER", key: "n_handover" }],
   IN_CUSTODY: [{ to: "IN_TRANSIT", event: "DEPARTED", key: "n_departed" }],
   IN_TRANSIT: [{ to: "CUSTOMS", event: "CUSTOMS", key: "n_customs" }, { to: "READY", event: "ARRIVED", key: "n_arrived" }],
   CUSTOMS: [{ to: "READY", event: "ARRIVED", key: "n_released" }],
-  READY: [{ to: "DELIVERED", event: "DELIVERED", key: "n_delivered" }],
+  READY: [{ to: "DELIVERED", event: "DELIVERED", key: "n_delivered", needsReceipt: true }],
 };
 
 export default async function ShipmentDetail({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ error?: string; ok?: string }> }) {
@@ -90,7 +90,7 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
         <p className="text-sm text-slate-500">{s.corridor_name} · {d.sender} {s.sender_name} · {d.created} {dateNL(s.created_at)}</p>
       </div>
 
-      {error && <div className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">{error}</div>}
+      {error && <div className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">{error === "receipt" ? d.err_receipt : error}</div>}
       {ok && <div className="rounded-lg bg-orange-50 px-3 py-2 text-sm text-orange-700 ring-1 ring-orange-200">{pm.saved}</div>}
 
       {isOwner && s.eligibility === "ALLOW" && (
@@ -201,6 +201,13 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
             {conv && (
               <Link href={`/app/messages/${conv.id}`} className="ph-btn ph-btn-ghost mt-3 w-full text-sm">{d.open_chat}</Link>
             )}
+            {isOwner && s.receipt_code && s.status !== "DELIVERED" && (
+              <div className="mt-3 rounded-lg bg-emerald-50 p-3 text-center ring-1 ring-emerald-200">
+                <div className="text-xs font-medium text-emerald-700">{d.receipt_code_label}</div>
+                <div className="mt-0.5 font-mono text-2xl font-bold tracking-widest text-emerald-800">{s.receipt_code}</div>
+                <div className="mt-1 text-[11px] text-emerald-600">{d.receipt_share}</div>
+              </div>
+            )}
           </section>
 
           <section className="ph-card p-4">
@@ -247,6 +254,12 @@ export default async function ShipmentDetail({ params, searchParams }: { params:
                     <input type="hidden" name="event_type" value={n.event} />
                     {n.needsSeal && (
                       <input name="seal_no" placeholder={d.seal_no} required className="w-full rounded border border-slate-300 px-2 py-1 text-sm" />
+                    )}
+                    {n.needsReceipt && s.receipt_code && (
+                      <>
+                        <p className="text-xs text-slate-500">{d.receipt_ask}</p>
+                        <input name="receipt_code" inputMode="numeric" placeholder={d.receipt_code_ph} required className="w-full rounded border border-slate-300 px-2 py-1 text-sm tracking-widest" />
+                      </>
                     )}
                     <button className="ph-btn ph-btn-primary w-full text-sm">{d[n.key]}</button>
                   </form>

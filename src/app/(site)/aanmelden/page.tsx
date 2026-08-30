@@ -12,6 +12,7 @@ export const metadata = { title: "Account aanmaken" };
 async function doRegister(formData: FormData) {
   "use server";
   const role = String(formData.get("role") ?? "SENDER") === "TRAVELER" ? "TRAVELER" : "SENDER";
+  if (!formData.get("terms")) redirect(`/aanmelden?role=${role}&error=terms`);
   const res = await register({
     firstName: String(formData.get("first_name") ?? ""),
     lastName: String(formData.get("last_name") ?? ""),
@@ -46,7 +47,7 @@ export default async function RegisterPage({ searchParams }: { searchParams: Pro
 
       {error && (
         <div className="mt-4 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-rose-200">
-          {error === "exists" ? R.err_exists : R.err_fields}
+          {error === "exists" ? R.err_exists : error === "terms" ? R.err_terms : R.err_fields}
         </div>
       )}
 
@@ -81,6 +82,10 @@ export default async function RegisterPage({ searchParams }: { searchParams: Pro
         </div>
 
         <p className="text-xs text-slate-500">{R.kyc_hint}</p>
+        <label className="flex items-start gap-2 text-xs text-slate-600">
+          <input type="checkbox" name="terms" value="1" className="mt-0.5" />
+          <span>{R.terms} <Link href="/trust" className="font-medium text-orange-600 hover:underline">{R.terms_link}</Link></span>
+        </label>
         <button className="ph-btn ph-btn-primary w-full">{R.create}</button>
       </form>
 

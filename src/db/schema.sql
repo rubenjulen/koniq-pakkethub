@@ -920,6 +920,20 @@ ALTER TABLE conversations ADD COLUMN IF NOT EXISTS trip_id uuid REFERENCES trips
 -- Gelezen-status voor notificaties (ongelezen-badge), los van de bezorgstatus.
 ALTER TABLE notifications ADD COLUMN IF NOT EXISTS read_at timestamptz;
 
+-- Uitbetaling aanvragen (feature 9): lid vraagt opname aan zodra de drempel is bereikt.
+CREATE TABLE IF NOT EXISTS payout_requests (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id    uuid NOT NULL REFERENCES tenants(id),
+  user_id      uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  amount_eur   numeric(18,2) NOT NULL,
+  method       text,                              -- CASH_WU|CARD|CRYPTO
+  status       text NOT NULL DEFAULT 'REQUESTED', -- REQUESTED|PAID|REJECTED
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+
+-- Ontvangst bevestigen met code (OTP) bij overdracht/aflevering.
+ALTER TABLE shipments ADD COLUMN IF NOT EXISTS receipt_code text;
+
 -- Melden/rapporteren (safety): een lid meldt een gebruiker/listing → naar Control Center.
 CREATE TABLE IF NOT EXISTS reports (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),

@@ -4,6 +4,7 @@ import { walletBalance, accountBalance } from "@/lib/finance";
 import { StatCard, EmptyState, SectionTitle, Chip } from "@/components/ui";
 import { eur, dateTimeNL } from "@/lib/format";
 import { getMessages } from "@/i18n";
+import { requestPayoutAction } from "./actions";
 
 export const metadata = { title: "Wallet & betalingen" };
 
@@ -11,9 +12,10 @@ const STATUS_TONE: Record<string, "ok" | "warn" | "bad" | "neutral"> = {
   SUCCEEDED: "ok", REQUIRES_ACTION: "warn", PROCESSING: "warn", FAILED: "bad", REFUNDED: "neutral",
 };
 
-export default async function WalletPage() {
+export default async function WalletPage({ searchParams }: { searchParams: Promise<{ ok?: string }> }) {
   const user = await requireSession();
   const t = user.tenantId;
+  const { ok } = await searchParams;
   const w = (await getMessages()).wallet;
   const balance = await walletBalance(t, user.id);
   const isAdmin = hasCapability(user, "control.view");
@@ -40,6 +42,11 @@ export default async function WalletPage() {
   const threshold = wp?.threshold ?? 500;
   const progress = Math.min(100, threshold > 0 ? Math.max(0, (balance / threshold) * 100) : 0);
   const remaining = Math.max(0, threshold - balance);
+  const pendingPayout = await queryOne<any>(
+    `SELECT id FROM payout_requests WHERE tenant_id=$1 AND user_id=$2 AND status='REQUESTED' LIMIT 1`,
+    [t, user.id]
+  );
+  const canPayout = balance >= threshold;
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -54,6 +61,14 @@ export default async function WalletPage() {
         </div>
         <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-orange-500" style={{ width: `${progress}%` }} /></div>
         <div className="mt-1 text-xs font-medium text-slate-500">{balance >= threshold ? w.payout_ready : w.to_payout.replace("{x}", eur(remaining))}</div>
+        {ok === "payout" && <div className="mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 ring-1 ring-emerald-200">{w.request_done}</div>}
+        {pendingPayout ? (
+          <div className="mt-3 inline-flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm font-medium text-amber-700 ring-1 ring-amber-200">⏳ {w.request_pending}</div>
+        ) : canPayout && !ok ? (
+          <form action={requestPayoutAction} className="mt-3">
+            <button className="ph-btn ph-btn-primary text-sm">{w.request_payout}</button>
+          </form>
+        ) : null}
       </section>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">

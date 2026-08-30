@@ -17,7 +17,9 @@ function Avatar({ name, url, size = 44 }: { name: string; url?: string | null; s
   return <div className="flex shrink-0 items-center justify-center rounded-xl bg-orange-100 font-bold text-orange-700" style={{ width: size, height: size, fontSize: size * 0.34 }}>{initials}</div>;
 }
 
-type SP = { mode?: string; from?: string; to?: string; verified?: string; priceMax?: string; size?: string; weightMax?: string };
+type SP = { mode?: string; from?: string; to?: string; verified?: string; priceMax?: string; size?: string; weightMax?: string; sort?: string };
+const SORTS = ["date", "price_asc", "price_desc", "rating"] as const;
+type SortKeyT = (typeof SORTS)[number];
 
 export default async function MarketplacePage({ searchParams }: { searchParams: Promise<SP> }) {
   const user = await requireSession();
@@ -30,9 +32,10 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
   const priceMax = sp.priceMax ? parseFloat(sp.priceMax) : null;
   const weightMax = sp.weightMax ? parseFloat(sp.weightMax) : null;
   const verified = sp.verified === "1";
+  const sort = (SORTS as readonly string[]).includes(sp.sort ?? "") ? (sp.sort as SortKeyT) : "date";
 
-  const routes = mode === "routes" ? await getRoutes(user.tenantId, { from: sp.from, to: sp.to, verified, priceMax, size: sp.size }) : [];
-  const requests = mode === "requests" ? await getRequests(user.tenantId, { from: sp.from, to: sp.to, verified, priceMax, weightMax }) : [];
+  const routes = mode === "routes" ? await getRoutes(user.tenantId, { from: sp.from, to: sp.to, verified, priceMax, size: sp.size, sort }) : [];
+  const requests = mode === "requests" ? await getRequests(user.tenantId, { from: sp.from, to: sp.to, verified, priceMax, weightMax, sort }) : [];
 
   const inp = "mt-1 w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm";
   const tab = (k: string, label: string) => (
@@ -64,6 +67,14 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
           <label className="block"><span className="text-xs text-slate-500">{t.f_from}</span><input name="from" defaultValue={sp.from ?? ""} className={inp} /></label>
           <label className="block"><span className="text-xs text-slate-500">{t.f_to}</span><input name="to" defaultValue={sp.to ?? ""} className={inp} /></label>
           <label className="flex items-center gap-2"><input type="checkbox" name="verified" value="1" defaultChecked={verified} /> {t.f_verified}</label>
+          <label className="block"><span className="text-xs text-slate-500">{t.sort_label}</span>
+            <select name="sort" defaultValue={sort} className={inp}>
+              <option value="date">{t.sort_date}</option>
+              <option value="price_asc">{t.sort_price_asc}</option>
+              <option value="price_desc">{t.sort_price_desc}</option>
+              <option value="rating">{t.sort_rating}</option>
+            </select>
+          </label>
           <label className="block"><span className="text-xs text-slate-500">{t.f_price_max}</span><input name="priceMax" type="number" min="0" defaultValue={sp.priceMax ?? ""} className={inp} /></label>
           {mode === "routes" ? (
             <label className="block"><span className="text-xs text-slate-500">{t.f_size}</span>

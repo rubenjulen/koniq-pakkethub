@@ -1,8 +1,26 @@
 import "server-only";
 import { query } from "@/db/client";
 
-export type RouteFilters = { from?: string; to?: string; verified?: boolean; priceMax?: number | null; size?: string };
-export type RequestFilters = { from?: string; to?: string; verified?: boolean; priceMax?: number | null; weightMax?: number | null };
+export type SortKey = "date" | "price_asc" | "price_desc" | "rating";
+export type RouteFilters = { from?: string; to?: string; verified?: boolean; priceMax?: number | null; size?: string; sort?: SortKey };
+export type RequestFilters = { from?: string; to?: string; verified?: boolean; priceMax?: number | null; weightMax?: number | null; sort?: SortKey };
+
+function routeOrder(sort?: SortKey): string {
+  switch (sort) {
+    case "price_asc": return `coalesce(t.price_indication_eur,0) ASC, t.created_at DESC`;
+    case "price_desc": return `coalesce(t.price_indication_eur,0) DESC, t.created_at DESC`;
+    case "rating": return `stars DESC NULLS LAST, t.created_at DESC`;
+    default: return `t.depart_date NULLS LAST, t.created_at DESC`;
+  }
+}
+function requestOrder(sort?: SortKey): string {
+  switch (sort) {
+    case "price_asc": return `coalesce(s.offered_price_eur,0) ASC, s.created_at DESC`;
+    case "price_desc": return `coalesce(s.offered_price_eur,0) DESC, s.created_at DESC`;
+    case "rating": return `stars DESC NULLS LAST, s.created_at DESC`;
+    default: return `s.deadline NULLS LAST, s.created_at DESC`;
+  }
+}
 
 /** Zichtbare ROUTES (reizigers die ruimte aanbieden) — voor afzenders om te bekijken. */
 export async function getRoutes(tenantId: string, f: RouteFilters = {}) {
@@ -22,7 +40,7 @@ export async function getRoutes(tenantId: string, f: RouteFilters = {}) {
             (SELECT count(*)::int FROM ratings r WHERE r.ratee_id=u.id AND r.role='CARRIER') AS stars_n
        FROM trips t JOIN users u ON u.id=t.traveler_id JOIN corridors c ON c.id=t.corridor_id
       WHERE ${where.join(" AND ")}
-      ORDER BY t.depart_date NULLS LAST, t.created_at DESC LIMIT 60`,
+      ORDER BY ${routeOrder(f.sort)} LIMIT 60`,
     params
   );
 }
@@ -45,7 +63,7 @@ export async function getRequests(tenantId: string, f: RequestFilters = {}) {
             (SELECT count(*)::int FROM ratings r WHERE r.ratee_id=u.id AND r.role='CLIENT') AS stars_n
        FROM shipments s JOIN users u ON u.id=s.sender_id JOIN corridors c ON c.id=s.corridor_id
       WHERE ${where.join(" AND ")}
-      ORDER BY s.deadline NULLS LAST, s.created_at DESC LIMIT 60`,
+      ORDER BY ${requestOrder(f.sort)} LIMIT 60`,
     params
   );
 }

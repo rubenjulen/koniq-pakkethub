@@ -136,6 +136,22 @@ export async function advanceStatusAction(formData: FormData) {
   const allowed = ["INTAKE", "SEALED", "IN_CUSTODY", "IN_TRANSIT", "CUSTOMS", "READY", "DELIVERED", "RETURNED", "CLOSED"];
   if (!allowed.includes(to)) redirect(`/app/shipments/${shipmentId}`);
 
+  // Bewijs van levering (OTP): bij aankomst een 6-cijferige code genereren; bij levering verplicht laten kloppen.
+  if (to === "READY") {
+    const cur = await queryOne<{ receipt_code: string | null }>(`SELECT receipt_code FROM shipments WHERE id=$1 AND tenant_id=$2`, [shipmentId, tenantId]);
+    if (!cur?.receipt_code) {
+      const code = String(Math.floor(100000 + Math.random() * 900000));
+      await query(`UPDATE shipments SET receipt_code=$1 WHERE id=$2 AND tenant_id=$3`, [code, shipmentId, tenantId]);
+    }
+  }
+  if (to === "DELIVERED") {
+    const cur = await queryOne<{ receipt_code: string | null }>(`SELECT receipt_code FROM shipments WHERE id=$1 AND tenant_id=$2`, [shipmentId, tenantId]);
+    if (cur?.receipt_code) {
+      const given = String(formData.get("receipt_code") ?? "").replace(/\s+/g, "");
+      if (given !== cur.receipt_code) redirect(`/app/shipments/${shipmentId}?error=receipt`);
+    }
+  }
+
   await query(`UPDATE shipments SET status=$1, updated_at=now() WHERE id=$2 AND tenant_id=$3`, [to, shipmentId, tenantId]);
   await appendCustody({ tenantId, shipmentId, eventType, actorId: user.id, sealNo,
     notes: `Status → ${to}${sealNo ? ` (zegel ${sealNo})` : ""}.` });
