@@ -8,6 +8,7 @@ import { Stars } from "@/components/Stars";
 import { Chip } from "@/components/ui";
 import { dateNL } from "@/lib/format";
 import { followAction, unfollowAction } from "./actions";
+import { startChatAction } from "../../messages/actions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Profiel" };
@@ -115,10 +116,11 @@ export default async function ProfilePage({ params, searchParams }: {
           </div>
           {!isSelf && (
             <div className="flex flex-col gap-2">
+              <form action={startChatAction}><input type="hidden" name="other_id" value={id} /><button className="ph-btn ph-btn-primary w-full text-sm">💬 {t.chat}</button></form>
               {isFollowing ? (
-                <form action={unfollowAction}><input type="hidden" name="user_id" value={id} /><button className="ph-btn ph-btn-ghost text-sm">✓ {t.following}</button></form>
+                <form action={unfollowAction}><input type="hidden" name="user_id" value={id} /><button className="ph-btn ph-btn-ghost w-full text-sm">✓ {t.following}</button></form>
               ) : (
-                <form action={followAction}><input type="hidden" name="user_id" value={id} /><button className="ph-btn ph-btn-primary text-sm">+ {t.follow}</button></form>
+                <form action={followAction}><input type="hidden" name="user_id" value={id} /><button className="ph-btn ph-btn-ghost w-full text-sm">+ {t.follow}</button></form>
               )}
             </div>
           )}

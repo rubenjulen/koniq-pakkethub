@@ -41,3 +41,42 @@ export async function markRead(conversationId: string, userId: string) {
     [conversationId, userId]
   );
 }
+
+/**
+ * Vindt of maakt een direct 1-op-1 gesprek tussen twee leden (los van een zending,
+ * eventueel in de context van een route/trip). Gebruikt door de 'Chat'-knoppen op
+ * route-/verzoek-kaarten en profielen.
+ */
+export async function startDirectConversation(opts: {
+  tenantId: string; meId: string; otherId: string; tripId?: string | null; subject?: string | null;
+}): Promise<string> {
+  const { tenantId, meId, otherId } = opts;
+  const existing = await queryOne<{ id: string }>(
+    `SELECT c.id FROM conversations c
+      WHERE c.tenant_id=$1 AND c.shipment_id IS NULL
+        AND EXISTS (SELECT 1 FROM conversation_participants p WHERE p.conversation_id=c.id AND p.user_id=$2)
+        AND EXISTS (SELECT 1 FROM conversation_participants p WHERE p.conversation_id=c.id AND p.user_id=$3)
+        AND (SELECT count(*) FROM conversation_participants p WHERE p.conversation_id=c.id) = 2
+      ORDER BY c.created_at DESC LIMIT 1`,
+    [tenantId, meId, otherId]
+  );
+  if (existing) return existing.id;
+
+  const conv = await queryOne<{ id: string }>(
+    `INSERT INTO conversations (tenant_id, trip_id, subject, status, last_message_at)
+     VALUES ($1,$2,$3,'OPEN', now()) RETURNING id`,
+    [tenantId, opts.tripId ?? null, opts.subject ?? null]
+  );
+  const id = conv!.id;
+  await query(
+    `INSERT INTO conversation_participants (conversation_id, user_id, party_role)
+     VALUES ($1,$2,'MEMBER'),($1,$3,'MEMBER')`,
+    [id, meId, otherId]
+  );
+  await query(
+    `INSERT INTO chat_messages (tenant_id, conversation_id, sender_id, kind, body)
+     VALUES ($1,$2,NULL,'SYSTEM',$3)`,
+    [tenantId, id, "Gesprek gestart — overleg hier en leg afspraken vast."]
+  );
+  return id;
+}

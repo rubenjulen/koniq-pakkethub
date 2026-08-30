@@ -6,6 +6,7 @@ import { eur, dateNL } from "@/lib/format";
 import { Stars } from "@/components/Stars";
 import { AdSlot } from "@/components/AdSlot";
 import { getRoutes, getRequests } from "@/lib/market";
+import { startChatAction } from "../messages/actions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Marktplaats" };
@@ -104,6 +105,10 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                   </div>
                   <div className="mt-2 flex items-center gap-3 text-sm">
                     <Link href={`/app/u/${r.user_id}`} className="font-medium text-orange-600 hover:underline">{t.see_profile}</Link>
+                    <form action={startChatAction}>
+                      <input type="hidden" name="other_id" value={r.user_id} /><input type="hidden" name="trip_id" value={r.id} />
+                      <button className="font-medium text-orange-600 hover:underline">💬 {t.chat}</button>
+                    </form>
                   </div>
                 </div>
                 <div className="shrink-0 text-right">
@@ -131,6 +136,10 @@ export default async function MarketplacePage({ searchParams }: { searchParams: 
                   </div>
                   <div className="mt-2 flex items-center gap-3 text-sm">
                     <Link href={`/app/u/${s.user_id}`} className="font-medium text-orange-600 hover:underline">{t.see_profile}</Link>
+                    <form action={startChatAction}>
+                      <input type="hidden" name="other_id" value={s.user_id} />
+                      <button className="font-medium text-orange-600 hover:underline">💬 {t.chat}</button>
+                    </form>
                     {canBid && <Link href={`/app/marketplace/${s.id}`} className="font-medium text-orange-600 hover:underline">{t.react}</Link>}
                   </div>
                 </div>

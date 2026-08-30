@@ -82,11 +82,11 @@ export function ChatThread({
 
   useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
 
-  async function send() {
-    const body = text.trim();
+  async function send(override?: string) {
+    const body = (override ?? text).trim();
     if (!body || sending) return;
     setSending(true);
-    setText("");
+    if (!override) setText("");
     // Optimistisch tonen.
     const optimistic: Msg = {
       id: "tmp-" + Date.now(), sender_id: currentUserId, sender_name: "Jij", kind: "TEXT",
@@ -111,8 +111,24 @@ export function ChatThread({
     await refreshAll();
   }
 
+  // Laatste bevestigde afspraak als houvast bovenaan vastpinnen.
+  const pinned = [...messages].reverse().find((mm) => mm.agreement_status === "ACCEPTED" && mm.agreement_terms)?.agreement_terms ?? null;
+
   return (
     <div className="ph-card flex h-[70vh] flex-col">
+      {/* Vastgepinde afspraak (houvast) */}
+      {pinned && (
+        <div className="rounded-t-[14px] border-b border-orange-200 bg-orange-50 px-4 py-2 text-xs text-orange-800">
+          <div className="mb-0.5 font-semibold">📌 {t.agreement_pin}</div>
+          <div className="flex flex-wrap gap-x-4 gap-y-0.5">
+            {pinned.handover_place && <span>📍 {pinned.handover_place}</span>}
+            {pinned.handover_time && <span>🕒 {pinned.handover_time}</span>}
+            {pinned.price_eur != null && <span>💶 €{pinned.price_eur}</span>}
+            {pinned.note && <span className="opacity-80">{pinned.note}</span>}
+          </div>
+        </div>
+      )}
+
       {/* Berichten */}
       <div ref={scrollBox} className="ph-scroll flex-1 space-y-3 overflow-y-auto p-4">
         {messages.map((m) => {
@@ -159,6 +175,15 @@ export function ChatThread({
         <div className="border-t border-slate-100 p-3 text-center text-sm text-slate-400">{t.closed}</div>
       ) : (
         <div className="border-t border-slate-100 p-3">
+          {/* Handige standaardvragen (common practice) */}
+          {t.quick?.length > 0 && (
+            <div className="ph-scroll mb-2 flex gap-1.5 overflow-x-auto pb-1">
+              {t.quick.map((q, i) => (
+                <button key={i} onClick={() => send(q)} disabled={sending}
+                  className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600 hover:bg-slate-200 disabled:opacity-40">{q}</button>
+              ))}
+            </div>
+          )}
           <div className="flex items-end gap-2">
             <button onClick={() => setShowPropose((v) => !v)} title={t.propose}
               className="ph-btn ph-btn-ghost shrink-0 px-3">🤝</button>
@@ -170,7 +195,7 @@ export function ChatThread({
               placeholder={t.type_msg}
               className="max-h-32 flex-1 resize-none rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
             />
-            <button onClick={send} disabled={sending || !text.trim()} className="ph-btn ph-btn-primary shrink-0 disabled:opacity-40">{t.send}</button>
+            <button onClick={() => send()} disabled={sending || !text.trim()} className="ph-btn ph-btn-primary shrink-0 disabled:opacity-40">{t.send}</button>
           </div>
         </div>
       )}

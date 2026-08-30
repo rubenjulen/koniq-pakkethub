@@ -913,3 +913,6 @@ CREATE TABLE IF NOT EXISTS gifts (
   message      text,
   created_at   timestamptz NOT NULL DEFAULT now()
 );
+
+-- Directe gesprekken (reiziger ⇄ afzender) los van een zending, evt. over een route.
+ALTER TABLE conversations ADD COLUMN IF NOT EXISTS trip_id uuid REFERENCES trips(id) ON DELETE SET NULL;
