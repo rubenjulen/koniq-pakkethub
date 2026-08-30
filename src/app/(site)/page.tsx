@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { InstallAppButton } from "@/components/InstallAppButton";
 import { BoardingHero } from "@/components/BoardingHero";
+import { HeroVideo } from "@/components/HeroVideo";
 import { RouteSearch } from "@/components/RouteSearch";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { getMessages, getLocale } from "@/i18n";
@@ -46,7 +47,9 @@ export default async function HomePage() {
     <>
       {/* Hero: passagiers stappen bij schemering in het vliegtuig + route-zoek */}
       <section className="relative flex min-h-[92vh] w-full items-center overflow-hidden bg-[#2b2416] text-white">
+        {/* SVG-boarding-scène als directe fallback; video legt zich erover zodra hij speelt. */}
         <BoardingHero className="absolute inset-0 h-full w-full" />
+        <HeroVideo src="/media/hero.mp4" poster="/media/hero-poster.jpg" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1c160e]/95 via-[#1c160e]/55 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1c160e]/70 via-transparent to-transparent" />
         <div className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 py-20 lg:grid-cols-2 lg:items-center">
