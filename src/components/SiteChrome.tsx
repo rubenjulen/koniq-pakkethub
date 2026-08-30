@@ -8,10 +8,10 @@ import type { Messages } from "@/i18n/messages/nl";
 import type { Locale } from "@/i18n/config";
 
 export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
+  // Primaire nav: geen dubbele bestemmingen — "Verzenden" zit al in de CTA-knop rechts.
   const NAV: [string, string][] = [
     ["/ontdek", m.nav.discover],
     ["/hoe-het-werkt", m.nav.how_it_works],
-    ["/verzenden", m.nav.send],
     ["/prijzen", m.nav.pricing],
     ["/trust", m.nav.trust],
     ["/track", m.nav.track],
@@ -20,21 +20,24 @@ export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3">
         <Link href="/" className="shrink-0"><Logo /></Link>
-        <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+        <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
           {NAV.map(([href, label]) => (
-            <Link key={href} href={href} className="hover:text-orange-600">{label}</Link>
+            <Link key={href} href={href} className="whitespace-nowrap hover:text-orange-600">{label}</Link>
           ))}
         </nav>
-        <div className="flex items-center gap-1.5">
-          {/* Desktop: volledige set */}
-          <div className="hidden items-center gap-1.5 md:flex">
-            <ThemeToggle />
-            <LanguageSwitcher current={locale} />
+        <div className="flex items-center gap-2">
+          {/* Desktop: utility-cluster + scheiding + auth/CTA */}
+          <div className="hidden items-center gap-2 lg:flex">
+            <div className="flex items-center gap-0.5">
+              <ThemeToggle />
+              <LanguageSwitcher current={locale} />
+            </div>
+            <span aria-hidden className="mx-1 h-5 w-px bg-slate-200" />
             <Link href="/login" className="ph-btn ph-btn-ghost text-sm">{m.common.login}</Link>
             <Link href="/verzenden" className="ph-btn ph-btn-primary text-sm">{m.common.send_package}</Link>
           </div>
           {/* Mobiel: altijd zichtbare install-knop + hamburger */}
-          <InstallAppButton compact label={m.home.install_app} className="md:hidden" />
+          <InstallAppButton compact label={m.home.install_app} className="lg:hidden" />
           <MobileNav nav={NAV} login={m.common.login} send={m.common.send_package} installLabel={m.home.install_app} locale={locale} />
         </div>
       </div>

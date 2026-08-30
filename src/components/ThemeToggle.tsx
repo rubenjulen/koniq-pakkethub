@@ -8,7 +8,11 @@ function apply(theme: Theme) {
   document.documentElement.classList.toggle("dark", dark);
 }
 
-/** Thema-schakelaar: licht / donker / automatisch (systeem). Onthoudt de keuze in een cookie. */
+const ICON: Record<Theme, string> = { light: "☀️", dark: "🌙", system: "💻" };
+const NEXT: Record<Theme, Theme> = { light: "dark", dark: "system", system: "light" };
+const LABEL: Record<Theme, string> = { light: "Licht", dark: "Donker", system: "Auto" };
+
+/** Compacte thema-schakelaar: één knop die licht → donker → auto doorloopt. Onthoudt de keuze in een cookie. */
 export function ThemeToggle({ light = false }: { light?: boolean }) {
   const [theme, setTheme] = useState<Theme>("system");
 
@@ -16,42 +20,29 @@ export function ThemeToggle({ light = false }: { light?: boolean }) {
     const m = document.cookie.match(/(?:^|; )theme=([^;]+)/);
     const t = (m ? decodeURIComponent(m[1]) : "system") as Theme;
     setTheme(t);
-    // Volg systeemwijzigingen wanneer 'system' actief is.
     const mq = matchMedia("(prefers-color-scheme: dark)");
     const onChange = () => { if ((document.cookie.match(/(?:^|; )theme=([^;]+)/)?.[1] ?? "system") === "system") apply("system"); };
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  function choose(t: Theme) {
+  function cycle() {
+    const t = NEXT[theme];
     document.cookie = `theme=${t};path=/;max-age=${60 * 60 * 24 * 365};samesite=lax`;
     setTheme(t);
     apply(t);
   }
 
-  const options: [Theme, string, string][] = [
-    ["light", "☀️", "Licht"],
-    ["dark", "🌙", "Donker"],
-    ["system", "💻", "Auto"],
-  ];
-  const base = light ? "text-white/80" : "text-slate-500";
-
   return (
-    <div className={`inline-flex items-center gap-0.5 rounded-full border p-0.5 ${light ? "border-white/20" : "border-slate-200"}`}>
-      {options.map(([t, icon, label]) => (
-        <button
-          key={t}
-          onClick={() => choose(t)}
-          title={label}
-          aria-label={label}
-          aria-pressed={theme === t}
-          className={`flex h-7 w-7 items-center justify-center rounded-full text-xs transition ${
-            theme === t ? "bg-orange-500 text-white" : `${base} hover:opacity-100`
-          }`}
-        >
-          {icon}
-        </button>
-      ))}
-    </div>
+    <button
+      onClick={cycle}
+      title={`${LABEL[theme]} — klik voor ${LABEL[NEXT[theme]]}`}
+      aria-label={`Thema: ${LABEL[theme]}`}
+      className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm transition ${
+        light ? "text-white hover:bg-white/10" : "text-slate-600 hover:bg-slate-100"
+      }`}
+    >
+      {ICON[theme]}
+    </button>
   );
 }
