@@ -8,6 +8,7 @@ import { QuoteCalculator } from "@/components/QuoteCalculator";
 import { HomeAvailability } from "@/components/HomeAvailability";
 import { getMessages, getLocale } from "@/i18n";
 import { getTenantId, getCorridors, getCategoriesList } from "@/lib/tenant";
+import { getPublicRoutes, getPublicRequests } from "@/lib/market";
 import { query, queryOne } from "@/db/client";
 
 export const dynamic = "force-dynamic";
@@ -42,6 +43,9 @@ export default async function HomePage() {
     prohibited: c.prohibited, dangerous_goods: c.dangerous_goods,
     max_value_eur: c.max_value_eur != null ? parseFloat(String(c.max_value_eur)) : null,
   }));
+  // Publiek (anoniem) beschikbaar — voor het "Nu beschikbaar"-blok naast de check.
+  const [pubRoutes, pubRequests] = await Promise.all([getPublicRoutes(tenantId, 6), getPublicRequests(tenantId, 6)]);
+  const hasAvail = pubRoutes.length > 0 || pubRequests.length > 0;
 
   const MODES = [
     ["📦", h.mode1_t, h.mode1_d, "/verzenden"],
@@ -80,22 +84,22 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Gratis check — meteen uitproberen */}
-      <section className="mx-auto max-w-3xl px-4 py-16">
-        <div className="text-center">
-          <span className="ph-chip bg-orange-50 text-orange-700">{m.send.badge}</span>
-          <h2 className="mt-3 text-2xl font-bold text-slate-900">{h.check_title}</h2>
-          <p className="mx-auto mt-1 max-w-xl text-slate-500">{h.check_sub}</p>
-        </div>
-        <div className="mt-6">
-          <QuoteCalculator categories={categories} corridor={{ ...pilot, name: pilot.name }} t={m.send} eligLabels={m.elig} />
+      {/* Gratis check + Nu beschikbaar — naast elkaar, meteen uitproberen */}
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className={`grid gap-10 ${hasAvail ? "lg:grid-cols-2 lg:items-start" : ""}`}>
+          <div className={hasAvail ? "" : "mx-auto w-full max-w-3xl"}>
+            <div className={hasAvail ? "" : "text-center"}>
+              <span className="ph-chip bg-orange-50 text-orange-700">{m.send.badge}</span>
+              <h2 className="mt-3 text-2xl font-bold text-slate-900">{h.check_title}</h2>
+              <p className="mt-1 max-w-xl text-slate-500">{h.check_sub}</p>
+            </div>
+            <div className="mt-6">
+              <QuoteCalculator categories={categories} corridor={{ ...pilot, name: pilot.name }} t={m.send} eligLabels={m.elig} />
+            </div>
+          </div>
+          {hasAvail && <HomeAvailability routes={pubRoutes} requests={pubRequests} m={m} />}
         </div>
       </section>
-
-      {/* Beschikbaar nu — wie is er (anoniem) beschikbaar, klik door na login */}
-      <div className="bg-slate-50">
-        <HomeAvailability tenantId={tenantId} m={m} />
-      </div>
 
       {/* Service modes */}
       <section className="mx-auto max-w-6xl px-4 py-16">
