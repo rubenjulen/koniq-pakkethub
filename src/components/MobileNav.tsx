@@ -8,13 +8,14 @@ import type { Locale } from "@/i18n/config";
 
 /** Hamburgermenu voor smalle schermen: taal, thema, nav-links, login, verstuur, installeren. */
 export function MobileNav({
-  nav, login, send, installLabel, locale,
+  nav, login, send, installLabel, locale, discoverCount = 0,
 }: {
   nav: [string, string][];
   login: string;
   send: string;
   installLabel: string;
   locale: Locale;
+  discoverCount?: number;
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -38,8 +39,11 @@ export function MobileNav({
               </div>
               {nav.map(([href, label]) => (
                 <Link key={href} href={href} onClick={() => setOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
-                  {label}
+                  className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                  <span>{label}</span>
+                  {href === "/ontdek" && discoverCount > 0 && (
+                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1.5 text-[11px] font-semibold text-white">{discoverCount}</span>
+                  )}
                 </Link>
               ))}
               <div className="mt-2 grid grid-cols-2 gap-2">

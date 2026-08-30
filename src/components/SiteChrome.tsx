@@ -7,7 +7,7 @@ import { MobileNav } from "./MobileNav";
 import type { Messages } from "@/i18n/messages/nl";
 import type { Locale } from "@/i18n/config";
 
-export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
+export function SiteHeader({ m, locale, discoverCount = 0 }: { m: Messages; locale: Locale; discoverCount?: number }) {
   // Primaire nav: geen dubbele bestemmingen — "Verzenden" zit al in de CTA-knop rechts.
   const NAV: [string, string][] = [
     ["/ontdek", m.nav.discover],
@@ -22,7 +22,12 @@ export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
         <Link href="/" className="shrink-0"><Logo /></Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
           {NAV.map(([href, label]) => (
-            <Link key={href} href={href} className="whitespace-nowrap hover:text-orange-600">{label}</Link>
+            <Link key={href} href={href} className="inline-flex items-center gap-1.5 whitespace-nowrap hover:text-orange-600">
+              {label}
+              {href === "/ontdek" && discoverCount > 0 && (
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1.5 text-[11px] font-semibold text-white" title={m.ontdek.title}>{discoverCount}</span>
+              )}
+            </Link>
           ))}
         </nav>
         <div className="flex items-center gap-2">
@@ -38,7 +43,7 @@ export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
           </div>
           {/* Mobiel: altijd zichtbare install-knop + hamburger */}
           <InstallAppButton compact label={m.home.install_app} className="lg:hidden" />
-          <MobileNav nav={NAV} login={m.common.login} send={m.common.send_package} installLabel={m.home.install_app} locale={locale} />
+          <MobileNav nav={NAV} login={m.common.login} send={m.common.send_package} installLabel={m.home.install_app} locale={locale} discoverCount={discoverCount} />
         </div>
       </div>
     </header>

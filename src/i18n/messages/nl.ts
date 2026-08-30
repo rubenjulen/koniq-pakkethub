@@ -566,6 +566,7 @@ const nl = {
   },
   appnav: {
     overview: "Overzicht",
+    market_open: "Nu open op de marktplaats", market_open_short: "open",
     shipments: "Mijn zendingen",
     marketplace: "Marktplaats",
     trips: "Mijn ritten",

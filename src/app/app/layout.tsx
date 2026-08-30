@@ -39,6 +39,17 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   );
   const unreadNotif = notifRow[0]?.n ?? 0;
 
+  // Live teller: hoeveel routes + verzoeken staan er nu open op de marktplaats.
+  const marketRow = await query<{ n: number }>(
+    `SELECT ((SELECT count(*) FROM trips
+                WHERE tenant_id = $1 AND visible = true AND status = 'OPEN')
+           + (SELECT count(*) FROM shipments
+                WHERE tenant_id = $1 AND visible = true AND eligibility = 'ALLOW'
+                  AND status IN ('QUOTED','SCREENING','BOOKED')))::int AS n`,
+    [user.tenantId]
+  );
+  const marketOpen = marketRow[0]?.n ?? 0;
+
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr]">
       {/* Sidebar (desktop) */}
@@ -54,6 +65,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
               <span className="flex items-center gap-2"><span>{item.icon}</span>{A[item.key]}</span>
               {item.href === "/app/messages" && unread > 0 && (
                 <span className="ph-chip bg-orange-500 text-white">{unread}</span>
+              )}
+              {item.href === "/app/marketplace" && marketOpen > 0 && (
+                <span className="ph-chip bg-orange-100 font-semibold text-orange-700" title={A.market_open}>{marketOpen} {A.market_open_short}</span>
               )}
             </Link>
           ))}
@@ -104,6 +118,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                 {item.icon}
                 {item.href === "/app/messages" && unread > 0 && (
                   <span className="absolute -right-2 -top-1 h-4 min-w-4 rounded-full bg-orange-500 px-1 text-[9px] leading-4 text-white">{unread}</span>
+                )}
+                {item.href === "/app/marketplace" && marketOpen > 0 && (
+                  <span className="absolute -right-2 -top-1 h-4 min-w-4 rounded-full bg-orange-500 px-1 text-[9px] leading-4 text-white">{marketOpen}</span>
                 )}
               </span>
               {A[item.key].split(" ")[0]}

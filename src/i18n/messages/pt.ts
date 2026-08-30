@@ -568,6 +568,7 @@ const pt: Messages = {
   },
   appnav: {
     overview: "Visão geral",
+    market_open: "Aberto agora no mercado", market_open_short: "abertas",
     shipments: "Meus envios",
     marketplace: "Mercado",
     trips: "Minhas viagens",
