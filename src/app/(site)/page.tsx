@@ -4,8 +4,10 @@ import { BoardingHero } from "@/components/BoardingHero";
 import { HeroVideo } from "@/components/HeroVideo";
 import { RouteSearch } from "@/components/RouteSearch";
 import { VideoEmbed } from "@/components/VideoEmbed";
+import { QuoteCalculator } from "@/components/QuoteCalculator";
+import { HomeAvailability } from "@/components/HomeAvailability";
 import { getMessages, getLocale } from "@/i18n";
-import { getTenantId } from "@/lib/tenant";
+import { getTenantId, getCorridors, getCategoriesList } from "@/lib/tenant";
 import { query, queryOne } from "@/db/client";
 
 export const dynamic = "force-dynamic";
@@ -31,6 +33,15 @@ export default async function HomePage() {
   const videos = vrows.length
     ? vrows.map((v) => ({ id: v.yt as string, title: (v.title_i18n?.[locale] as string) || v.title }))
     : [{ id: "O_RucR2okRY", title: h.videos_title }, { id: "z2wXH9ZCQSM", title: h.videos_title }];
+
+  // Gratis check (QuoteCalculator): corridor-limieten + categorieën, zoals /verzenden.
+  const corridors = await getCorridors(tenantId);
+  const pilot = corridors.find((c) => c.status === "PILOT") ?? corridors[0];
+  const categories = (await getCategoriesList(tenantId)).map((c) => ({
+    code: c.code, name: c.name, traveler_eligible: c.traveler_eligible, requires_review: c.requires_review,
+    prohibited: c.prohibited, dangerous_goods: c.dangerous_goods,
+    max_value_eur: c.max_value_eur != null ? parseFloat(String(c.max_value_eur)) : null,
+  }));
 
   const MODES = [
     ["📦", h.mode1_t, h.mode1_d, "/verzenden"],
@@ -68,6 +79,23 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Gratis check — meteen uitproberen */}
+      <section className="mx-auto max-w-3xl px-4 py-16">
+        <div className="text-center">
+          <span className="ph-chip bg-orange-50 text-orange-700">{m.send.badge}</span>
+          <h2 className="mt-3 text-2xl font-bold text-slate-900">{h.check_title}</h2>
+          <p className="mx-auto mt-1 max-w-xl text-slate-500">{h.check_sub}</p>
+        </div>
+        <div className="mt-6">
+          <QuoteCalculator categories={categories} corridor={{ ...pilot, name: pilot.name }} t={m.send} eligLabels={m.elig} />
+        </div>
+      </section>
+
+      {/* Beschikbaar nu — wie is er (anoniem) beschikbaar, klik door na login */}
+      <div className="bg-slate-50">
+        <HomeAvailability tenantId={tenantId} m={m} />
+      </div>
 
       {/* Service modes */}
       <section className="mx-auto max-w-6xl px-4 py-16">

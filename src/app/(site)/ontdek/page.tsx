@@ -94,7 +94,7 @@ export default async function DiscoverPage() {
                     </div>
                     <div className="shrink-0 text-right">
                       <div className="font-bold text-slate-800">{r.price ? eur(r.price) : o.free}</div>
-                      <Link href="/login" className="mt-1 block text-xs font-medium text-orange-600 hover:underline">{o.contact}</Link>
+                      <Link href={`/login?next=/app/u/${r.user_id}`} className="mt-1 block text-xs font-medium text-orange-600 hover:underline">{o.contact}</Link>
                     </div>
                   </div>
                 ))}
@@ -126,7 +126,7 @@ export default async function DiscoverPage() {
                     </div>
                     <div className="shrink-0 text-right">
                       <div className="font-bold text-slate-800">{s.price ? eur(s.price) : o.free}</div>
-                      <Link href="/login" className="mt-1 block text-xs font-medium text-orange-600 hover:underline">{o.contact}</Link>
+                      <Link href={`/login?next=/app/u/${s.user_id}`} className="mt-1 block text-xs font-medium text-orange-600 hover:underline">{o.contact}</Link>
                     </div>
                   </div>
                 ))}

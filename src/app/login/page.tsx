@@ -10,18 +10,25 @@ import { getTenantId } from "@/lib/tenant";
 
 export const metadata = { title: "Inloggen" };
 
+// Alleen interne app-paden toestaan als redirect (geen open redirect).
+function safeNext(next?: string): string {
+  return next && /^\/app(\/|$)/.test(next) ? next : "/app";
+}
+
 async function doLogin(formData: FormData) {
   "use server";
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
+  const next = safeNext(String(formData.get("next") ?? ""));
   const res = await login(email, password);
-  if (res.ok) redirect("/app");
-  redirect(`/login?error=${encodeURIComponent(res.error)}`);
+  if (res.ok) redirect(next);
+  redirect(`/login?error=${encodeURIComponent(res.error)}${next !== "/app" ? `&next=${encodeURIComponent(next)}` : ""}`);
 }
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string; next?: string }> }) {
   if (await getSession()) redirect("/app");
-  const { error } = await searchParams;
+  const { error, next: nextRaw } = await searchParams;
+  const next = safeNext(nextRaw);
   const [m, locale, tenantId] = await Promise.all([getMessages(), getLocale(), getTenantId()]);
   const L = m.login;
 
@@ -62,6 +69,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             </div>
 
             <form action={doLogin} className="space-y-3">
+              <input type="hidden" name="next" value={next} />
               <div>
                 <label className="text-sm font-medium text-slate-700">{L.email}</label>
                 <input name="email" type="email" required defaultValue="sender@pakkethub.com"

@@ -79,7 +79,7 @@ const DISPLAY_NAME = `trim(u.first_name || ' ' || left(u.last_name, 1) || case w
 export async function getPublicRoutes(tenantId: string, limit = 24) {
   return query<any>(
     `SELECT t.id, t.depart_date, t.price_indication_eur::float8 AS price, t.package_size, t.short_info,
-            ${DISPLAY_NAME} AS display_name, (u.kyc_status='VERIFIED') AS verified, c.name AS corridor,
+            u.id AS user_id, ${DISPLAY_NAME} AS display_name, (u.kyc_status='VERIFIED') AS verified, c.name AS corridor,
             (SELECT round(avg(stars)::numeric,1)::float8 FROM ratings r WHERE r.ratee_id=u.id AND r.role='CARRIER') AS stars,
             (SELECT count(*)::int FROM ratings r WHERE r.ratee_id=u.id AND r.role='CARRIER') AS stars_n
        FROM trips t JOIN users u ON u.id=t.traveler_id JOIN corridors c ON c.id=t.corridor_id
@@ -93,7 +93,7 @@ export async function getPublicRoutes(tenantId: string, limit = 24) {
 export async function getPublicRequests(tenantId: string, limit = 24) {
   return query<any>(
     `SELECT s.id, s.deadline, s.declared_weight_kg::float8 AS kg, s.offered_price_eur::float8 AS price,
-            s.recipient_country, ${DISPLAY_NAME} AS display_name, (u.kyc_status='VERIFIED') AS verified, c.name AS corridor,
+            s.recipient_country, u.id AS user_id, ${DISPLAY_NAME} AS display_name, (u.kyc_status='VERIFIED') AS verified, c.name AS corridor,
             (SELECT round(avg(stars)::numeric,1)::float8 FROM ratings r WHERE r.ratee_id=u.id AND r.role='CLIENT') AS stars,
             (SELECT count(*)::int FROM ratings r WHERE r.ratee_id=u.id AND r.role='CLIENT') AS stars_n
        FROM shipments s JOIN users u ON u.id=s.sender_id JOIN corridors c ON c.id=s.corridor_id
