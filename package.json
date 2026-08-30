@@ -8,6 +8,7 @@
     "prebuild": "node scripts/gen-schema.mjs",
     "build": "next build",
     "start": "next start -p 3070",
+    "gen:icons": "node scripts/gen-icons.mjs",
     "gen:schema": "node scripts/gen-schema.mjs"
   },
   "dependencies": {
