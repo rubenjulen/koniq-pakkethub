@@ -16,7 +16,7 @@ const zh: Messages = {
     staging: "🚧 预览 — pakkethub.com 稍后启用。这是网站 + 应用的可用预览。",
   },
   nav: {
-    how_it_works: "如何运作", send: "寄送", pricing: "价格", trust: "信任中心", track: "追踪查询",
+    discover: "发现", how_it_works: "如何运作", send: "寄送", pricing: "价格", trust: "信任中心", track: "追踪查询",
   },
   footer: {
     ...en.footer,

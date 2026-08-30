@@ -418,7 +418,7 @@ export async function seedDatabase(db: DbAdapter) {
   // Reiziger een profiel + zichtbare route geven.
   await q(db, `UPDATE users SET bio=$2, city='Paramaribo', country='SR' WHERE id=$1`,
     [USER.TRAVELER, "Reis regelmatig NL ⇄ SR en neem graag kleine pakketten mee. Betrouwbaar en op tijd."]);
-  await q(db, `UPDATE trips SET visible=true, short_info=$2, long_info=$3, package_size='LARGE', price_indication_eur=15
+  await q(db, `UPDATE trips SET visible=true, public_listed=true, short_info=$2, long_info=$3, package_size='LARGE', price_indication_eur=15
                 WHERE traveler_id=$1`,
     [USER.TRAVELER, "Ruimte voor een klein pakket tot 3 kg.",
      "Ik vlieg met handbagage + ruimbagage. Kan een pakket tot 3 kg meenemen, graag open en aangegeven."]);
@@ -467,7 +467,7 @@ export async function seedDatabase(db: DbAdapter) {
                  VALUES ($1,$2,$3,'CLIENT',$4,$5)`, [T, rater, USER.SENDER, stars, comment]);
   }
   // Demo-verzoek zichtbaar maken op de marktplaats (afzender-kant).
-  await q(db, `UPDATE shipments SET visible=true, offered_price_eur=25,
+  await q(db, `UPDATE shipments SET visible=true, public_listed=true, offered_price_eur=25,
                  request_info=$2 WHERE id=$1`,
     [SHIPMENT, "Klein pakket kinderkleding + koffie, ca. 3,5 kg. Graag open en aangegeven."]);
 
@@ -480,9 +480,9 @@ export async function seedDatabase(db: DbAdapter) {
   for (const [tid, dep, size, price, info] of extraTrips) {
     await q(db,
       `INSERT INTO trips (tenant_id, traveler_id, corridor_id, depart_date, arrive_date, capacity_kg,
-                          price_indication_eur, package_size, visible, status, short_info)
+                          price_indication_eur, package_size, visible, public_listed, status, short_info)
        VALUES ($1,$2,$3, (current_date + ($4)::interval)::date, (current_date + ($4)::interval + interval '10 days')::date,
-               5, $5, $6, true, 'OPEN', $7)`,
+               5, $5, $6, true, true, 'OPEN', $7)`,
       [T, tid, CORRIDOR, dep, price, size, info]);
   }
   // Een paar carrier-ratings voor admin & ops zodat hun sterren zichtbaar zijn.

@@ -9,6 +9,7 @@ import type { Locale } from "@/i18n/config";
 
 export function SiteHeader({ m, locale }: { m: Messages; locale: Locale }) {
   const NAV: [string, string][] = [
+    ["/ontdek", m.nav.discover],
     ["/hoe-het-werkt", m.nav.how_it_works],
     ["/verzenden", m.nav.send],
     ["/prijzen", m.nav.pricing],

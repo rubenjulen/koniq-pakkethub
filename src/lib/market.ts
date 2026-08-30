@@ -67,3 +67,58 @@ export async function getRequests(tenantId: string, f: RequestFilters = {}) {
     params
   );
 }
+
+// ===========================================================================
+//  PUBLIEK (geanonimiseerd) — voor de website /ontdek, zonder login.
+//  Dataminimalisatie: voornaam + achternaam-initiaal, grove periode (maand),
+//  geen exacte datum, geen achternaam/adres/telefoon, geen verzoek-inhoud.
+// ===========================================================================
+const DISPLAY_NAME = `trim(u.first_name || ' ' || left(u.last_name, 1) || case when coalesce(u.last_name,'') <> '' then '.' else '' end)`;
+
+/** Publieke, anonieme routes (reizigers die ruimte aanbieden). */
+export async function getPublicRoutes(tenantId: string, limit = 24) {
+  return query<any>(
+    `SELECT t.id, t.depart_date, t.price_indication_eur::float8 AS price, t.package_size, t.short_info,
+            ${DISPLAY_NAME} AS display_name, (u.kyc_status='VERIFIED') AS verified, c.name AS corridor,
+            (SELECT round(avg(stars)::numeric,1)::float8 FROM ratings r WHERE r.ratee_id=u.id AND r.role='CARRIER') AS stars,
+            (SELECT count(*)::int FROM ratings r WHERE r.ratee_id=u.id AND r.role='CARRIER') AS stars_n
+       FROM trips t JOIN users u ON u.id=t.traveler_id JOIN corridors c ON c.id=t.corridor_id
+      WHERE t.tenant_id=$1 AND t.visible=true AND t.public_listed=true AND t.status='OPEN'
+      ORDER BY t.depart_date NULLS LAST, t.created_at DESC LIMIT ${Math.max(1, Math.min(60, limit))}`,
+    [tenantId]
+  );
+}
+
+/** Publieke, anonieme verzoeken (afzenders) — zónder inhoud/adres. */
+export async function getPublicRequests(tenantId: string, limit = 24) {
+  return query<any>(
+    `SELECT s.id, s.deadline, s.declared_weight_kg::float8 AS kg, s.offered_price_eur::float8 AS price,
+            s.recipient_country, ${DISPLAY_NAME} AS display_name, (u.kyc_status='VERIFIED') AS verified, c.name AS corridor,
+            (SELECT round(avg(stars)::numeric,1)::float8 FROM ratings r WHERE r.ratee_id=u.id AND r.role='CLIENT') AS stars,
+            (SELECT count(*)::int FROM ratings r WHERE r.ratee_id=u.id AND r.role='CLIENT') AS stars_n
+       FROM shipments s JOIN users u ON u.id=s.sender_id JOIN corridors c ON c.id=s.corridor_id
+      WHERE s.tenant_id=$1 AND s.visible=true AND s.public_listed=true AND s.eligibility='ALLOW'
+        AND s.status IN ('QUOTED','SCREENING','BOOKED')
+      ORDER BY s.deadline NULLS LAST, s.created_at DESC LIMIT ${Math.max(1, Math.min(60, limit))}`,
+    [tenantId]
+  );
+}
+
+/** Aggregaten per corridor + totalen — sociaal bewijs zonder persoonsgegevens. */
+export async function getPublicStats(tenantId: string) {
+  const rows = await query<any>(
+    `SELECT c.name AS corridor,
+            (SELECT count(*)::int FROM trips t WHERE t.corridor_id=c.id AND t.tenant_id=$1
+                AND t.visible=true AND t.public_listed=true AND t.status='OPEN') AS routes,
+            (SELECT count(*)::int FROM shipments s WHERE s.corridor_id=c.id AND s.tenant_id=$1
+                AND s.visible=true AND s.public_listed=true AND s.eligibility='ALLOW'
+                AND s.status IN ('QUOTED','SCREENING','BOOKED')) AS requests
+       FROM corridors c WHERE c.tenant_id=$1
+      ORDER BY c.name`,
+    [tenantId]
+  );
+  const corridors = rows.filter((r) => (r.routes ?? 0) + (r.requests ?? 0) > 0);
+  const totalRoutes = corridors.reduce((n, r) => n + (r.routes ?? 0), 0);
+  const totalRequests = corridors.reduce((n, r) => n + (r.requests ?? 0), 0);
+  return { corridors, totalRoutes, totalRequests };
+}

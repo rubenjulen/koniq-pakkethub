@@ -18,7 +18,7 @@ export default async function TripsPage({ searchParams }: { searchParams: Promis
   const trips = await query<any>(
     `SELECT t.id, t.depart_date, t.arrive_date, t.capacity_kg::float8 AS capacity_kg,
             t.price_indication_eur::float8 AS price, t.notes, t.status, c.name AS corridor,
-            t.visible, t.short_info, t.long_info, t.package_size
+            t.visible, t.public_listed, t.short_info, t.long_info, t.package_size
        FROM trips t JOIN corridors c ON c.id=t.corridor_id
       WHERE t.tenant_id=$1 AND t.traveler_id=$2 ORDER BY t.depart_date DESC`,
     [user.tenantId, user.id]
@@ -79,6 +79,10 @@ export default async function TripsPage({ searchParams }: { searchParams: Promis
                   <label className="block sm:col-span-2"><span className="text-xs text-slate-500">{p.pub_short}</span><input name="short_info" maxLength={200} defaultValue={t.short_info ?? ""} className={inp} /></label>
                   <label className="block sm:col-span-2"><span className="text-xs text-slate-500">{p.pub_long}</span><textarea name="long_info" rows={2} defaultValue={t.long_info ?? ""} className={inp} /></label>
                   <label className="flex items-center gap-2 text-sm sm:col-span-2"><input type="checkbox" name="visible" defaultChecked={t.visible} /> {p.pub_visible}</label>
+                  <label className="flex items-start gap-2 text-sm sm:col-span-2">
+                    <input type="checkbox" name="public_listed" defaultChecked={t.public_listed} className="mt-0.5" />
+                    <span>{p.pub_public}<span className="block text-xs text-slate-500">{p.pub_public_hint}</span></span>
+                  </label>
                   <div className="sm:col-span-2"><button className="ph-btn ph-btn-primary text-sm">{p.pub_route_save}</button></div>
                 </form>
               </details>

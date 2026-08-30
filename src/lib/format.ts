@@ -10,6 +10,14 @@ export function dateNL(d: string | Date | null | undefined): string {
   return new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: "short", year: "numeric" }).format(date);
 }
 
+/** Grove periode (maand + jaar) — voor publieke, geanonimiseerde weergave. */
+export function monthNL(d: string | Date | null | undefined): string {
+  if (!d) return "—";
+  const date = typeof d === "string" ? new Date(d) : d;
+  if (isNaN(date.getTime())) return "—";
+  return new Intl.DateTimeFormat("nl-NL", { month: "long", year: "numeric" }).format(date);
+}
+
 export function dateTimeNL(d: string | Date | null | undefined): string {
   if (!d) return "—";
   const date = typeof d === "string" ? new Date(d) : d;

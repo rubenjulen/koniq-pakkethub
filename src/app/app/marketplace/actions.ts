@@ -79,14 +79,16 @@ export async function publishRouteAction(formData: FormData) {
   const tenantId = user.tenantId;
   const tripId = String(formData.get("trip_id") ?? "");
   const visible = formData.get("visible") === "on" || formData.get("visible") === "1";
+  // Publiek (anoniem op de website) impliceert zichtbaar-voor-leden.
+  const publicListed = visible && (formData.get("public_listed") === "on" || formData.get("public_listed") === "1");
   const price = parseFloat(String(formData.get("price_eur") ?? ""));
   const size = String(formData.get("package_size") ?? "MEDIUM");
   const shortInfo = String(formData.get("short_info") ?? "").trim() || null;
   const longInfo = String(formData.get("long_info") ?? "").trim() || null;
   await query(
-    `UPDATE trips SET visible=$1, price_indication_eur=$2, package_size=$3, short_info=$4, long_info=$5
-      WHERE id=$6 AND tenant_id=$7 AND traveler_id=$8`,
-    [visible, Number.isFinite(price) ? price : null, size, shortInfo, longInfo, tripId, tenantId, user.id]
+    `UPDATE trips SET visible=$1, public_listed=$2, price_indication_eur=$3, package_size=$4, short_info=$5, long_info=$6
+      WHERE id=$7 AND tenant_id=$8 AND traveler_id=$9`,
+    [visible, publicListed, Number.isFinite(price) ? price : null, size, shortInfo, longInfo, tripId, tenantId, user.id]
   );
   await audit({ tenantId, userId: user.id, action: "ROUTE_PUBLISH", entityType: "trip", entityId: tripId, summary: visible ? "zichtbaar" : "verborgen" });
   redirect("/app/trips?ok=1");
@@ -98,12 +100,13 @@ export async function publishRequestAction(formData: FormData) {
   const tenantId = user.tenantId;
   const shipmentId = String(formData.get("shipment_id") ?? "");
   const visible = formData.get("visible") === "on" || formData.get("visible") === "1";
+  const publicListed = visible && (formData.get("public_listed") === "on" || formData.get("public_listed") === "1");
   const price = parseFloat(String(formData.get("offered_price_eur") ?? ""));
   const info = String(formData.get("request_info") ?? "").trim() || null;
   await query(
-    `UPDATE shipments SET visible=$1, offered_price_eur=$2, request_info=$3
-      WHERE id=$4 AND tenant_id=$5 AND sender_id=$6`,
-    [visible, Number.isFinite(price) ? price : null, info, shipmentId, tenantId, user.id]
+    `UPDATE shipments SET visible=$1, public_listed=$2, offered_price_eur=$3, request_info=$4
+      WHERE id=$5 AND tenant_id=$6 AND sender_id=$7`,
+    [visible, publicListed, Number.isFinite(price) ? price : null, info, shipmentId, tenantId, user.id]
   );
   await audit({ tenantId, userId: user.id, action: "REQUEST_PUBLISH", entityType: "shipment", entityId: shipmentId, summary: visible ? "zichtbaar" : "verborgen" });
   redirect(`/app/shipments/${shipmentId}?ok=1`);

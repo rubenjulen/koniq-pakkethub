@@ -947,3 +947,11 @@ CREATE TABLE IF NOT EXISTS reports (
   created_at    timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS reports_status_idx ON reports(tenant_id, status);
+
+-- =============================================================================
+--  v0.8 — Publieke (geanonimiseerde) ontdek-pagina op de website
+--  Aparte opt-in naast `visible`: `visible` = zichtbaar voor ingelogde leden,
+--  `public_listed` = óók anoniem tonen op de publieke website (geen login).
+-- =============================================================================
+ALTER TABLE trips     ADD COLUMN IF NOT EXISTS public_listed boolean NOT NULL DEFAULT false;
+ALTER TABLE shipments ADD COLUMN IF NOT EXISTS public_listed boolean NOT NULL DEFAULT false;
