@@ -106,6 +106,7 @@ const en: Messages = {
     avail_request: "Request",
     avail_view: "Profile & reviews",
     avail_privacy: "Shown anonymously — full name, exact date and contact appear after you log in.",
+    live_open: "open now →",
   },
   login: {
     title: "Log in",

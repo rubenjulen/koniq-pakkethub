@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 const BYPASS = [
   "/gate",
   "/api/gate",
+  "/embed",         // publieke insluitbare widget (voor externe sites)
   "/api/v1",        // publieke API: eigen Bearer-auth
   "/manifest.webmanifest",
   "/robots.txt",

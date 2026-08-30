@@ -8,7 +8,7 @@ import { QuoteCalculator } from "@/components/QuoteCalculator";
 import { HomeAvailability } from "@/components/HomeAvailability";
 import { getMessages, getLocale } from "@/i18n";
 import { getTenantId, getCorridors, getCategoriesList } from "@/lib/tenant";
-import { getPublicRoutes, getPublicRequests } from "@/lib/market";
+import { getPublicRoutes, getPublicRequests, getPublicStats } from "@/lib/market";
 import { query, queryOne } from "@/db/client";
 
 export const dynamic = "force-dynamic";
@@ -44,7 +44,9 @@ export default async function HomePage() {
     max_value_eur: c.max_value_eur != null ? parseFloat(String(c.max_value_eur)) : null,
   }));
   // Publiek (anoniem) beschikbaar — voor het "Nu beschikbaar"-blok naast de check.
-  const [pubRoutes, pubRequests] = await Promise.all([getPublicRoutes(tenantId, 6), getPublicRequests(tenantId, 6)]);
+  const [pubRoutes, pubRequests, pubStats] = await Promise.all([
+    getPublicRoutes(tenantId, 6), getPublicRequests(tenantId, 6), getPublicStats(tenantId),
+  ]);
   const hasAvail = pubRoutes.length > 0 || pubRequests.length > 0;
 
   const MODES = [
@@ -75,6 +77,18 @@ export default async function HomePage() {
             </h1>
             <p className="mt-3 text-lg font-semibold text-orange-300">{h.h2_sub.replace("{n}", String(routeCount))}</p>
             <p className="mt-3 max-w-lg text-base text-slate-200">{h.origin_line}</p>
+            {(pubStats.totalRoutes + pubStats.totalRequests) > 0 && (
+              <Link href="/ontdek" className="mt-5 inline-flex items-center gap-2.5 rounded-full bg-white/12 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/25 backdrop-blur transition hover:bg-white/20 [text-shadow:none]">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75 motion-reduce:hidden"></span>
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-orange-400"></span>
+                </span>
+                <span>🧳 {pubStats.totalRoutes} {m.ontdek.chip_routes}</span>
+                <span className="text-white/40">·</span>
+                <span>📦 {pubStats.totalRequests} {m.ontdek.chip_requests}</span>
+                <span className="font-semibold text-orange-200">{h.live_open}</span>
+              </Link>
+            )}
             <div className="mt-6 [text-shadow:none]"><InstallAppButton label={h.install_app} /></div>
           </div>
           <div className="[text-shadow:none]">

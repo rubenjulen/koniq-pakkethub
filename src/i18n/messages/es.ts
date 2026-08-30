@@ -107,6 +107,7 @@ const es: Messages = {
     avail_request: "Solicitud",
     avail_view: "Perfil y valoraciones",
     avail_privacy: "Mostrado de forma anónima — el nombre completo, la fecha exacta y el contacto aparecen tras iniciar sesión.",
+    live_open: "abiertas ahora →",
   },
   login: {
     title: "Iniciar sesión",

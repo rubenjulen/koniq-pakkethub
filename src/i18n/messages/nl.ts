@@ -105,6 +105,7 @@ const nl = {
     avail_request: "Verzoek",
     avail_view: "Profiel & reviews",
     avail_privacy: "Anoniem weergegeven — volledige naam, exacte datum en contact zie je na inloggen.",
+    live_open: "nu open →",
   },
   login: {
     title: "Inloggen",

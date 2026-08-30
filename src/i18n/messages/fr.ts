@@ -107,6 +107,7 @@ const fr: Messages = {
     avail_request: "Demande",
     avail_view: "Profil & avis",
     avail_privacy: "Affiché de façon anonyme — nom complet, date exacte et contact apparaissent après connexion.",
+    live_open: "ouvertes →",
   },
   login: {
     title: "Se connecter",
