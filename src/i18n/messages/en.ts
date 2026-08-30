@@ -515,7 +515,7 @@ const en: Messages = {
   appnav: {
     overview: "Overview",
     shipments: "My shipments",
-    marketplace: "Trips & offers",
+    marketplace: "Marketplace",
     trips: "My trips",
     messages: "Messages",
     wallet: "Wallet & payments",

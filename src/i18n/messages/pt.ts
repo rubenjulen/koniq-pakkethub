@@ -516,7 +516,7 @@ const pt: Messages = {
   appnav: {
     overview: "Visão geral",
     shipments: "Meus envios",
-    marketplace: "Viagens e ofertas",
+    marketplace: "Mercado",
     trips: "Minhas viagens",
     messages: "Mensagens",
     wallet: "Carteira e pagamentos",

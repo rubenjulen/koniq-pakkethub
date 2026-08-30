@@ -514,7 +514,7 @@ const nl = {
   appnav: {
     overview: "Overzicht",
     shipments: "Mijn zendingen",
-    marketplace: "Ritten & aanbod",
+    marketplace: "Marktplaats",
     trips: "Mijn ritten",
     messages: "Berichten",
     wallet: "Wallet & betalingen",
