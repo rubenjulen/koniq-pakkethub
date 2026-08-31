@@ -67,3 +67,12 @@ export async function resolveReportAction(formData: FormData) {
   await audit({ tenantId: user.tenantId, userId: user.id, action: "REPORT_RESOLVE", entityType: "report", entityId: id, summary: to });
   redirect("/app/control");
 }
+
+/** Testfeedback afhandelen (markeren als afgehandeld). */
+export async function resolveFeedbackAction(formData: FormData) {
+  const user = await requireCapability("control.view");
+  const id = String(formData.get("feedback_id") ?? "");
+  await query(`UPDATE feedback SET status='DONE' WHERE id=$1 AND tenant_id=$2`, [id, user.tenantId]);
+  await audit({ tenantId: user.tenantId, userId: user.id, action: "FEEDBACK_DONE", entityType: "feedback", entityId: id, summary: "afgehandeld" });
+  redirect("/app/control");
+}

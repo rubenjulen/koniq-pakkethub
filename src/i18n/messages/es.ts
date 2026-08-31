@@ -410,6 +410,7 @@ const es: Messages = {
     blocked: "🔴 Bloqueado — reabrir", block: "Bloquear",
     audit: "Auditoría", audit_sub: "Últimos eventos",
     reports: "Reportes", reports_sub: "Miembros reportados — revisa y resuelve", no_reports: "No hay reportes abiertos.", report_reviewed: "Revisado", report_dismiss: "Descartar", reported_by: "reportado por",
+    feedback: "Comentarios de prueba", feedback_sub: "Lo que envían los testers — revisa y resuelve", no_feedback: "Aún no hay comentarios.", fb_done: "Resolver",
   },
   dash: {
     hello: "Hola", install_as_app: "Instalar como app",
@@ -566,6 +567,12 @@ const es: Messages = {
     action: "Reportar", title: "Reportar a este miembro", sub: "Los reportes van al equipo de BugaWuga.",
     reason: "Motivo", r_spam: "Spam", r_fraud: "Fraude", r_unsafe: "Inseguro", r_offensive: "Ofensivo", r_other: "Otro",
     note: "Nota (opcional)", submit: "Enviar reporte", done: "Gracias, revisaremos tu reporte.",
+  },
+  fb: {
+    button: "Comentarios", title: "Comentarios de la prueba", sub: "¿Qué te llamó la atención? Lo reunimos todo en un sitio.",
+    cat_label: "Tipo", cat_bug: "Error", cat_idea: "Idea", cat_question: "Pregunta", cat_other: "Otro",
+    placeholder: "¿Qué no funcionó o qué se puede mejorar? Sé específico si quieres.",
+    send: "Enviar", sent: "¡Gracias! Tu comentario se guardó.", whatsapp: "O por WhatsApp", close: "Cerrar",
   },
   appnav: {
     overview: "Resumen",

@@ -955,3 +955,18 @@ CREATE INDEX IF NOT EXISTS reports_status_idx ON reports(tenant_id, status);
 -- =============================================================================
 ALTER TABLE trips     ADD COLUMN IF NOT EXISTS public_listed boolean NOT NULL DEFAULT false;
 ALTER TABLE shipments ADD COLUMN IF NOT EXISTS public_listed boolean NOT NULL DEFAULT false;
+
+-- =============================================================================
+--  v0.9 — Testfeedback (in-app verzamelen tijdens de testfase)
+-- =============================================================================
+CREATE TABLE IF NOT EXISTS feedback (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id  uuid NOT NULL REFERENCES tenants(id),
+  user_id    uuid REFERENCES users(id) ON DELETE SET NULL,
+  page       text,                                   -- pad waar het is ingestuurd
+  category   text NOT NULL DEFAULT 'OTHER',          -- BUG|IDEA|QUESTION|OTHER
+  message    text NOT NULL,
+  status     text NOT NULL DEFAULT 'NEW',            -- NEW|SEEN|DONE
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS feedback_status_idx ON feedback(tenant_id, status, created_at DESC);

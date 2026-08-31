@@ -408,6 +408,7 @@ const nl = {
     blocked: "🔴 Geblokkeerd — heropen", block: "Blokkeer",
     audit: "Audit", audit_sub: "Laatste gebeurtenissen",
     reports: "Meldingen", reports_sub: "Gerapporteerde leden — beoordeel en handel af", no_reports: "Geen open meldingen.", report_reviewed: "Behandeld", report_dismiss: "Afwijzen", reported_by: "gemeld door",
+    feedback: "Testfeedback", feedback_sub: "Wat testers insturen — bekijk en handel af", no_feedback: "Nog geen feedback.", fb_done: "Afgehandeld",
   },
   dash: {
     hello: "Hallo", install_as_app: "Installeer als app",
@@ -564,6 +565,12 @@ const nl = {
     action: "Melden", title: "Dit lid melden", sub: "Meldingen gaan naar het BugaWuga-team.",
     reason: "Reden", r_spam: "Spam", r_fraud: "Oplichting", r_unsafe: "Onveilig", r_offensive: "Ongepast", r_other: "Anders",
     note: "Toelichting (optioneel)", submit: "Melding versturen", done: "Bedankt, we bekijken je melding.",
+  },
+  fb: {
+    button: "Feedback", title: "Feedback op de test", sub: "Wat viel je op? We verzamelen het gebundeld.",
+    cat_label: "Soort", cat_bug: "Bug / fout", cat_idea: "Idee", cat_question: "Vraag", cat_other: "Anders",
+    placeholder: "Wat werkte niet, of wat kan beter? Wees gerust specifiek.",
+    send: "Versturen", sent: "Bedankt! Je feedback is opgeslagen.", whatsapp: "Of via WhatsApp", close: "Sluiten",
   },
   appnav: {
     overview: "Overzicht",

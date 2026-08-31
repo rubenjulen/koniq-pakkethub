@@ -3,7 +3,7 @@ import { requireCapability } from "@/lib/auth";
 import { query } from "@/db/client";
 import { StatCard, EligibilityBadge, EmptyState, SectionTitle, Chip } from "@/components/ui";
 import { timeAgo } from "@/lib/format";
-import { toggleKillSwitchAction, resolveReportAction } from "./actions";
+import { toggleKillSwitchAction, resolveReportAction, resolveFeedbackAction } from "./actions";
 import { getMessages } from "@/i18n";
 
 export const metadata = { title: "Control Center" };
@@ -43,6 +43,11 @@ export default async function ControlCenter() {
        JOIN users ru ON ru.id = r.reporter_id
        LEFT JOIN users tu ON tu.id = r.target_id
       WHERE r.tenant_id=$1 AND r.status='OPEN' ORDER BY r.created_at DESC LIMIT 20`, [t]
+  );
+  const feedback = await query<any>(
+    `SELECT f.id, f.category, f.message, f.page, f.created_at, u.name AS user_name
+       FROM feedback f LEFT JOIN users u ON u.id = f.user_id
+      WHERE f.tenant_id=$1 AND f.status <> 'DONE' ORDER BY f.created_at DESC LIMIT 30`, [t]
   );
 
   return (
@@ -119,6 +124,32 @@ export default async function ControlCenter() {
                       <form action={resolveReportAction}><input type="hidden" name="report_id" value={r.id} /><input type="hidden" name="to" value="REVIEWED" /><button className="ph-btn ph-btn-ghost text-xs">{C.report_reviewed}</button></form>
                       <form action={resolveReportAction}><input type="hidden" name="report_id" value={r.id} /><input type="hidden" name="to" value="DISMISSED" /><button className="text-xs text-slate-400 hover:underline">{C.report_dismiss}</button></form>
                     </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section>
+            <SectionTitle sub={C.feedback_sub}>💬 {C.feedback}{feedback.length > 0 ? ` (${feedback.length})` : ""}</SectionTitle>
+            {feedback.length === 0 ? (
+              <p className="text-sm text-slate-400">{C.no_feedback}</p>
+            ) : (
+              <div className="ph-card divide-y divide-slate-100 text-sm">
+                {feedback.map((f) => (
+                  <div key={f.id} className="p-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <Chip tone={f.category === "BUG" ? "bad" : f.category === "IDEA" ? "ok" : "neutral"}>
+                        {(m.fb as Record<string, string>)[`cat_${f.category.toLowerCase()}`] ?? f.category}
+                      </Chip>
+                      <span className="text-xs text-slate-400">{timeAgo(f.created_at)}</span>
+                    </div>
+                    <div className="mt-1 whitespace-pre-wrap text-slate-700">{f.message}</div>
+                    <div className="mt-1 text-xs text-slate-400">{f.user_name ?? "—"}{f.page ? ` · ${f.page}` : ""}</div>
+                    <form action={resolveFeedbackAction} className="mt-2">
+                      <input type="hidden" name="feedback_id" value={f.id} />
+                      <button className="ph-btn ph-btn-ghost text-xs">{C.fb_done}</button>
+                    </form>
                   </div>
                 ))}
               </div>

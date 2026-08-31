@@ -409,6 +409,7 @@ const en: Messages = {
     blocked: "🔴 Blocked — reopen", block: "Block",
     audit: "Audit", audit_sub: "Latest events",
     reports: "Reports", reports_sub: "Reported members — review and resolve", no_reports: "No open reports.", report_reviewed: "Reviewed", report_dismiss: "Dismiss", reported_by: "reported by",
+    feedback: "Test feedback", feedback_sub: "What testers send in — review and resolve", no_feedback: "No feedback yet.", fb_done: "Resolve",
   },
   dash: {
     hello: "Hi", install_as_app: "Install as app",
@@ -565,6 +566,12 @@ const en: Messages = {
     action: "Report", title: "Report this member", sub: "Reports go to the BugaWuga team.",
     reason: "Reason", r_spam: "Spam", r_fraud: "Fraud", r_unsafe: "Unsafe", r_offensive: "Offensive", r_other: "Other",
     note: "Note (optional)", submit: "Submit report", done: "Thanks, we'll review your report.",
+  },
+  fb: {
+    button: "Feedback", title: "Feedback on the test", sub: "What stood out? We collect it all in one place.",
+    cat_label: "Type", cat_bug: "Bug / error", cat_idea: "Idea", cat_question: "Question", cat_other: "Other",
+    placeholder: "What didn't work, or what could be better? Feel free to be specific.",
+    send: "Send", sent: "Thanks! Your feedback was saved.", whatsapp: "Or via WhatsApp", close: "Close",
   },
   appnav: {
     overview: "Overview",

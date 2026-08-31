@@ -410,6 +410,7 @@ const fr: Messages = {
     blocked: "🔴 Bloqué — rouvrir", block: "Bloquer",
     audit: "Audit", audit_sub: "Derniers événements",
     reports: "Signalements", reports_sub: "Membres signalés — examinez et résolvez", no_reports: "Aucun signalement ouvert.", report_reviewed: "Examiné", report_dismiss: "Rejeter", reported_by: "signalé par",
+    feedback: "Retours de test", feedback_sub: "Ce que les testeurs envoient — examinez et résolvez", no_feedback: "Pas encore de retours.", fb_done: "Résoudre",
   },
   dash: {
     hello: "Bonjour", install_as_app: "Installer comme app",
@@ -566,6 +567,12 @@ const fr: Messages = {
     action: "Signaler", title: "Signaler ce membre", sub: "Les signalements vont à l'équipe BugaWuga.",
     reason: "Motif", r_spam: "Spam", r_fraud: "Fraude", r_unsafe: "Dangereux", r_offensive: "Offensant", r_other: "Autre",
     note: "Note (facultatif)", submit: "Envoyer le signalement", done: "Merci, nous examinerons votre signalement.",
+  },
+  fb: {
+    button: "Retour", title: "Retour sur le test", sub: "Qu'avez-vous remarqué ? On rassemble tout au même endroit.",
+    cat_label: "Type", cat_bug: "Bug / erreur", cat_idea: "Idée", cat_question: "Question", cat_other: "Autre",
+    placeholder: "Qu'est-ce qui n'a pas marché, ou peut être amélioré ? Soyez précis si besoin.",
+    send: "Envoyer", sent: "Merci ! Votre retour a été enregistré.", whatsapp: "Ou via WhatsApp", close: "Fermer",
   },
   appnav: {
     overview: "Aperçu",

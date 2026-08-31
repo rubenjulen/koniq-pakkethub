@@ -31,6 +31,7 @@ const HUB = {
 };
 
 const SHIPMENT = "14000000-0000-0000-0000-0000000000d1";
+const SHIPMENT2 = "14000000-0000-0000-0000-0000000000d2"; // demo: al onderweg (READY)
 const TRIP = "15000000-0000-0000-0000-0000000000e1";
 const CONV = "16000000-0000-0000-0000-0000000000f1";
 
@@ -470,6 +471,52 @@ export async function seedDatabase(db: DbAdapter) {
   await q(db, `UPDATE shipments SET visible=true, public_listed=true, offered_price_eur=25,
                  request_info=$2 WHERE id=$1`,
     [SHIPMENT, "Klein pakket kinderkleding + koffie, ca. 3,5 kg. Graag open en aangegeven."]);
+
+  // ---- Demo: een tweede zending die al ONDERWEG is (status READY) ----------
+  //  Zo zien testers de statusstappen/custody-tijdlijn en kunnen ze de
+  //  levering bevestigen met de ontvangstcode (zichtbaar bij de afzender).
+  await q(db,
+    `INSERT INTO shipments (id, tenant_id, reference, sender_id, corridor_id, service_mode,
+        recipient_name, recipient_phone, recipient_city, recipient_country,
+        declared_weight_kg, length_cm, width_cm, height_cm, is_sealed_closed, deadline,
+        pickup_choice, notes, status, eligibility, total_declared_value_eur, receipt_code)
+     VALUES ($1,$2,'PH-2026-000102',$3,$4,'CROWDSHIP',
+        'M. Overtoom','+597700099887','Paramaribo','SR',
+        2.0, 30, 20, 15, false, current_date + interval '4 days',
+        'HUB_DROPOFF','Boeken en een klein cadeau.', 'READY','ALLOW', 90, '834217')`,
+    [SHIPMENT2, T, USER.SENDER, CORRIDOR]);
+  await q(db,
+    `INSERT INTO shipment_items (tenant_id, shipment_id, description, quantity, unit_value, currency, origin_country, category_code)
+     VALUES ($1,$2,'Twee boeken',2,20,'EUR','NL','BOOKS'),
+            ($1,$2,'Ingepakt cadeau (open)',1,50,'EUR','NL','GIFT')`,
+    [T, SHIPMENT2]);
+  await q(db,
+    `INSERT INTO eligibility_decisions (tenant_id, shipment_id, decision, reasons, rule_version, decided_by)
+     VALUES ($1,$2,'ALLOW',$3,'v1',null)`,
+    [T, SHIPMENT2, JSON.stringify(["Alle items toegestaan.", "Waarde €90 ≤ corridorlimiet.", "Open, aangegeven pakket."])]);
+  const custody2: [number, string, string | null, string | null][] = [
+    [1, "CREATED", USER.SENDER, "Zending aangemaakt door afzender."],
+    [2, "SCREENED", null, "Automatische eligibility: ALLOW."],
+    [3, "HANDOVER", USER.SENDER, "Bod geaccepteerd (€18). Betaling vastgehouden tot levering."],
+    [4, "SEALED", USER.OPS, "Inspectie geslaagd, verzegeld (zegel SR-8842)."],
+    [5, "IN_CUSTODY", USER.TRAVELER, "Overgedragen aan reiziger."],
+    [6, "DEPARTED", USER.TRAVELER, "Vertrokken vanaf AMS."],
+    [7, "ARRIVED", USER.TRAVELER, "Aangekomen — klaar voor aflevering. Ontvangstcode gedeeld met afzender."],
+  ];
+  for (const [seq, type, actor, note] of custody2) {
+    await q(db,
+      `INSERT INTO custody_events (tenant_id, shipment_id, seq, event_type, actor_id, notes)
+       VALUES ($1,$2,$3,$4,$5,$6)`, [T, SHIPMENT2, seq, type, actor, note]);
+  }
+  const offer2 = await q(db,
+    `INSERT INTO offers (tenant_id, shipment_id, trip_id, traveler_id, price_eur, message, status)
+     VALUES ($1,$2,$3,$4, 18.00, 'Neem ik mee, kom op tijd aan.', 'ACCEPTED') RETURNING id`,
+    [T, SHIPMENT2, TRIP, USER.TRAVELER]);
+  const offer2Id = (offer2 as any).rows?.[0]?.id ?? (offer2 as any)[0]?.id;
+  await q(db,
+    `INSERT INTO bookings (tenant_id, shipment_id, offer_id, traveler_id, agreed_price_eur, payout_status)
+     VALUES ($1,$2,$3,$4,18.00,'HELD')`,
+    [T, SHIPMENT2, offer2Id, USER.TRAVELER]);
 
   // Extra zichtbare routes (reizigers) van andere leden, met korte info + prijs.
   const extraTrips: [string, string, string, number, string, string][] = [
