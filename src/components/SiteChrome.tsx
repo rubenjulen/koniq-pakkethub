@@ -38,8 +38,8 @@ export function SiteHeader({ m, locale, discoverCount = 0 }: { m: Messages; loca
               <LanguageSwitcher current={locale} />
             </div>
             <span aria-hidden className="mx-1 h-5 w-px bg-slate-200" />
-            <Link href="/login" className="ph-btn ph-btn-ghost text-sm">{m.common.login}</Link>
-            <Link href="/verzenden" className="ph-btn ph-btn-primary text-sm">{m.common.send_package}</Link>
+            <Link href="/login" data-ev="cta_login" className="ph-btn ph-btn-ghost text-sm">{m.common.login}</Link>
+            <Link href="/verzenden" data-ev="cta_send" className="ph-btn ph-btn-primary text-sm">{m.common.send_package}</Link>
           </div>
           {/* Mobiel: altijd zichtbare install-knop + hamburger */}
           <InstallAppButton compact label={m.home.install_app} className="lg:hidden" />

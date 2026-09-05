@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { LOCALES, LOCALE_META, type Locale } from "@/i18n/config";
+import { track } from "@/lib/track";
 
 /** Taalwisselaar: zet de 'locale'-cookie en ververst de pagina (server-rendered vertaling). */
 export function LanguageSwitcher({ current, light = false }: { current: Locale; light?: boolean }) {
@@ -17,6 +18,7 @@ export function LanguageSwitcher({ current, light = false }: { current: Locale; 
 
   function choose(l: Locale) {
     document.cookie = `locale=${l};path=/;max-age=${60 * 60 * 24 * 365};samesite=lax`;
+    track("lang_switch", { to: l });
     setOpen(false);
     router.refresh();
   }

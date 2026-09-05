@@ -90,10 +90,13 @@ worden geen echte berichten verstuurd.
 1. Log in als **admin@**.
 2. **Control Center** → onderaan **💬 Testfeedback**: hier komt alle ingestuurde feedback binnen,
    met gebruiker + pagina; je kunt items **afhandelen**. Ook de **🚩 Meldingen** staan hier.
-3. **Analytics**: bekijk de stuurinformatie / unit-economics (sim).
-4. **Test Console**: stuur de simulaties aan (betaling laten slagen, KYC goedkeuren, enz.).
-5. **Content & video's**: voeg een YouTube-video toe of (de)publiceer er een.
-6. **Bulk-upload**: plak meerdere zendingen als CSV, controleer de voorvertoning en maak ze in één
+3. **Gebruik & activiteit** (📈): zie hoeveel mensen actief zijn (24u/7d/30d), **wie er actief is
+   geweest** (laatste login + logins/acties per lid), de activiteitstrechter (registratie → …→
+   levering) en **Gedrag (events)**: paginaweergaven, "check gebruikt" en widget-kliks.
+4. **Analytics**: bekijk de stuurinformatie / unit-economics (sim).
+5. **Test Console**: stuur de simulaties aan (betaling laten slagen, KYC goedkeuren, enz.).
+6. **Content & video's**: voeg een YouTube-video toe of (de)publiceer er een.
+7. **Bulk-upload**: plak meerdere zendingen als CSV, controleer de voorvertoning en maak ze in één
    keer aan.
 
 ---

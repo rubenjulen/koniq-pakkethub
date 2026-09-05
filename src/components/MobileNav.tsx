@@ -47,8 +47,8 @@ export function MobileNav({
                 </Link>
               ))}
               <div className="mt-2 grid grid-cols-2 gap-2">
-                <Link href="/login" onClick={() => setOpen(false)} className="ph-btn ph-btn-ghost text-sm">{login}</Link>
-                <Link href="/verzenden" onClick={() => setOpen(false)} className="ph-btn ph-btn-primary text-sm">{send}</Link>
+                <Link href="/login" data-ev="cta_login" onClick={() => setOpen(false)} className="ph-btn ph-btn-ghost text-sm">{login}</Link>
+                <Link href="/verzenden" data-ev="cta_send" onClick={() => setOpen(false)} className="ph-btn ph-btn-primary text-sm">{send}</Link>
               </div>
               <div className="mt-2"><InstallAppButton label={installLabel} /></div>
             </nav>

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { track } from "@/lib/track";
 
 type BIPEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
 
@@ -26,9 +27,11 @@ export function InstallAppButton({ className = "", label = "Installeer de app", 
   }, []);
 
   async function handleClick() {
+    track("app_install_click");
     if (deferred) {
       await deferred.prompt();
-      await deferred.userChoice;
+      const choice = await deferred.userChoice.catch(() => null);
+      track("app_installed", { outcome: choice?.outcome ?? "unknown" });
       setDeferred(null);
     } else {
       setShowIos((v) => !v);
