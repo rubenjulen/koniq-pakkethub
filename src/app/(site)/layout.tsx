@@ -1,4 +1,5 @@
 import { SiteHeader, SiteFooter, StagedBanner } from "@/components/SiteChrome";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { getLocale, getMessages } from "@/i18n";
 import { getTenantId } from "@/lib/tenant";
 import { getPublicStats } from "@/lib/market";
@@ -10,6 +11,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   const discoverCount = stats.totalRoutes + stats.totalRequests;
   return (
     <div className="flex min-h-screen flex-col bg-white">
+      <AnalyticsTracker />
       <StagedBanner m={m} />
       <SiteHeader m={m} locale={locale} discoverCount={discoverCount} />
       <div className="flex-1">{children}</div>

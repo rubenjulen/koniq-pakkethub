@@ -970,3 +970,19 @@ CREATE TABLE IF NOT EXISTS feedback (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS feedback_status_idx ON feedback(tenant_id, status, created_at DESC);
+
+-- =============================================================================
+--  v1.0 — Lichte event-laag (product-analytics): niet-transactionele acties
+--  zoals paginaweergaven, "check gebruikt", widget-kliks. Fire-and-forget.
+-- =============================================================================
+CREATE TABLE IF NOT EXISTS events (
+  id         bigserial PRIMARY KEY,
+  tenant_id  uuid,
+  user_id    uuid,                                   -- null = anoniem/uitgelogd
+  name       text NOT NULL,                          -- bv. page_view, check_used, avail_card
+  path       text,
+  props      jsonb DEFAULT '{}'::jsonb,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS events_tenant_time_idx ON events(tenant_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS events_tenant_name_idx ON events(tenant_id, name, created_at DESC);

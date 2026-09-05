@@ -22,7 +22,7 @@ export function SiteHeader({ m, locale, discoverCount = 0 }: { m: Messages; loca
         <Link href="/" className="shrink-0"><Logo /></Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
           {NAV.map(([href, label]) => (
-            <Link key={href} href={href} className="inline-flex items-center gap-1.5 whitespace-nowrap hover:text-orange-600">
+            <Link key={href} href={href} data-ev={href === "/ontdek" ? "nav_ontdek" : undefined} className="inline-flex items-center gap-1.5 whitespace-nowrap hover:text-orange-600">
               {label}
               {href === "/ontdek" && discoverCount > 0 && (
                 <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1.5 text-[11px] font-semibold text-white" title={m.ontdek.title}>{discoverCount}</span>

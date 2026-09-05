@@ -581,6 +581,8 @@ const pt: Messages = {
     f_offer: "Fez uma oferta", f_booking: "Reserva", f_delivered: "Entregue",
     actions_title: "Top ações (30d)", actions_sub: "Atividade mais frequente",
     feedback_title: "Comentários de teste", feedback_open: "Abertos / total",
+    pageviews: "Visualizações de página", pageviews_hint: "últimos 7 dias",
+    ev_title: "Comportamento (eventos)", ev_sub: "Ações não transacionais — últimos 30 dias", ev_events: "Top eventos", ev_pages: "Páginas mais vistas", ev_empty: "Ainda sem eventos — aparecem assim que houver cliques/navegação.",
     note: "Derivado das sessões e do registo de auditoria — sem tracking à parte nem ferramenta externa. Para análise de produto mais profunda (funis, coortes de retenção, session replay) pode ligar-se depois uma ferramenta como o PostHog.",
   },
   fb: {

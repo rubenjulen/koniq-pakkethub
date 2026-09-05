@@ -78,7 +78,7 @@ export default async function HomePage() {
             <p className="mt-3 text-lg font-semibold text-orange-300">{h.h2_sub.replace("{n}", String(routeCount))}</p>
             <p className="mt-3 max-w-lg text-base text-slate-200">{h.origin_line}</p>
             {(pubStats.totalRoutes + pubStats.totalRequests) > 0 && (
-              <Link href="/ontdek" className="mt-5 inline-flex items-center gap-2.5 rounded-full bg-white/12 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/25 backdrop-blur transition hover:bg-white/20 [text-shadow:none]">
+              <Link href="/ontdek" data-ev="pill_open" className="mt-5 inline-flex items-center gap-2.5 rounded-full bg-white/12 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/25 backdrop-blur transition hover:bg-white/20 [text-shadow:none]">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75 motion-reduce:hidden"></span>
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-orange-400"></span>

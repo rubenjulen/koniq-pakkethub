@@ -80,6 +80,21 @@ export default async function InsightsPage() {
     `SELECT count(*)::int AS total, count(*) FILTER (WHERE status <> 'DONE')::int AS open FROM feedback WHERE tenant_id=$1`, [t]
   );
 
+  // Event-laag (gedrag): top-events + meest bekeken pagina's (30d).
+  const topEvents = await query<any>(
+    `SELECT name, count(*)::int AS n FROM events
+      WHERE tenant_id=$1 AND created_at >= now() - interval '30 days'
+      GROUP BY name ORDER BY n DESC LIMIT 8`, [t]
+  );
+  const topPages = await query<any>(
+    `SELECT coalesce(path,'—') AS path, count(*)::int AS n FROM events
+      WHERE tenant_id=$1 AND name='page_view' AND created_at >= now() - interval '30 days'
+      GROUP BY path ORDER BY n DESC LIMIT 8`, [t]
+  );
+  const [pv] = await query<any>(
+    `SELECT count(*)::int AS n FROM events WHERE tenant_id=$1 AND name='page_view' AND created_at >= now() - interval '7 days'`, [t]
+  );
+
   const roleLabel = (key?: string) => (key ? (m.appnav as Record<string, string>)[key.toLowerCase()] ?? key : "—");
 
   return (
@@ -89,12 +104,13 @@ export default async function InsightsPage() {
         <p className="text-sm text-slate-500">{L.sub}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <StatCard label={L.dau} value={k.dau} hint={L.active_hint} />
         <StatCard label={L.wau} value={k.wau} hint={L.active_hint} />
         <StatCard label={L.mau} value={k.mau} hint={L.active_hint} />
         <StatCard label={L.members} value={k.members} />
         <StatCard label={L.new7} value={`+${k.new7}`} />
+        <StatCard label={L.pageviews} value={pv?.n ?? 0} hint={L.pageviews_hint} />
       </div>
 
       <section className="ph-card p-5">
@@ -174,6 +190,38 @@ export default async function InsightsPage() {
           </section>
         </div>
       </div>
+
+      <section>
+        <SectionTitle sub={L.ev_sub}>{L.ev_title}</SectionTitle>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="ph-card p-4">
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{L.ev_events}</div>
+            {topEvents.length === 0 ? <p className="text-sm text-slate-400">{L.ev_empty}</p> : (
+              <div className="divide-y divide-slate-100 text-sm">
+                {topEvents.map((e) => (
+                  <div key={e.name} className="flex items-center justify-between py-2">
+                    <span className="font-mono text-xs text-slate-600">{e.name}</span>
+                    <Chip>{e.n}</Chip>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="ph-card p-4">
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{L.ev_pages}</div>
+            {topPages.length === 0 ? <p className="text-sm text-slate-400">{L.ev_empty}</p> : (
+              <div className="divide-y divide-slate-100 text-sm">
+                {topPages.map((p, i) => (
+                  <div key={i} className="flex items-center justify-between gap-3 py-2">
+                    <span className="truncate font-mono text-xs text-slate-600">{p.path}</span>
+                    <span className="shrink-0 font-medium tabular-nums text-slate-700">{p.n}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
 
       <p className="text-xs text-slate-400">{L.note}</p>
     </div>

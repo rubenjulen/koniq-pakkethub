@@ -1,6 +1,7 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { track } from "@/lib/track";
 import { evaluateEligibility, DECISION_LABEL, DECISION_TONE, type CategoryRule, type CorridorLimits } from "@/lib/eligibility";
 import type { Messages } from "@/i18n/messages/nl";
 
@@ -23,6 +24,14 @@ export function QuoteCalculator({
 }) {
   const [weight, setWeight] = useState("3");
   const [items, setItems] = useState<Item[]>([{ id: 1, description: "", value: 25, category_code: "CLOTHING" }]);
+
+  // Meet één keer dat de gratis check daadwerkelijk gebruikt is (na eerste wijziging).
+  const mounted = useRef(false);
+  const fired = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) { mounted.current = true; return; }
+    if (!fired.current) { fired.current = true; track("check_used"); }
+  }, [weight, items]);
 
   const catMap = useMemo(() => Object.fromEntries(categories.map((c) => [c.code, c])), [categories]);
 

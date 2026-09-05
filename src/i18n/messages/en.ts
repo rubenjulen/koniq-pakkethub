@@ -580,6 +580,8 @@ const en: Messages = {
     f_offer: "Placed an offer", f_booking: "Booking", f_delivered: "Delivered",
     actions_title: "Top actions (30d)", actions_sub: "Most common activity",
     feedback_title: "Test feedback", feedback_open: "Open / total",
+    pageviews: "Page views", pageviews_hint: "last 7 days",
+    ev_title: "Behaviour (events)", ev_sub: "Non-transactional actions — last 30 days", ev_events: "Top events", ev_pages: "Most viewed pages", ev_empty: "No events yet — they appear as soon as people click/browse.",
     note: "Derived from sessions and the audit log — no separate tracking or external tool needed. For deeper product analysis (funnels, retention cohorts, session replay) a tool like PostHog can be added later.",
   },
   fb: {

@@ -7,6 +7,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { KycBadge } from "@/components/ui";
 import { FeedbackWidget } from "@/components/FeedbackWidget";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { initials } from "@/lib/format";
 import { query } from "@/db/client";
 import { getLocale, getMessages } from "@/i18n";
@@ -130,6 +131,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </nav>
       </div>
 
+      <AnalyticsTracker />
       <FeedbackWidget t={m.fb} whatsapp={process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP} />
     </div>
   );

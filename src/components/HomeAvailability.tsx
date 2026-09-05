@@ -63,6 +63,7 @@ export function HomeAvailability({ routes, requests, m, max = 5 }: {
           <Link
             key={`${r.kind}-${r.user_id}-${r.corridor}`}
             href={`/login?next=/app/u/${r.user_id}`}
+            data-ev="avail_card"
             className="ph-card group flex items-center gap-3 p-3 transition hover:border-orange-300 hover:shadow-sm"
           >
             <Ini name={r.display_name} />

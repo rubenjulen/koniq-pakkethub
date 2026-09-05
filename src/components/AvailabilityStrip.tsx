@@ -48,7 +48,7 @@ export async function AvailabilityStrip({ tenantId, m }: { tenantId: string; m: 
           </Link>
         ))}
       </div>
-      <Link href="/ontdek" className="ph-btn ph-btn-primary ml-auto text-sm">{a.avail_see_all}</Link>
+      <Link href="/ontdek" data-ev="avail_strip" className="ph-btn ph-btn-primary ml-auto text-sm">{a.avail_see_all}</Link>
     </div>
   );
 }

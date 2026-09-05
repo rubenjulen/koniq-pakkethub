@@ -579,6 +579,8 @@ const nl = {
     f_offer: "Bod geplaatst", f_booking: "Boeking", f_delivered: "Geleverd",
     actions_title: "Top-acties (30d)", actions_sub: "Meest voorkomende handelingen",
     feedback_title: "Testfeedback", feedback_open: "Open / totaal",
+    pageviews: "Paginaweergaven", pageviews_hint: "laatste 7 dagen",
+    ev_title: "Gedrag (events)", ev_sub: "Niet-transactionele acties — laatste 30 dagen", ev_events: "Top-events", ev_pages: "Meest bekeken pagina's", ev_empty: "Nog geen events — verschijnen zodra er geklikt/gebladerd wordt.",
     note: "Afgeleid uit sessies en de audit-log — geen aparte tracking of externe tool nodig. Voor diepere product-analyse (funnels, retentie-cohorten, session replay) kan later een tool als PostHog worden gekoppeld.",
   },
   fb: {
