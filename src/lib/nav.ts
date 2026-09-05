@@ -23,6 +23,7 @@ const ALL: NavItem[] = [
   { href: "/app/lockers", key: "lockers", icon: "🔐", cap: "ops.intake" },
   { href: "/app/business", key: "business", icon: "🏢", cap: "control.view" },
   { href: "/app/analytics", key: "analytics", icon: "📊", cap: "control.view" },
+  { href: "/app/insights", key: "insights", icon: "📈", cap: "control.view" },
   { href: "/app/control", key: "control", icon: "🛡️", cap: "control.view" },
   { href: "/app/console", key: "console", icon: "🧪", cap: "control.view" },
   { href: "/app/content", key: "content", icon: "🎬", cap: "control.view" },
