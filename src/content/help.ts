@@ -1,130 +1,149 @@
-// In-app gebruikershandleiding, rolgefilterd. Los van de strikte Messages-types
-// gehouden zodat de (lange) tekst niet in 6 talen compleet hoeft te zijn:
-// NL is primair, EN is er, overige talen vallen terug op EN.
+// In-app gebruikershandleiding, rolgefilterd, met schermafbeeldingen.
+// Los van de strikte Messages-types gehouden zodat de (lange) tekst niet in
+// 6 talen compleet hoeft: NL is primair, EN is er, overige talen → EN.
+// `img` verwijst naar /help/<img>.png (public/help/, echte demo-schermen).
 import type { Locale } from "@/i18n/config";
 
-export type HelpSection = { h: string; steps: string[] };
+export type HelpSection = { h: string; steps: string[]; img?: string };
 export type HelpGuide = { key: string; cap?: string; icon: string; title: string; intro: string; sections: HelpSection[] };
 export type HelpChrome = { title: string; sub: string; for_role: string; common: string; print: string; download: string; tip: string };
 
 const NL: { chrome: HelpChrome; guides: HelpGuide[] } = {
   chrome: {
     title: "Handleiding",
-    sub: "Zo werkt BugaWuga — afgestemd op jouw rol.",
+    sub: "Zo werkt BugaWuga — met echte schermen, afgestemd op jouw rol.",
     for_role: "Voor jouw rol",
     common: "Aan de slag — voor iedereen",
     print: "Print",
     download: "Download PDF",
-    tip: "Tip: gebruik de 💬 Feedback-knop rechtsonder als iets onduidelijk is of beter kan.",
+    tip: "Kom je er niet uit? Gebruik de 💬 Feedback-knop rechtsonder — je bericht komt met pagina en al bij het team.",
   },
   guides: [
     {
-      key: "common", icon: "🚀", title: "Aan de slag", intro: "De basis die voor elk profiel geldt.",
+      key: "common", icon: "🚀", title: "Aan de slag", intro: "De basis die voor elk profiel geldt. Begin hier.",
       sections: [
-        { h: "Inloggen, taal & weergave", steps: [
-          "Inloggen — met je e-mail en wachtwoord, of via de knop bovenaan.",
-          "Taal — kies rechtsboven (of onderin) uit Nederlands, Engels, Spaans, Portugees, Frans of Chinees.",
-          "Thema — één knop wisselt tussen licht, donker en automatisch.",
-          "App installeren — via de installeer-knop draai je BugaWuga als app op je telefoon of desktop.",
+        { h: "Inloggen & je startpagina", img: "overview", steps: [
+          "Inloggen — ga naar de website, klik op Inloggen en gebruik je e-mail + wachtwoord. Heb je nog geen account? Klik op “Account maken” en kies je rol (afzender of reiziger).",
+          "Overzicht — na het inloggen kom je op je Overzicht: je belangrijkste cijfers en je laatste zendingen/ritten in één blik.",
+          "Menu links — alle onderdelen staan in het menu aan de linkerkant (op de telefoon onderin). Een getal naast een item (bv. Berichten of Marktplaats) laat zien wat nieuw of open is.",
+          "Je rol — linksonder zie je je naam, je rol en of je account geverifieerd is (✓).",
         ]},
-        { h: "Navigeren", steps: [
-          "Menu — op desktop links, op mobiel via de onderbalk. Getallen naast een item (bv. Berichten of Marktplaats) tonen wat er nieuw of open is.",
-          "Overzicht — je startpagina met je belangrijkste zaken in één blik.",
+        { h: "Taal, thema & de app installeren", steps: [
+          "Taal — rechtsboven kies je Nederlands, Engels, Spaans, Portugees, Frans of Chinees. De hele app schakelt direct mee.",
+          "Thema — met één knop wissel je tussen licht, donker en automatisch (volgt je toestel).",
+          "Installeren — klik op “Installeer de app”. Op de telefoon zet je BugaWuga zo op je beginscherm; hij opent daarna schermvullend, net als een gedownloade app.",
         ]},
-        { h: "Chatten & afspraken", steps: [
-          "Chat — overal bereikbaar waar je met een andere partij te maken hebt (marktplaats, profiel, zending).",
-          "Standaardvragen — snelkeuze-knoppen helpen je snel het juiste te vragen.",
-          "Afspraak — een gemaakte afspraak blijft bovenaan het gesprek staan als houvast voor beide partijen.",
+        { h: "Chatten & afspraken maken", img: "messages", steps: [
+          "Chat — overal waar je met een andere partij te maken hebt kun je chatten (vanuit de marktplaats, een profiel of een zending).",
+          "Standaardvragen — onderin de chat staan snelkeuze-knoppen met veelgestelde vragen, zodat je snel het juiste vraagt.",
+          "Afspraak vastpinnen — leg je afspraak (wat, wanneer, prijs) vast; die blijft bovenaan het gesprek staan als houvast voor beide partijen.",
         ]},
         { h: "Meldingen, profiel & feedback", steps: [
-          "Meldingen — het belletje toont ongelezen updates.",
-          "Profiel & verificatie — beheer je gegevens op Mijn account; een ✓ betekent geverifieerd.",
-          "Feedback — met de 💬-knop stuur je opmerkingen rechtstreeks naar het team.",
+          "Meldingen — het belletje toont ongelezen updates (nieuw bod, bericht, statuswijziging).",
+          "Mijn account — beheer je naam, telefoon en wachtwoord. Verificatie (KYC) staat hier ook; een ✓ betekent dat je kunt betalen, boeken en uitbetaald worden.",
+          "Feedback — met de 💬-knop rechtsonder stuur je op elke pagina een opmerking; die komt gebundeld bij het team binnen, inclusief de pagina waar je was.",
         ]},
       ],
     },
     {
       key: "sender", cap: "shipment.create", icon: "📦", title: "Afzender — iets versturen",
-      intro: "Van pakket aanmelden tot betaling en levering.",
+      intro: "Van pakket aanmelden tot betaling, volgen en levering met code.",
       sections: [
-        { h: "1. Pakket aanmelden & check", steps: [
-          "Verzenden — geef corridor, ontvanger, gewicht en de inhoud per item op.",
-          "Gratis check — je ziet meteen of het via een reiziger mag (toegestaan/beoordelen/geweigerd) en een prijsindicatie.",
+        { h: "1. Pakket aanmelden & de gratis check", img: "check", steps: [
+          "Start — klik op “Pakket versturen” (of open Verzenden). Kies de corridor (nu Nederland → Suriname) en vul de ontvanger in.",
+          "Inhoud per item — geef elk item op met een korte omschrijving, de waarde en de categorie. Voeg met “+ Item” meer regels toe.",
+          "Gratis check — je ziet meteen of het pakket via een reiziger mág (Toegestaan / Beoordelen / Geweigerd) én een prijsindicatie. Dit is een automatische regelcheck, geen mens.",
+          "Aangeven, niet dichtplakken — geef eerlijk op wat erin zit en laat het pakket open/inspecteerbaar. Dat is de kern van veilig versturen.",
         ]},
-        { h: "2. Zichtbaar maken", steps: [
-          "Op de marktplaats — zet je verzoek zichtbaar zodat reizigers het zien.",
-          "Publiek (optioneel) — je kunt het óók anoniem op de publieke website tonen (alleen voornaam + initiaal).",
+        { h: "2. Zichtbaar maken op de marktplaats", img: "marketplace", steps: [
+          "Zichtbaar zetten — open je zending en zet ‘m zichtbaar op de marktplaats, zodat reizigers je verzoek zien.",
+          "Prijs & info — geef aan wat je wilt betalen en een korte toelichting.",
+          "Publiek (optioneel) — je kunt je verzoek óók anoniem op de publieke website tonen (alleen voornaam + initiaal, bestemming, gewicht en prijs — nooit de inhoud, je adres of contactgegevens).",
         ]},
-        { h: "3. Bod, afspraak & betaling", steps: [
-          "Bod ontvangen — reageert een reiziger, dan opent automatisch een chat.",
-          "Accepteren & betalen — na akkoord betaal je; het bedrag wordt vastgehouden tot bewijs van levering.",
+        { h: "3. Bod ontvangen, chatten & betalen", steps: [
+          "Bod — reageert een reiziger, dan opent automatisch een chat met het bod erin.",
+          "Overleggen — stem via de chat de details en de prijs af en leg de afspraak vast.",
+          "Betalen — accepteer het bod en reken af. Je betaling wordt veilig vastgehouden en pas vrijgegeven na bewijs van levering.",
         ]},
-        { h: "4. Volgen & leveren", steps: [
-          "Statustijdlijn & label — volg elke stap en open/print het label.",
-          "Ontvangstcode — geef de 6-cijferige code aan de ontvanger; de levering wordt pas bevestigd als de code klopt.",
+        { h: "4. Volgen & afleveren met ontvangstcode", img: "shipment", steps: [
+          "Statustijdlijn — op de zending volg je elke stap (aangemaakt → verzegeld → onderweg → klaar voor afhalen → afgeleverd).",
+          "Label — open of print het verzendlabel.",
+          "Ontvangstcode — zodra de zending klaar is voor aflevering verschijnt een 6-cijferige ontvangstcode. Geef die aan de ontvanger; de levering wordt pas bevestigd (en de betaling vrijgegeven) als de code klopt.",
         ]},
-        { h: "5. Na de levering", steps: [
-          "Beoordelen — laat sterren achter voor de reiziger.",
-          "Probleem? — open een claim/retour, of meld een gebruiker.",
-          "Handig — bewaar ontvangers/producten in het adres- & productboek, of gebruik bulk-upload voor meerdere zendingen.",
+        { h: "5. Na de levering & bij problemen", steps: [
+          "Beoordelen — laat sterren achter voor de reiziger; dat bouwt vertrouwen op in de community.",
+          "Claim of retour — is er iets mis met de levering, open dan een claim of vraag een retour aan.",
+          "Melden — gedraagt iemand zich verkeerd? Meld de gebruiker; het komt binnen bij het beheer.",
+        ]},
+        { h: "6. Handige extra's", steps: [
+          "Adres- & productboek — bewaar ontvangers en producten, zodat een volgende zending sneller klaar staat.",
+          "Bulk-upload — meerdere zendingen tegelijk? Plak ze als CSV, controleer de voorvertoning en maak ze in één keer aan.",
         ]},
       ],
     },
     {
       key: "traveler", cap: "trip.create", icon: "🧳", title: "Reiziger — ruimte aanbieden",
-      intro: "Verdien bij door pakketten mee te nemen op je reis.",
+      intro: "Verdien bij door op je reis pakketten mee te nemen.",
       sections: [
-        { h: "1. Rit publiceren", steps: [
-          "Mijn ritten → Nieuwe rit — geef corridor, datum en capaciteit op.",
-          "Zichtbaar maken — zet je rit zichtbaar (en eventueel anoniem op de publieke website).",
+        { h: "1. Je rit publiceren", img: "trips", steps: [
+          "Nieuwe rit — ga naar “Mijn ritten” en maak een rit aan: kies de corridor, je vertrekdatum en hoeveel ruimte (kg) je hebt.",
+          "Prijsindicatie — geef aan wat je ongeveer wilt ontvangen; dit helpt afzenders een passend bod te doen.",
+          "Zichtbaar maken — zet je rit zichtbaar op de marktplaats, en eventueel anoniem op de publieke website.",
         ]},
-        { h: "2. Bieden & afspreken", steps: [
-          "Marktplaats — bekijk openstaande verzoeken en plaats een bod met een bericht.",
-          "Chat — stem de details en prijs af; leg de afspraak vast.",
+        { h: "2. Verzoeken zoeken & bieden", img: "marketplace", steps: [
+          "Marktplaats — bekijk de openstaande verzoeken; filter op bestemming, prijs of beoordeling en sorteer zoals je wilt.",
+          "Bieden — open een toegestaan verzoek en plaats een bod met een kort bericht. Zo open je meteen de chat met de afzender.",
         ]},
-        { h: "3. Meenemen & afleveren", steps: [
-          "Statusstappen — doorloop de stappen tot Afgeleverd.",
-          "Ontvangstcode — vul bij levering de code in die de ontvanger je geeft; klopt hij, dan komt je betaling vrij.",
+        { h: "3. Afspreken via chat", steps: [
+          "Overleggen — stem via de chat af wat je meeneemt, waar/wanneer je ophaalt en de prijs.",
+          "Afspraak — leg de afspraak vast; die blijft bovenaan staan als houvast.",
         ]},
-        { h: "4. Verdiensten", steps: [
-          "Wallet — zie je saldo en punten.",
-          "Uitbetaling — vraag een uitbetaling aan zodra je saldo de drempel haalt.",
-          "Beoordelen — laat een beoordeling achter voor de afzender.",
+        { h: "4. Meenemen & afleveren met code", steps: [
+          "Statusstappen — doorloop de stappen tot “Afgeleverd”.",
+          "Ontvangstcode — vraag bij de aflevering de 6-cijferige code aan de ontvanger en vul die in. Klopt de code, dan is de levering bevestigd en komt je betaling vrij.",
+        ]},
+        { h: "5. Verdiensten & uitbetaling", img: "wallet", steps: [
+          "Wallet — in je wallet zie je je saldo en je gespaarde punten.",
+          "Uitbetaling — zodra je saldo de uitbetaaldrempel haalt, vraag je met één klik een uitbetaling aan; de status “in behandeling” verschijnt.",
+          "Beoordelen — laat na afloop een beoordeling achter voor de afzender.",
         ]},
       ],
     },
     {
       key: "ops", cap: "ops.intake", icon: "🏭", title: "Hub / operatie — verwerking",
-      intro: "Intake, inspectie, custody en transport.",
+      intro: "Intake, inspectie, verzegeling, custody en transport.",
       sections: [
         { h: "Intake & verzegelen", steps: [
-          "Inspecteren — loop de checklist na en verzegel met een zegelnummer.",
-          "Chain of custody — elke overdracht wordt vastgelegd en is niet te wijzigen.",
+          "Inspectie — loop bij een geboekte zending de checklist na (inhoud, aantal, staat, batterijen, vloeistoffen, aangifte).",
+          "Verzegelen — geef een zegelnummer op en verzegel; de zending gaat naar de volgende status.",
+          "Chain of custody — elke stap en overdracht wordt vastgelegd in een onwijzigbaar logboek.",
         ]},
-        { h: "Transport", steps: [
-          "Manifesten & legs — maak een manifest (bv. een vlucht), koppel zendingen en zet de status door (verzegel → vertrek → aankomst → sluit).",
-          "Lockers & tijdslots — wijs een pakket toe aan een compartiment (met pin), boek een tijdslot en doe een voorraad-reconciliatie.",
+        { h: "Manifesten, legs, lockers", steps: [
+          "Manifesten & legs — maak een manifest (bv. een vlucht), koppel er zendingen aan en zet de status door: verzegelen → vertrek → aankomst → sluiten. Alle gekoppelde zendingen lopen mee.",
+          "Lockers & tijdslots — wijs een pakket toe aan een vrij compartiment (met pincode), boek een tijdslot en voer een voorraad-reconciliatie uit (scannen → MATCH / ONVERWACHT / ONTBREEKT).",
         ]},
-        { h: "Beoordeling", steps: [
-          "Control Center — behandel de beoordelingswachtrij en keur zendingen goed of af.",
+        { h: "Beoordelingswachtrij", img: "control", steps: [
+          "Control Center — behandel de wachtrij met zendingen die beoordeling nodig hebben en keur ze goed of af.",
         ]},
       ],
     },
     {
       key: "admin", cap: "control.view", icon: "🛡️", title: "Beheer — sturing & toezicht",
-      intro: "Overzicht, veiligheid, inzicht en content.",
+      intro: "Overzicht, veiligheid, inzicht in gebruik, en content.",
       sections: [
-        { h: "Toezicht & veiligheid", steps: [
-          "Control Center — beoordeel zendingen, zet een kill switch per corridor, en handel 🚩 meldingen af.",
-          "Testfeedback — alle ingestuurde feedback komt hier gebundeld binnen, met gebruiker + pagina.",
+        { h: "Control Center: toezicht & veiligheid", img: "control", steps: [
+          "Beoordelen — werk de beoordelingswachtrij af; overrule met een reden waar nodig.",
+          "Kill switch — zet per corridor een noodstop als dat moet.",
+          "Meldingen — handel 🚩 gerapporteerde gebruikers/listings af.",
         ]},
-        { h: "Inzicht", steps: [
-          "Gebruik & activiteit — zie actieve gebruikers (24u/7d/30d), wie er actief is geweest, de activiteitstrechter en gedrag (paginaweergaven, check gebruikt, kliks).",
-          "Analytics — stuurinformatie en unit-economics.",
+        { h: "Gebruik & activiteit (dashboard)", img: "insights", steps: [
+          "Actieve gebruikers — zie hoeveel mensen actief zijn (24u/7d/30d) en wie er actief is geweest, met laatste login en aantal acties per lid.",
+          "Trechter & gedrag — volg de activiteitstrechter (registratie → … → levering) en het gedrag (paginaweergaven, “check gebruikt”, kliks).",
         ]},
-        { h: "Beheer & content", steps: [
-          "Test Console — stuur de simulaties aan (betaling, verificatie).",
-          "Content & video's, advertenties, leden — beheer wat er op de site verschijnt en wie toegang heeft.",
+        { h: "Feedback, simulaties & content", steps: [
+          "Testfeedback — alle ingestuurde feedback komt gebundeld binnen in het Control Center, met gebruiker + pagina.",
+          "Test Console — stuur de simulaties aan (betaling laten slagen, verificatie goedkeuren) tijdens het testen.",
+          "Content & leden — beheer video's/advertenties en nodig leden uit of verban ze.",
         ]},
       ],
     },
@@ -134,63 +153,73 @@ const NL: { chrome: HelpChrome; guides: HelpGuide[] } = {
 const EN: { chrome: HelpChrome; guides: HelpGuide[] } = {
   chrome: {
     title: "User guide",
-    sub: "How BugaWuga works — tailored to your role.",
+    sub: "How BugaWuga works — with real screens, tailored to your role.",
     for_role: "For your role",
     common: "Getting started — for everyone",
     print: "Print",
     download: "Download PDF",
-    tip: "Tip: use the 💬 Feedback button (bottom-right) if anything is unclear or could be better.",
+    tip: "Stuck? Use the 💬 Feedback button (bottom-right) — your message reaches the team together with the page you were on.",
   },
   guides: [
     {
-      key: "common", icon: "🚀", title: "Getting started", intro: "The basics that apply to every profile.",
+      key: "common", icon: "🚀", title: "Getting started", intro: "The basics that apply to every profile. Start here.",
       sections: [
-        { h: "Log in, language & display", steps: [
-          "Log in — with your email and password, or via the button at the top.",
-          "Language — pick Dutch, English, Spanish, Portuguese, French or Chinese (top-right or bottom).",
-          "Theme — one button toggles light, dark and automatic.",
-          "Install the app — the install button runs BugaWuga as an app on phone or desktop.",
+        { h: "Log in & your home page", img: "overview", steps: [
+          "Log in — go to the website, click Log in and use your email + password. No account yet? Click “Create account” and choose your role (sender or traveler).",
+          "Overview — after logging in you land on your Overview: your key figures and latest shipments/trips at a glance.",
+          "Left menu — every part of the app is in the left menu (bottom bar on phone). A number next to an item (e.g. Messages or Marketplace) shows what's new or open.",
+          "Your role — bottom-left shows your name, role and whether your account is verified (✓).",
         ]},
-        { h: "Navigating", steps: [
-          "Menu — on the left (desktop) or the bottom bar (mobile). Numbers next to an item show what's new or open.",
-          "Overview — your home page with the key things at a glance.",
+        { h: "Language, theme & installing the app", steps: [
+          "Language — top-right, pick Dutch, English, Spanish, Portuguese, French or Chinese. The whole app switches instantly.",
+          "Theme — one button toggles light, dark and automatic (follows your device).",
+          "Install — click “Install the app”. On a phone this adds BugaWuga to your home screen; it then opens full-screen like a downloaded app.",
         ]},
-        { h: "Chat & agreements", steps: [
-          "Chat — available wherever you deal with another party (marketplace, profile, shipment).",
-          "Quick questions — shortcut buttons help you ask the right thing fast.",
-          "Agreement — a made agreement stays pinned at the top of the chat for both parties.",
+        { h: "Chat & making agreements", img: "messages", steps: [
+          "Chat — wherever you deal with another party you can chat (from the marketplace, a profile or a shipment).",
+          "Quick questions — shortcut buttons with common questions sit at the bottom of the chat.",
+          "Pin the agreement — record what/when/price; it stays pinned at the top for both parties.",
         ]},
         { h: "Notifications, profile & feedback", steps: [
-          "Notifications — the bell shows unread updates.",
-          "Profile & verification — manage your details under My account; a ✓ means verified.",
-          "Feedback — the 💬 button sends remarks straight to the team.",
+          "Notifications — the bell shows unread updates (new offer, message, status change).",
+          "My account — manage your name, phone and password. Verification (KYC) is here too; a ✓ means you can pay, book and get paid out.",
+          "Feedback — the 💬 button (bottom-right) sends a remark from any page, bundled to the team with the page you were on.",
         ]},
       ],
     },
     {
       key: "sender", cap: "shipment.create", icon: "📦", title: "Sender — send something",
-      intro: "From creating a shipment to payment and delivery.",
+      intro: "From creating a shipment to payment, tracking and delivery with a code.",
       sections: [
-        { h: "1. Create & check", steps: [
-          "Send — enter corridor, recipient, weight and the contents per item.",
-          "Free check — instantly see whether it may travel via a traveler and an indicative price.",
+        { h: "1. Create a shipment & the free check", img: "check", steps: [
+          "Start — click “Send a package” (or open Send). Choose the corridor (currently Netherlands → Suriname) and enter the recipient.",
+          "Contents per item — add each item with a short description, value and category. Use “+ Item” for more rows.",
+          "Free check — you instantly see whether it may travel via a traveler (Allowed / Review / Rejected) and an indicative price. This is an automatic rule check, not a person.",
+          "Declare, don't seal shut — honestly state what's inside and keep the package open/inspectable. That's the core of safe sending.",
         ]},
-        { h: "2. Make it visible", steps: [
-          "On the marketplace — make your request visible so travelers can see it.",
-          "Public (optional) — also show it anonymously on the public site (first name + initial only).",
+        { h: "2. Make it visible on the marketplace", img: "marketplace", steps: [
+          "Make visible — open your shipment and make it visible on the marketplace so travelers see your request.",
+          "Price & info — state what you'd like to pay and a short note.",
+          "Public (optional) — also show your request anonymously on the public site (first name + initial, destination, weight and price — never the contents, your address or contact details).",
         ]},
-        { h: "3. Offer, agreement & payment", steps: [
-          "Receive an offer — a chat opens automatically when a traveler responds.",
-          "Accept & pay — after agreeing you pay; the amount is held until proof of delivery.",
+        { h: "3. Offer, chat & payment", steps: [
+          "Offer — when a traveler responds, a chat opens automatically with the offer.",
+          "Discuss — agree the details and price via chat and pin the agreement.",
+          "Pay — accept the offer and pay. Your payment is held safely and only released after proof of delivery.",
         ]},
-        { h: "4. Track & deliver", steps: [
-          "Timeline & label — follow every step and open/print the label.",
-          "Receipt code — give the 6-digit code to the recipient; delivery is only confirmed once the code matches.",
+        { h: "4. Track & deliver with a receipt code", img: "shipment", steps: [
+          "Timeline — follow every step on the shipment (created → sealed → in transit → ready for pickup → delivered).",
+          "Label — open or print the shipping label.",
+          "Receipt code — once the shipment is ready for delivery a 6-digit receipt code appears. Give it to the recipient; delivery is only confirmed (and payment released) once the code matches.",
         ]},
-        { h: "5. After delivery", steps: [
-          "Rate — leave stars for the traveler.",
-          "A problem? — open a claim/return, or report a user.",
-          "Handy — save recipients/products in the address & product book, or use bulk upload.",
+        { h: "5. After delivery & problems", steps: [
+          "Rate — leave stars for the traveler; it builds trust in the community.",
+          "Claim or return — if something's wrong with the delivery, open a claim or request a return.",
+          "Report — someone misbehaving? Report the user; it reaches management.",
+        ]},
+        { h: "6. Handy extras", steps: [
+          "Address & product book — save recipients and products so your next shipment is ready faster.",
+          "Bulk upload — multiple shipments? Paste them as CSV, check the preview and create them all at once.",
         ]},
       ],
     },
@@ -198,57 +227,65 @@ const EN: { chrome: HelpChrome; guides: HelpGuide[] } = {
       key: "traveler", cap: "trip.create", icon: "🧳", title: "Traveler — offer space",
       intro: "Earn on the side by carrying packages on your trip.",
       sections: [
-        { h: "1. Publish a trip", steps: [
-          "My trips → New trip — enter corridor, date and capacity.",
-          "Make it visible — set your trip visible (optionally anonymously on the public site).",
+        { h: "1. Publish your trip", img: "trips", steps: [
+          "New trip — go to “My trips” and create a trip: choose the corridor, your departure date and how much space (kg) you have.",
+          "Indicative price — state roughly what you'd like to receive; this helps senders make a fitting offer.",
+          "Make visible — set your trip visible on the marketplace, optionally anonymously on the public site.",
         ]},
-        { h: "2. Offer & agree", steps: [
-          "Marketplace — view open requests and place an offer with a message.",
-          "Chat — agree the details and price; pin the agreement.",
+        { h: "2. Find requests & bid", img: "marketplace", steps: [
+          "Marketplace — browse open requests; filter by destination, price or rating and sort as you like.",
+          "Bid — open an allowed request and place an offer with a short message. This opens the chat with the sender.",
         ]},
-        { h: "3. Carry & deliver", steps: [
-          "Status steps — go through the steps up to Delivered.",
-          "Receipt code — enter the code the recipient gives you; if it matches, your payout is released.",
+        { h: "3. Agree via chat", steps: [
+          "Discuss — agree what you'll carry, where/when you pick up and the price.",
+          "Agreement — pin the agreement so it stays at the top.",
         ]},
-        { h: "4. Earnings", steps: [
-          "Wallet — see your balance and points.",
-          "Payout — request a payout once your balance reaches the threshold.",
-          "Rate — leave a rating for the sender.",
+        { h: "4. Carry & deliver with a code", steps: [
+          "Status steps — go through the steps up to “Delivered”.",
+          "Receipt code — at delivery, ask the recipient for the 6-digit code and enter it. If it matches, delivery is confirmed and your payout is released.",
+        ]},
+        { h: "5. Earnings & payout", img: "wallet", steps: [
+          "Wallet — your wallet shows your balance and points.",
+          "Payout — once your balance reaches the threshold, request a payout in one click; the status “pending” appears.",
+          "Rate — leave a rating for the sender afterwards.",
         ]},
       ],
     },
     {
       key: "ops", cap: "ops.intake", icon: "🏭", title: "Hub / operations — processing",
-      intro: "Intake, inspection, custody and transport.",
+      intro: "Intake, inspection, sealing, custody and transport.",
       sections: [
         { h: "Intake & sealing", steps: [
-          "Inspect — run the checklist and seal with a seal number.",
-          "Chain of custody — every handover is recorded and cannot be changed.",
+          "Inspection — on a booked shipment, run the checklist (contents, quantity, condition, batteries, liquids, declaration).",
+          "Sealing — enter a seal number and seal; the shipment moves to the next status.",
+          "Chain of custody — every step and handover is recorded in an immutable log.",
         ]},
-        { h: "Transport", steps: [
-          "Manifests & legs — create a manifest (e.g. a flight), link shipments and advance the status.",
-          "Lockers & timeslots — assign a package to a compartment (with pin), book a slot and reconcile stock.",
+        { h: "Manifests, legs, lockers", steps: [
+          "Manifests & legs — create a manifest (e.g. a flight), link shipments and advance the status: seal → depart → arrive → close. All linked shipments follow.",
+          "Lockers & timeslots — assign a package to a free compartment (with a pin), book a timeslot and run a stock reconciliation (scan → MATCH / UNEXPECTED / MISSING).",
         ]},
-        { h: "Review", steps: [
-          "Control Center — handle the review queue and approve or reject shipments.",
+        { h: "Review queue", img: "control", steps: [
+          "Control Center — handle the queue of shipments needing review and approve or reject them.",
         ]},
       ],
     },
     {
       key: "admin", cap: "control.view", icon: "🛡️", title: "Management — steering & oversight",
-      intro: "Overview, safety, insight and content.",
+      intro: "Overview, safety, usage insight and content.",
       sections: [
-        { h: "Oversight & safety", steps: [
-          "Control Center — review shipments, set a kill switch per corridor, resolve 🚩 reports.",
-          "Test feedback — all submitted feedback arrives here, with user + page.",
+        { h: "Control Center: oversight & safety", img: "control", steps: [
+          "Review — work through the review queue; override with a reason where needed.",
+          "Kill switch — set a per-corridor emergency stop when necessary.",
+          "Reports — resolve 🚩 reported users/listings.",
         ]},
-        { h: "Insight", steps: [
-          "Usage & activity — active users (24h/7d/30d), who has been active, the activity funnel and behaviour (page views, check used, clicks).",
-          "Analytics — steering information and unit economics.",
+        { h: "Usage & activity (dashboard)", img: "insights", steps: [
+          "Active users — see how many are active (24h/7d/30d) and who has been active, with last login and actions per member.",
+          "Funnel & behaviour — follow the activity funnel (sign-up → … → delivery) and behaviour (page views, “check used”, clicks).",
         ]},
-        { h: "Management & content", steps: [
-          "Test Console — drive the simulations (payment, verification).",
-          "Content & videos, ads, members — manage what appears on the site and who has access.",
+        { h: "Feedback, simulations & content", steps: [
+          "Test feedback — all submitted feedback arrives bundled in the Control Center, with user + page.",
+          "Test Console — drive the simulations (make a payment succeed, approve verification) while testing.",
+          "Content & members — manage videos/ads and invite or ban members.",
         ]},
       ],
     },

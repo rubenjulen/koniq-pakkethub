@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start -p 3070",
     "gen:icons": "node scripts/gen-icons.mjs",
+    "gen:help": "node scripts/gen-help-screenshots.mjs",
     "gen:schema": "node scripts/gen-schema.mjs"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "puppeteer-core": "^25.10.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0"
   }

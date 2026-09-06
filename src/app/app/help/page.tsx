@@ -22,7 +22,7 @@ export default async function HelpPage() {
   const user = await requireSession();
   const locale = await getLocale();
   const { chrome, guides } = getHelp(locale);
-  const pdfHref = `/handleiding/BugaWuga-handleiding-${locale === "nl" ? "NL" : "EN"}.pdf`;
+  const pdfHref = `/handleiding/handleiding-${locale === "nl" ? "nl" : "en"}.pdf`;
 
   // Toon het gemeenschappelijke deel + de gidsen die bij de rechten van deze gebruiker passen.
   const visible = guides.filter((g) => !g.cap || hasCapability(user, g.cap));
@@ -61,6 +61,14 @@ export default async function HelpPage() {
                     </li>
                   ))}
                 </ul>
+                {s.img && (
+                  <img
+                    src={`/help/${s.img}.png`}
+                    alt={s.h}
+                    loading="lazy"
+                    className="mt-3 w-full rounded-lg border border-slate-200 shadow-sm"
+                  />
+                )}
               </div>
             ))}
           </div>
