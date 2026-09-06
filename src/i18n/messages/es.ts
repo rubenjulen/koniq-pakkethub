@@ -616,6 +616,7 @@ const es: Messages = {
     content: "Contenido y videos",
     members: "Miembros",
     ads: "Anuncios",
+    help: "Guía",
     account: "Cuenta",
     notifications: "🔔 Notificaciones",
   },

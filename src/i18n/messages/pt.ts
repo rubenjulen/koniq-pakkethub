@@ -616,6 +616,7 @@ const pt: Messages = {
     content: "Conteúdo e vídeos",
     members: "Membros",
     ads: "Anúncios",
+    help: "Manual",
     account: "Conta",
     notifications: "🔔 Notificações",
   },

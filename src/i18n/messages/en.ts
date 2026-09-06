@@ -615,6 +615,7 @@ const en: Messages = {
     content: "Content & videos",
     members: "Members",
     ads: "Advertisements",
+    help: "User guide",
     account: "Account",
     notifications: "🔔 Notifications",
   },

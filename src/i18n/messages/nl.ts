@@ -614,6 +614,7 @@ const nl = {
     content: "Content & video's",
     members: "Leden",
     ads: "Advertenties",
+    help: "Handleiding",
     account: "Account",
     notifications: "🔔 Meldingen",
   },
