@@ -22,6 +22,7 @@ export default async function HelpPage() {
   const user = await requireSession();
   const locale = await getLocale();
   const { chrome, guides } = getHelp(locale);
+  const pdfHref = `/handleiding/BugaWuga-handleiding-${locale === "nl" ? "NL" : "EN"}.pdf`;
 
   // Toon het gemeenschappelijke deel + de gidsen die bij de rechten van deze gebruiker passen.
   const visible = guides.filter((g) => !g.cap || hasCapability(user, g.cap));
@@ -34,7 +35,10 @@ export default async function HelpPage() {
           <p className="text-sm text-slate-500">{chrome.sub}</p>
           <span className="ph-chip mt-2 inline-flex bg-orange-50 text-orange-700">{chrome.for_role}: {user.roleName}</span>
         </div>
-        <PrintButton label={chrome.print} />
+        <div className="flex items-center gap-2 print:hidden">
+          <a href={pdfHref} target="_blank" rel="noopener" data-ev="help_pdf" className="ph-btn ph-btn-primary text-sm">⬇ {chrome.download}</a>
+          <PrintButton label={chrome.print} />
+        </div>
       </div>
 
       {visible.map((g) => (

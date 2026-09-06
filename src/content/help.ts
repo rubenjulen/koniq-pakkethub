@@ -5,7 +5,7 @@ import type { Locale } from "@/i18n/config";
 
 export type HelpSection = { h: string; steps: string[] };
 export type HelpGuide = { key: string; cap?: string; icon: string; title: string; intro: string; sections: HelpSection[] };
-export type HelpChrome = { title: string; sub: string; for_role: string; common: string; print: string; tip: string };
+export type HelpChrome = { title: string; sub: string; for_role: string; common: string; print: string; download: string; tip: string };
 
 const NL: { chrome: HelpChrome; guides: HelpGuide[] } = {
   chrome: {
@@ -13,7 +13,8 @@ const NL: { chrome: HelpChrome; guides: HelpGuide[] } = {
     sub: "Zo werkt BugaWuga — afgestemd op jouw rol.",
     for_role: "Voor jouw rol",
     common: "Aan de slag — voor iedereen",
-    print: "Print / opslaan als PDF",
+    print: "Print",
+    download: "Download PDF",
     tip: "Tip: gebruik de 💬 Feedback-knop rechtsonder als iets onduidelijk is of beter kan.",
   },
   guides: [
@@ -136,7 +137,8 @@ const EN: { chrome: HelpChrome; guides: HelpGuide[] } = {
     sub: "How BugaWuga works — tailored to your role.",
     for_role: "For your role",
     common: "Getting started — for everyone",
-    print: "Print / save as PDF",
+    print: "Print",
+    download: "Download PDF",
     tip: "Tip: use the 💬 Feedback button (bottom-right) if anything is unclear or could be better.",
   },
   guides: [
