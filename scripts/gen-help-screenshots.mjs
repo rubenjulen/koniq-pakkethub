@@ -28,7 +28,13 @@ const SHOTS = [
   ["/app/wallet", "wallet", "traveler@pakkethub.com"],
   ["/app/control", "control", "admin@pakkethub.com"],
   ["/app/insights", "insights", "admin@pakkethub.com"],
+  ["/app/ops", "ops_intake", "hub@pakkethub.com"],
+  ["/app/manifests", "ops_manifests", "hub@pakkethub.com"],
+  ["/app/lockers", "ops_lockers", "hub@pakkethub.com"],
 ];
+// ONLY=bestand1,bestand2 → leg alleen die vast (rest overslaan).
+const ONLY = (process.env.ONLY || "").split(",").map((s) => s.trim()).filter(Boolean);
+const PICK = ONLY.length ? SHOTS.filter(([, f]) => ONLY.includes(f)) : SHOTS;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -68,18 +74,19 @@ let current = null;
 async function login(email) {
   await resetCookies(); // anders stuurt /login door naar /app als er nog een sessie is
   await go("/login");
+  // Waarden zetten én formulier versturen in één evaluate (voorkomt race met navigatie).
   await page.evaluate((e, p) => {
     const em = document.querySelector("input[name=email]");
     const pw = document.querySelector("input[name=password]");
     if (em) em.value = e;
     if (pw) pw.value = p;
+    (em && em.closest("form"))?.requestSubmit();
   }, email, PW);
-  await page.click("button[type=submit]");
-  await sleep(2800); // server-action + navigatie
+  await sleep(3500); // server-action + navigatie
   current = email;
 }
 
-for (const [path, file, account] of SHOTS) {
+for (const [path, file, account] of PICK) {
   if (account && account !== current) await login(account);
   await go(path);
   await page.screenshot({ path: join(OUT, `${file}.png`) });

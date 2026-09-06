@@ -113,14 +113,19 @@ const NL: { chrome: HelpChrome; guides: HelpGuide[] } = {
       key: "ops", cap: "ops.intake", icon: "🏭", title: "Hub / operatie — verwerking",
       intro: "Intake, inspectie, verzegeling, custody en transport.",
       sections: [
-        { h: "Intake & verzegelen", steps: [
-          "Inspectie — loop bij een geboekte zending de checklist na (inhoud, aantal, staat, batterijen, vloeistoffen, aangifte).",
+        { h: "Intake & verzegelen", img: "ops_intake", steps: [
+          "Werklijst — op “Hub & intake” zie je de geboekte zendingen die intake/inspectie nodig hebben, plus de hubs & service points in de corridor.",
+          "Inspectie — loop bij een zending de checklist na (inhoud, aantal, staat, batterijen, vloeistoffen, aangifte).",
           "Verzegelen — geef een zegelnummer op en verzegel; de zending gaat naar de volgende status.",
           "Chain of custody — elke stap en overdracht wordt vastgelegd in een onwijzigbaar logboek.",
         ]},
-        { h: "Manifesten, legs, lockers", steps: [
-          "Manifesten & legs — maak een manifest (bv. een vlucht), koppel er zendingen aan en zet de status door: verzegelen → vertrek → aankomst → sluiten. Alle gekoppelde zendingen lopen mee.",
-          "Lockers & tijdslots — wijs een pakket toe aan een vrij compartiment (met pincode), boek een tijdslot en voer een voorraad-reconciliatie uit (scannen → MATCH / ONVERWACHT / ONTBREEKT).",
+        { h: "Manifesten & legs", img: "ops_manifests", steps: [
+          "Manifest maken — maak een manifest (bv. een vlucht) en koppel er zendingen aan.",
+          "Status doorzetten — verzegelen → vertrek → aankomst → sluiten. Alle gekoppelde zendingen en hun custody lopen mee.",
+        ]},
+        { h: "Lockers & tijdslots", img: "ops_lockers", steps: [
+          "Compartiment toewijzen — wijs een pakket toe aan een vrij compartiment (met pincode) en boek een tijdslot.",
+          "Voorraad-reconciliatie — scan/plak referenties en vergelijk: MATCH / ONVERWACHT / ONTBREEKT.",
         ]},
         { h: "Beoordelingswachtrij", img: "control", steps: [
           "Control Center — behandel de wachtrij met zendingen die beoordeling nodig hebben en keur ze goed of af.",
@@ -255,14 +260,19 @@ const EN: { chrome: HelpChrome; guides: HelpGuide[] } = {
       key: "ops", cap: "ops.intake", icon: "🏭", title: "Hub / operations — processing",
       intro: "Intake, inspection, sealing, custody and transport.",
       sections: [
-        { h: "Intake & sealing", steps: [
-          "Inspection — on a booked shipment, run the checklist (contents, quantity, condition, batteries, liquids, declaration).",
+        { h: "Intake & sealing", img: "ops_intake", steps: [
+          "Work list — “Hub & intake” shows the booked shipments needing intake/inspection, plus the hubs & service points in the corridor.",
+          "Inspection — on a shipment, run the checklist (contents, quantity, condition, batteries, liquids, declaration).",
           "Sealing — enter a seal number and seal; the shipment moves to the next status.",
           "Chain of custody — every step and handover is recorded in an immutable log.",
         ]},
-        { h: "Manifests, legs, lockers", steps: [
-          "Manifests & legs — create a manifest (e.g. a flight), link shipments and advance the status: seal → depart → arrive → close. All linked shipments follow.",
-          "Lockers & timeslots — assign a package to a free compartment (with a pin), book a timeslot and run a stock reconciliation (scan → MATCH / UNEXPECTED / MISSING).",
+        { h: "Manifests & legs", img: "ops_manifests", steps: [
+          "Create a manifest — make a manifest (e.g. a flight) and link shipments to it.",
+          "Advance the status — seal → depart → arrive → close. All linked shipments and their custody follow.",
+        ]},
+        { h: "Lockers & timeslots", img: "ops_lockers", steps: [
+          "Assign a compartment — assign a package to a free compartment (with a pin) and book a timeslot.",
+          "Stock reconciliation — scan/paste references and compare: MATCH / UNEXPECTED / MISSING.",
         ]},
         { h: "Review queue", img: "control", steps: [
           "Control Center — handle the queue of shipments needing review and approve or reject them.",
